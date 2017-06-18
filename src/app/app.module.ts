@@ -8,17 +8,17 @@ import { routing } from './app.routes';
 
 import { AppComponent } from './app.component';
 import { LoginCompComponent } from './login-comp/login-comp.component';
-import { TopNavComponent } from './home/top-nav.component';
 import { StockListComponent } from './stock/stock-list.component';
 import { HomePortalComponent } from './home/home-portal.component';
+import { TopNavComponent } from './shared/top-nav/top-nav.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginCompComponent,
-    TopNavComponent,
     StockListComponent,
-    HomePortalComponent
+    HomePortalComponent,
+    TopNavComponent
   ],
   imports: [
     BrowserModule,
