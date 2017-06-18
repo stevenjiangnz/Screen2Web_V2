@@ -4,14 +4,21 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdButtonModule, MdCheckboxModule } from '@angular/material';
+import { routing } from './app.routes';
 
 import { AppComponent } from './app.component';
 import { LoginCompComponent } from './login-comp/login-comp.component';
+import { TopNavComponent } from './home/top-nav.component';
+import { StockListComponent } from './stock/stock-list.component';
+import { HomePortalComponent } from './home/home-portal.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginCompComponent
+    LoginCompComponent,
+    TopNavComponent,
+    StockListComponent,
+    HomePortalComponent
   ],
   imports: [
     BrowserModule,
@@ -19,7 +26,8 @@ import { LoginCompComponent } from './login-comp/login-comp.component';
     HttpModule,
     BrowserAnimationsModule,
     MdButtonModule,
-    MdCheckboxModule
+    MdCheckboxModule,
+    routing
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,6 +1,10 @@
-$primaryColor: #ccffcc;
+$primaryColor: #ebebeb;
+
+$main-background-color: #2b3e50;
 
 body {
-    background: $primaryColor;
+    background: $main-background-color;
+    color: $primaryColor;
 }
+
 
