@@ -7,10 +7,11 @@
     <div class="top-menu">
       <ul>
         <li class="logo"><span class="navbar-brand" style="display:inline-block"><i class="fa fa-lg fa-chain "></i>Screen<span>.2</span></span></li>
-        <li><a href="#home" class="active">Home</a></li>
-        <li><a href="#news">News</a></li>
-        <li><a href="#contact">Contact</a></li>
-        <li style="float:right"><a href="#about">About</a></li>
+        <li><a [routerLink]="['/home']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a></li>
+        <li><a [routerLink]="['/stock']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"> Stock</a></li>
+        <li><a href="#contact">Analysis</a></li>
+        <li><a href="#contact">Trade</a></li>
+        <li style="float:right"><a href="#about">Admin</a></li>
       </ul>
     </div>
     </nav>

@@ -1,6 +1,7 @@
 $primaryColor: #ebebeb;
 $main-background-color: #2b3e50;
 $highlight-background-color: #4e5d6c;
+
 body {
   background: $main-background-color;
   color: $primaryColor;
@@ -10,17 +11,38 @@ body {
   background: $highlight-background-color;
   padding: 0px;
   ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
     li {
-      display: inline;
+      float: left;
       list-style-type: none;
       padding-right: 10px;
+      a {
+        display: block;
+        color: white;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+      }
+      a:focus,
+      a:hover {
+        text-decoration: none;
+      }
+      a:hover:not(.active) {
+        background-color: #111;
+      }
+      .active {
+        background-color: #4CAF50;
+      }
     }
-
-    li.logo{
-        margin-top:8px;
-        margin-left:10px;
-        font-size: 1.1em;
-        font-weight: bolder;
+    .logo {
+      margin-top: 8px;
+      margin-left: 10px;
+      font-size: 1.1em;
+      font-weight: bolder;
     }
   }
 }
@@ -32,4 +54,6 @@ body {
     margin-right: 5px;
   }
 }
+
+
 
