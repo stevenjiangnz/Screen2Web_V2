@@ -16,6 +16,13 @@ body {
     padding: 0;
     overflow: hidden;
     background-color: #333;
+    .navbar-brand {
+      font-size: 1.05em;
+      .fa {
+        color: red;
+        margin-right: 5px;
+      }
+    }
     li {
       float: left;
       list-style-type: none;
@@ -46,14 +53,4 @@ body {
     }
   }
 }
-
-.navbar-brand {
-  font-size: 1.05em;
-  .fa {
-    color: red;
-    margin-right: 5px;
-  }
-}
-
-
 
