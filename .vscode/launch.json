@@ -25,6 +25,12 @@
             "sourceMapPathOverrides": {
                 "webpack:///./*": "${webRoot}/*"
             }
+        },
+         {
+            "name": "PowerShell",
+            "type": "PowerShell",
+            "request": "launch",
+            "program": "${file}"
         }
     ]
 }
