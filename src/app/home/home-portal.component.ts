@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-home-portal',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home-portal.component.scss']
 })
 export class HomePortalComponent implements OnInit {
+  environmentName = environment.testProp;
 
   constructor() { }
 
