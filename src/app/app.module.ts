@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import { MdButtonModule, MdCheckboxModule } from '@angular/material';
+import { MdButtonModule, MdCheckboxModule } from '@angular/material';
 import { routing } from './app.routes';
 
 import { AppComponent } from './app.component';
@@ -27,8 +27,8 @@ import { TopNavComponent } from './shared/top-nav/top-nav.component';
     FormsModule,
     HttpModule,
     BrowserAnimationsModule,
-    // MdButtonModule,
-    // MdCheckboxModule,
+    MdButtonModule,
+    MdCheckboxModule,
     routing
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
