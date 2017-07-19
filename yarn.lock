@@ -110,12 +110,6 @@
   dependencies:
     tslib "^1.7.1"
 
-"@angular/material@^2.0.0-beta.6":
-  version "2.0.0-beta.6"
-  resolved "https://registry.yarnpkg.com/@angular/material/-/material-2.0.0-beta.6.tgz#83bfdf00f540a8c7db900a1e7b8ed2cff49df821"
-  dependencies:
-    tslib "^1.7.1"
-
 "@angular/platform-browser-dynamic@^4.2.3":
   version "4.2.3"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-4.2.3.tgz#87ce41f5779d31cbc68c71db6bfeba216d135554"
@@ -2781,6 +2775,10 @@ karma-jasmine-html-reporter@^0.2.2:
 karma-jasmine@^1.0.2, karma-jasmine@~1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/karma-jasmine/-/karma-jasmine-1.1.0.tgz#22e4c06bf9a182e5294d1f705e3733811b810acf"
+
+karma-teamcity-reporter@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/karma-teamcity-reporter/-/karma-teamcity-reporter-1.0.0.tgz#d33c1217753c141897f64560f25f0f37be905233"
 
 karma@~1.4.1:
   version "1.4.1"
