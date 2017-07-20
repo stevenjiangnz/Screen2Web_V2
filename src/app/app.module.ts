@@ -12,6 +12,7 @@ import { LoginCompComponent } from './login-comp/login-comp.component';
 import { StockListComponent } from './stock/stock-list.component';
 import { HomePortalComponent } from './home/home-portal.component';
 import { TopNavComponent } from './shared/top-nav/top-nav.component';
+import { StockService } from './services/stock.service';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,7 @@ import { TopNavComponent } from './shared/top-nav/top-nav.component';
     routing
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-  providers: [],
+  providers: [ StockService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
