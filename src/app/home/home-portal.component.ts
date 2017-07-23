@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { StockService } from '../services/stock.service';
+import { ServiceAccessService } from '../services/service-access.service';
 
 @Component({
   selector: 'app-home-portal',
   templateUrl: './home-portal.component.html',
   styleUrls: ['./home-portal.component.scss'],
-  providers: [StockService]
+  providers: [StockService, ServiceAccessService]
 })
 export class HomePortalComponent implements OnInit {
   public environmentName: string = environment.testProp;
