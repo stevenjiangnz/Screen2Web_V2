@@ -13,6 +13,7 @@ import { StockListComponent } from './stock/stock-list.component';
 import { HomePortalComponent } from './home/home-portal.component';
 import { TopNavComponent } from './shared/top-nav/top-nav.component';
 import { StockService } from './services/stock.service';
+import { ServiceAccessService } from './services/service-access.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { StockService } from './services/stock.service';
     routing
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-  providers: [ StockService ],
+  providers: [  StockService,
+                ServiceAccessService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
