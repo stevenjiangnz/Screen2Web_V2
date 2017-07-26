@@ -5,7 +5,7 @@ import * as TypeMoq from 'typemoq';
 
 const serviceAccessMock = TypeMoq.Mock.ofType(ServiceAccessService);
 
-serviceAccessMock.setup(x => x.getTestString()).returns(() => 'from mock');
+// serviceAccessMock.setup(x => x.getTestString()).returns(() => 'from mock');
 
 describe('StockService', () => {
   beforeEach(() => {
