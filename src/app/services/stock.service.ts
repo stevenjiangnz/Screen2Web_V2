@@ -11,7 +11,7 @@ export class StockService {
    }
 
   getStocks() {
-    this.stockList[0].name = this.serviceAccess.getTestString();
+     this.stockList[0].name = 'from mock';
     return this.stockList;
   }
 
