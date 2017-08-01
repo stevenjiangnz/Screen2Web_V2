@@ -11,8 +11,9 @@ import { AppComponent } from './app.component';
 import { LoginCompComponent } from './login-comp/login-comp.component';
 import { StockListComponent } from './stock/stock-list.component';
 import { HomePortalComponent } from './home/home-portal.component';
-import { TopNavComponent } from './shared/top-nav/top-nav.component';
+import { TopNavComponent } from './component/top-nav/top-nav.component';
 import { StockService } from './services/stock.service';
+import { AuthService } from './services/auth.service';
 import { ServiceAccessService } from './services/service-access.service';
 
 @NgModule({
@@ -35,7 +36,8 @@ import { ServiceAccessService } from './services/service-access.service';
   ],
   schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
   providers: [  StockService,
-                ServiceAccessService ],
+                ServiceAccessService,
+              AuthService ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

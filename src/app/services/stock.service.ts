@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ServiceAccessService } from './service-access.service';
-
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class StockService {
@@ -15,4 +15,12 @@ export class StockService {
     return this.stockList;
   }
 
+  getWords(): Observable<string[]> {
+    const obsString: Observable<string[]> = new Observable<string[]>(observer => {
+      setTimeout(() => {
+        observer.next(['1']);
+      }, 1000);
+    });
+    return obsString;
+  }
 }
