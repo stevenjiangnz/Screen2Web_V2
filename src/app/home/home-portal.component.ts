@@ -21,9 +21,9 @@ export class HomePortalComponent implements OnInit {
 
   ngOnInit() {
     this.authService.login('', '').subscribe((res) => {
-      console.log(res.json().token_type);
+      // console.log(res.json().token_type);
       // console.log(res.json().access_token);
-      console.log('see jquery 123: ', $(window));
+      // console.log('see jquery 123: ', $(window));
     } );
   }
 }

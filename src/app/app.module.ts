@@ -16,6 +16,7 @@ import { TopNavComponent } from './component/top-nav/top-nav.component';
 import { StockService } from './services/stock.service';
 import { AuthService } from './services/auth.service';
 import { ServiceAccessService } from './services/service-access.service';
+import { StockNavComponent } from './stock/stock-nav/stock-nav.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ServiceAccessService } from './services/service-access.service';
     LoginCompComponent,
     StockListComponent,
     HomePortalComponent,
-    TopNavComponent
+    TopNavComponent,
+    StockNavComponent
   ],
   imports: [
     RouterModule,
