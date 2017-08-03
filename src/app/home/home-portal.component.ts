@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { StockService } from '../services/stock.service';
 import { AuthService } from '../services/auth.service';
+import * as $ from 'jquery';
 
 @Component({
   selector: 'app-home-portal',
@@ -22,6 +23,7 @@ export class HomePortalComponent implements OnInit {
     this.authService.login('', '').subscribe((res) => {
       console.log(res.json().token_type);
       // console.log(res.json().access_token);
+      console.log('see jquery 123: ', $(window));
     } );
   }
 }

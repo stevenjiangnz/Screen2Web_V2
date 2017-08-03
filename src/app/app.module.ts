@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { LocalStorageModule } from 'angular-2-local-storage';
 import { MdButtonModule, MdCheckboxModule } from '@angular/material';
 import { routing } from './app.routes';
 
@@ -32,12 +33,16 @@ import { ServiceAccessService } from './services/service-access.service';
     BrowserAnimationsModule,
     MdButtonModule,
     MdCheckboxModule,
-    routing
+    routing,
+    LocalStorageModule.withConfig({
+      prefix: 'screen2-app',
+      storageType: 'localStorage'
+    })
   ],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
-  providers: [  StockService,
-                ServiceAccessService,
-              AuthService ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [StockService,
+    ServiceAccessService,
+    AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
