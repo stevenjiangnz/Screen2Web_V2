@@ -1,5 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  HttpModule,
+  Http,
+  Response,
+  ResponseOptions,
+  XHRBackend
+} from '@angular/http';
 import { StockService } from '../services/stock.service';
+import { AuthService } from '../services/auth.service';
 
 import { HomePortalComponent } from './home-portal.component';
 // check this: https://stackoverflow.com/questions/40003575/angular-2-error-no-provider-for-http-in-karma-jasmine-test
@@ -9,12 +17,14 @@ describe('HomePortalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [HomePortalComponent]
+      declarations: [HomePortalComponent],
+      imports: [HttpModule]
     }).overrideComponent(HomePortalComponent, {
       set: {
         providers: [
-          { provide: StockService, useClass: MockStockService }
-        ]
+          { provide: StockService, useClass: MockStockService },
+          AuthService
+        ],
       }
     }).compileComponents();
   }));

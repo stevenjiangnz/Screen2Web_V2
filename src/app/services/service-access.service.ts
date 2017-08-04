@@ -29,6 +29,11 @@ export class ServiceAccessService {
                     .map(res => res.json().data);
   }
 
+  getList(url: string) {
+    return this.http.get(url)
+                    .map(res => res.json().data);
+  }
+
   getText() {
     return this.http.get(`http://dummy.com/videos`)
                     .map(res => res.text());
