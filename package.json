@@ -43,7 +43,6 @@
   },
   "devDependencies": {
     "@types/jasmine": "2.5.38",
-    "@types/jquery": "^3.2.10",
     "@types/node": "~6.0.60",
     "codelyzer": "~2.0.0",
     "gulp": "^3.9.1",
