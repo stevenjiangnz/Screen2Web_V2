@@ -15,7 +15,7 @@ describe('ShareService', () => {
     TestBed.configureTestingModule({
       providers: [
         ShareService,
-       { provide: XHRBackend, useClass: MockBackend },]
+       { provide: XHRBackend, useClass: MockBackend }, ]
     });
   });
 

@@ -8,7 +8,7 @@ export class Stock {
     volumn: number;
 }
 
-export class Share{
+export class Share {
     id: number;
     symbol: string;
     name: string;
