@@ -9,8 +9,7 @@ describe('StockListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StockListComponent ],
-      imports: [StockNavComponent]
+      declarations: [ StockListComponent, StockNavComponent ],
     })
     .compileComponents();
   }));
