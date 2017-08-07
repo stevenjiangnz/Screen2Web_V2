@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { TreeModule } from 'angular-tree-component';
 
 import { StockNavComponent } from './stock-nav.component';
 
@@ -8,7 +9,8 @@ describe('StockNavComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StockNavComponent ]
+      declarations: [ StockNavComponent ],
+      imports: [TreeModule]
     })
     .compileComponents();
   }));
