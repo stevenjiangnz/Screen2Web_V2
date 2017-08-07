@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LocalStorageModule } from 'angular-2-local-storage';
 import { MdButtonModule, MdCheckboxModule } from '@angular/material';
+import { TreeModule } from 'angular-tree-component';
 import { routing } from './app.routes';
 
 import { AppComponent } from './app.component';
@@ -39,7 +40,8 @@ import { StockNavComponent } from './stock/stock-nav/stock-nav.component';
     LocalStorageModule.withConfig({
       prefix: 'screen2-app',
       storageType: 'localStorage'
-    })
+    }),
+    TreeModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [StockService,
