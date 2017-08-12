@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import {Http, Headers, RequestOptions, Response} from '@angular/http';
+import { LocalStorageService } from 'angular-2-local-storage';
 import { Observable } from 'rxjs/Rx';
 import { Token } from '../model/EntityDefinitions';
 import { BaseService } from './baseservice';
@@ -24,6 +25,19 @@ export class AuthService extends BaseService {
     body.set('password', this.password);
     body.set('grant_type', 'password');
 
-    return this.http.post(this.url, body.toString(), {headers});
+    const res = this.http.post(this.url, body.toString(), {headers});
+
+    res.map((response) => response.json()).subscribe(result => {
+      const token: Token = new Token();
+      token.token = result.access_token;
+      token.tokeType = result.token_type;
+      token.expiresIn = result.expires_in;
+
+      localStorage.setItem('testhere', JSON.stringify(token));
+      console.log('get from local storage', localStorage.getItem('testhere'));
+      // console.log(token);
+    });
+
+    return res;
   }
 }

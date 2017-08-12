@@ -1,12 +1,12 @@
-export class Stock {
-    id: number;
-    symbol: string;
-    open: number;
-    close: number;
-    high: number;
-    low: number;
-    volumn: number;
-}
+// export class Stock {
+//     id: number;
+//     symbol: string;
+//     open: number;
+//     close: number;
+//     high: number;
+//     low: number;
+//     volumn: number;
+// }
 
 export class Share {
     id: number;
@@ -22,6 +22,12 @@ export class Share {
     shareType: string;
     marketId: number;
     market?: string;
+}
+
+export class Node {
+    id: string;
+    name: string;
+    Children?: Node[];
 }
 
 export class Token {
