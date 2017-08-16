@@ -1,7 +1,7 @@
 import {LocalStoreHelper} from './local-store-helper';
 import { StorageKey } from '../global/enums';
 
-fdescribe('LocalStoreHelper', () => {
+describe('LocalStoreHelper', () => {
   it('should create an instance', () => {
     expect(new LocalStoreHelper()).toBeTruthy();
   });
