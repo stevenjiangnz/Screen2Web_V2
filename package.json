@@ -10,7 +10,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "karma": "karma start --reporters teamcity --single-run"
+    "karma": "karma start --reporters teamcity --single-run",
+    "test-debug": "karma start karma.conf.js --browsers Chrome_with_debugging"
   },
   "private": true,
   "dependencies": {
