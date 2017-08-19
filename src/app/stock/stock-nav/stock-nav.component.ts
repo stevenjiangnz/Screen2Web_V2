@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ShareService } from '../../services/share.service';
 
 @Component({
   selector: 'app-stock-nav',
@@ -31,9 +32,16 @@ export class StockNavComponent implements OnInit {
     }
   ];
 
-  constructor() { }
+  constructor(private service: ShareService) { }
 
   ngOnInit() {
+    this.getShareList();
+  }
+
+  private getShareList() {
+    this.service.getShareList().subscribe((data) => {
+          console.log('stock nav get share list...', data);
+    });
   }
 
 }

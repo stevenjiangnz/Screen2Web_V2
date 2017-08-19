@@ -1,6 +1,7 @@
 $primaryColor: #ebebeb;
 $main-background-color: #2b3e50;
 $highlight-background-color: #4e5d6c;
+$tree-hover-color: #4caf50;
 
 body {
   background: $main-background-color;
@@ -59,3 +60,20 @@ body {
     padding:0px;
 }
 
+.tree {
+  padding: 3px 5px;
+  background-color: #4e5d6c;
+  line-height: 1.1;
+  .node-content-wrapper:hover {
+    background: $tree-hover-color !important;
+  }
+  .node-content-wrapper-active, .node-content-wrapper-focused {
+    background: darken($tree-hover-color, 10%) !important;
+  }
+  .node-content-wrapper-active:hover, .node-content-wrapper-focused:hover {
+    background: $tree-hover-color !important;
+  }
+  // .node-content-wrapper-focused {
+  //   background: #00ffff !important;
+  // }
+}
