@@ -15,8 +15,8 @@ export class ShareService extends BaseService {
     const opt = super.getOptions(true);
 
     return this.http.get(this.baseUrl + '/share', opt)
-                    .map((res) => {
-                      return res.json();
-                    });
+      .map((res) => {
+        return res.json();
+      });
   }
 }

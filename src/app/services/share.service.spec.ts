@@ -14,10 +14,10 @@ describe('ShareService', () => {
     });
   });
 
-  fit('should be created', inject([ShareService], (service: ShareService) => {
+  it('should be created', inject([ShareService], (service: ShareService) => {
     const result = service.getShareList();
 
-    console.log(result);
+    // console.log(result);
     expect(result).toBeTruthy();
   }));
 });
