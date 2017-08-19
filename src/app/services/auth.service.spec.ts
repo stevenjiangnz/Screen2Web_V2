@@ -21,7 +21,7 @@ describe('AuthService', () => {
     expect(service).toBeTruthy();
   }));
 
-  fit('should be run testPromise', (done) => {
+  it('should be run testPromise', (done) => {
     inject([AuthService], (service: AuthService) => {
       service.testPromise().then((message) => {
         console.log('message in test...', message);
@@ -51,7 +51,7 @@ describe('AuthService', () => {
 
     const tokenString = LocalStoreHelper.get(StorageKey.SECURITY_TOKEN);
 
-    console.log(tokenString);
+    // console.log(tokenString);
     // service.login('username', 'password').subscribe(
     //   (result) => {
     //     expect(result).toBeDefined();

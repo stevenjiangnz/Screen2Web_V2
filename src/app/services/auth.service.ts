@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Http, Headers, RequestOptions, Response} from '@angular/http';
+import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import { Token } from '../model/EntityDefinitions';
 import { BaseService } from './baseService';
@@ -22,7 +22,7 @@ export class AuthService extends BaseService {
       // console.log('in promise');
       setTimeout(function(){
         resolve('Success!'); // Yay! Everything went well!
-      }, 100);
+      }, 200);
     });
 
     return myFirstPromise;
@@ -73,15 +73,9 @@ export class AuthService extends BaseService {
 
       LocalStoreHelper.set(StorageKey.SECURITY_TOKEN, token);
     });
-    // res.map((response) => response.json()).subscribe(result => {
-    //   token = new Token();
-    //   token.token = result.access_token;
-    //   token.tokeType = result.token_type;
-    //   token.expiresIn = result.expires_in;
+  }
 
-    //   LocalStoreHelper.set(StorageKey.SECURITY_TOKEN, token);
-    // });
-
-    // return token;
+  public logout() {
+    LocalStoreHelper.clear();
   }
 }

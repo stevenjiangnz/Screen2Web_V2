@@ -14,6 +14,7 @@ import { StockListComponent } from './stock/stock-list.component';
 import { HomePortalComponent } from './home/home-portal.component';
 import { TopNavComponent } from './component/top-nav/top-nav.component';
 import { StockService } from './services/stock.service';
+import { ShareService } from './services/share.service';
 import { AuthService } from './services/auth.service';
 import { ServiceAccessService } from './services/service-access.service';
 import { StockNavComponent } from './stock/stock-nav/stock-nav.component';
@@ -40,6 +41,7 @@ import { StockNavComponent } from './stock/stock-nav/stock-nav.component';
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [StockService,
+    ShareService,
     ServiceAccessService,
     AuthService],
   bootstrap: [AppComponent]

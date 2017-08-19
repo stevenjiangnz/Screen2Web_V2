@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ShareService } from '../services/share.service';
 
 @Component({
   selector: 'app-stock-list',
