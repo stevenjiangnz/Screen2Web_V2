@@ -3,12 +3,14 @@ import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { SharedService } from './shared.service';
 import 'rxjs/add/operator/map';
 import { AuthService } from './auth.service';
+import { UserService } from './user.service';
 import { StorageKey } from '../global/enums';
 import { Token } from '../model/EntityDefinitions';
 import { LocalStoreHelper } from '../utils/local-store-helper';
 
 export class BaseService {
     public baseUrl: string;
+    public token: Token;
 
     constructor(public http: Http) {
         this.baseUrl =  new SharedService().getSettings().apiBaseUrl;
@@ -21,18 +23,14 @@ export class BaseService {
         return Observable.throw(errMsg);
     }
 
-    getOptions(autoLogin: boolean = true): RequestOptions {
-        // if (autoLogin) {
-        //     this.checkLogin(autoLogin);
-        // }
-
+    getOptions(token?: Token): RequestOptions {
         const headers: Headers = new Headers();
         headers.append('content-type', 'application/json; charset=utf-8');
 
-        // if (autoLogin) {
-        //     const token: Token = JSON.parse(LocalStoreHelper.get(StorageKey.SECURITY_TOKEN)) as Token;
-        //     headers.append('authorization', 'bearer ' + token.token);
-        // }
+        if (token) {
+            headers.append('authorization', 'bearer ' + token.token);
+        }
+
         const opts = new RequestOptions({headers: headers});
         opts.headers = headers;
         return opts;

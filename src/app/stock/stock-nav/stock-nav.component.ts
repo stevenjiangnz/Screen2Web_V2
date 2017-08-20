@@ -39,9 +39,9 @@ export class StockNavComponent implements OnInit {
   }
 
   private getShareList() {
-    this.service.getShareList().subscribe((data) => {
-          console.log('stock nav get share list...', data);
-    });
+    // this.service.getShareList().subscribe((data) => {
+    //       console.log('stock nav get share list...', data);
+    // });
   }
 
 }

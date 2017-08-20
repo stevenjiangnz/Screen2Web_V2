@@ -9,27 +9,30 @@ import { LocalStoreHelper } from '../utils/local-store-helper';
 import { AuthService } from './auth.service';
 
 @Injectable()
-export class UserService extends BaseService{
-  private static isLogged = false;
-  private static token: Token;
+export class UserService extends BaseService {
+  // public static isLogged = false;
+  public static token: Token;
 
-  public isLoggedIn(): boolean {
-    return UserService.isLogged;
-  }
+  // public isLoggedIn(): boolean {
+  //   return UserService.isLogged;
+  // }
 
   constructor(public http: Http, private authService: AuthService) {
     super(http);
   }
 
-  public async ensureLogin(): Promise<Token> {
-    //  const loginPromise = new Promise<Token> ((resolve, reject) => {
-    //   this.authService.login('', '').then((result) => {
-    //     const token = new Token();
-    //     token.token = 'token example';
-    //     resolve(token);
-    //   });
-    // });
+  public async ensureLogin(userName: string = '', password: string = ''): Promise<Token> {
+    const loginPromise = new Promise<Token>((resolve, reject) => {
+      if (UserService.token) {
+        resolve(UserService.token);
+      } else {
+        this.authService.login(userName, password).then((data) => {
+          UserService.token = data;
+          resolve(data);
+        });
+      }
+    });
 
-    return this.authService.login('', '');
+    return loginPromise;
   }
 }

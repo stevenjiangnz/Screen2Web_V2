@@ -54,7 +54,7 @@ export class AuthService extends BaseService {
 
   public async login(userName: string, password: string): Promise<Token> {
     // let token: Token = null;
-    const opt = super.getOptions(false);
+    const opt = super.getOptions();
     const headers = new Headers();
     let token: Token;
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
@@ -76,7 +76,7 @@ export class AuthService extends BaseService {
   }
 
     public async loginPromise(userName: string, password: string): Promise<string> {
-    const opt = super.getOptions(false);
+    const opt = super.getOptions();
     const headers = new Headers();
     headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
