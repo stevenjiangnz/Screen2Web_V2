@@ -18,7 +18,7 @@ export class Share {
     isYahooVerified: boolean;
     lastProcessed: string;
     processComment?: string;
-    isCfd: boolean;
+    iscfd: boolean;
     shareType: string;
     marketId: number;
     market?: string;
