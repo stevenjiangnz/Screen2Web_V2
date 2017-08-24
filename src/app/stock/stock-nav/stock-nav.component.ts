@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import * as _ from 'underscore';
 import { ShareService } from '../../services/share.service';
+import { Share } from '../../model/EntityDefinitions';
 
 @Component({
   selector: 'app-stock-nav',
@@ -9,7 +11,6 @@ import { ShareService } from '../../services/share.service';
 export class StockNavComponent implements OnInit {
   nodes = [
     {
-      id: 1,
       name: 'root1',
       children: [
         { id: 2, name: 'child1' },
@@ -17,7 +18,6 @@ export class StockNavComponent implements OnInit {
       ]
     },
     {
-      id: 4,
       name: 'root2',
       children: [
         { id: 5, name: 'child2.1' },
@@ -39,9 +39,39 @@ export class StockNavComponent implements OnInit {
   }
 
   private getShareList() {
-    // this.service.getShareList().subscribe((data) => {
-    //       console.log('stock nav get share list...', data);
-    // });
+    this.service.getShareList().then((shareList) => {
+      console.log('share list count: ' + shareList.length);
+      const treeObj = this.buildTreeObj(shareList);
+      this.nodes = treeObj;
+    });
   }
 
+  private buildTreeObj(shareList: Share[]): any {
+    const nodes = [{name: 'Stock',
+      children: this.shareListToTreeObj(shareList, 'Stock')},
+  {name: 'ETF'},
+  {name: 'Watch'},
+  {name: 'Scan'}];
+    return nodes;
+  }
+
+  private shareListToTreeObj(shareList: Share[], shareType: string): any {
+    console.log(shareList[0]);
+    const nodes = new Array();
+    const filterShares = _.filter(shareList, (item) => item.shareType === shareType);
+    const groupShares = _.groupBy(filterShares, 'sector');
+
+    // tslint:disable-next-line:forin
+    for (const prop in groupShares) {
+      const sectorShares = new Array();
+
+      _.each(groupShares[prop], (share) => {
+        sectorShares.push({id: share.id, name: share.symbol, description: share.name});
+      })
+
+      nodes.push({name: prop, children: _.sortBy(sectorShares, 'name')});
+    }
+
+    return _.sortBy(nodes, 'name');
+  }
 }

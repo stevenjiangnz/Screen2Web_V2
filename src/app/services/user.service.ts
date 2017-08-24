@@ -10,12 +10,7 @@ import { AuthService } from './auth.service';
 
 @Injectable()
 export class UserService extends BaseService {
-  // public static isLogged = false;
   public static token: Token;
-
-  // public isLoggedIn(): boolean {
-  //   return UserService.isLogged;
-  // }
 
   constructor(public http: Http, private authService: AuthService) {
     super(http);
