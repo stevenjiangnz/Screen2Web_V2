@@ -48,18 +48,20 @@ export class StockNavComponent implements OnInit {
 
   private buildTreeObj(shareList: Share[]): any {
     const nodes = [{name: 'Stock',
-      children: this.shareListToTreeObj(shareList, 'Stock')},
-  {name: 'ETF'},
+      children: this.shareListToTreeObj(shareList, 'Stock', 'sector')},
+  {name: 'ETF',
+  children: this.shareListToTreeObj(shareList, 'ETF', 'industry')},
   {name: 'Watch'},
   {name: 'Scan'}];
     return nodes;
   }
 
-  private shareListToTreeObj(shareList: Share[], shareType: string): any {
-    console.log(shareList[0]);
+  private shareListToTreeObj(shareList: Share[], shareType: string, group: string): any {
     const nodes = new Array();
     const filterShares = _.filter(shareList, (item) => item.shareType === shareType);
-    const groupShares = _.groupBy(filterShares, 'sector');
+
+    console.log(filterShares[0]);
+    const groupShares = _.groupBy(filterShares, group);
 
     // tslint:disable-next-line:forin
     for (const prop in groupShares) {
@@ -67,7 +69,7 @@ export class StockNavComponent implements OnInit {
 
       _.each(groupShares[prop], (share) => {
         sectorShares.push({id: share.id, name: share.symbol, description: share.name});
-      })
+      });
 
       nodes.push({name: prop, children: _.sortBy(sectorShares, 'name')});
     }
