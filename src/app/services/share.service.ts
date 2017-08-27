@@ -19,10 +19,8 @@ export class ShareService extends BaseService {
     let shares = new Array<Share>();
 
     if (LocalStoreHelper.get(StorageKey.SHARE_LIST)) {
-      console.log('load from store');
       shares = JSON.parse(LocalStoreHelper.get(StorageKey.SHARE_LIST));
     } else {
-      console.log('load from service');
       await this.userService.ensureLogin().then(async (token) => {
         const opt = super.getOptions(token);
         const resPromise = await this.http.get(this.baseUrl + '/share', opt).toPromise().then((data) => {

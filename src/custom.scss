@@ -60,35 +60,47 @@ body {
     padding:0px;
 }
 
-.tree {
-  padding: 3px 5px;
-  background-color: #4e5d6c;
-  line-height: 1.1;
-  font-size: 85%;
-  .node-content-wrapper:hover {
-    background: $tree-hover-color !important;
-  }
-  .node-content-wrapper-active, .node-content-wrapper-focused {
-    background: darken($tree-hover-color, 10%) !important;
-  }
-  .node-content-wrapper-active:hover, .node-content-wrapper-focused:hover {
-    background: $tree-hover-color !important;
-  }
-  .tree-node-level-3 .node-content-wrapper{
-    margin-left: 6px;
+.btn {
+  cursor: pointer;
+}
+.stock-tree-wrapper {
+  margin-top: 15px;
+  
+  .stock-filter {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.95rem;
   }
 
-  .tree-node-level-3 tree-node-expander ::after{
-    content: "\f15c";
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: bold;
-    text-decoration: inherit;
-/*--adjust as necessary--*/
-    color: #fff;
-    font-size: 12px;
-    padding-right: 0.5em;
-    position: absolute;
-    left: 0;
+  .tree {
+    padding: 3px 5px;
+    background-color: #4e5d6c;
+    line-height: 1.1;
+    font-size: 90%;
+    .node-content-wrapper:hover {
+      background: $tree-hover-color !important;
+    }
+    .node-content-wrapper-active, .node-content-wrapper-focused {
+      background: darken($tree-hover-color, 10%) !important;
+    }
+    .node-content-wrapper-active:hover, .node-content-wrapper-focused:hover {
+      background: $tree-hover-color !important;
+    }
+    .tree-node-level-3 .node-content-wrapper{
+      margin-left: 6px;
+    }
+  
+    .tree-node-level-3 tree-node-expander ::after{
+      content: "\f15c";
+      font-family: FontAwesome;
+      font-style: normal;
+      font-weight: bold;
+      text-decoration: inherit;
+  /*--adjust as necessary--*/
+      color: #fff;
+      font-size: 12px;
+      padding-right: 0.5em;
+      position: absolute;
+      left: 0;
+    }
   }
 }

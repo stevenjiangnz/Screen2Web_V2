@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as _ from 'underscore';
 import { ShareService } from '../../services/share.service';
 import { Share } from '../../model/EntityDefinitions';
+import { TREE_ACTIONS, KEYS, IActionMapping } from 'angular-tree-component';
 
 @Component({
   selector: 'app-stock-nav',
@@ -32,15 +33,30 @@ export class StockNavComponent implements OnInit {
     }
   ];
 
+  actionMapping: IActionMapping = {
+    mouse: {
+      click: TREE_ACTIONS.TOGGLE_EXPANDED
+    }
+  };
+
+  treeOptions = {
+    actionMapping: this.actionMapping
+  };
+
   constructor(private service: ShareService) { }
 
   ngOnInit() {
     this.getShareList();
   }
 
+  filterTree($event, filterHere, tree) {
+    console.log(filterHere);
+
+    tree.treeModel.filterNodes('ORG');
+  }
+
   private getShareList() {
     this.service.getShareList().then((shareList) => {
-      console.log('share list count: ' + shareList.length);
       const treeObj = this.buildTreeObj(shareList);
       this.nodes = treeObj;
     });
@@ -60,7 +76,6 @@ export class StockNavComponent implements OnInit {
     const nodes = new Array();
     const filterShares = _.filter(shareList, (item) => item.shareType === shareType);
 
-    console.log(filterShares[0]);
     const groupShares = _.groupBy(filterShares, group);
 
     // tslint:disable-next-line:forin
