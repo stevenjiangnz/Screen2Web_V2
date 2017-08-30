@@ -1,6 +1,6 @@
 <div class="stock-tree-wrapper">
   <div>
-    <input type="text" class="form-control stock-filter" placeholder="search stock"  (keyup)="onSearchType($event.target.value)">
+    <input type="text" class="form-control stock-filter" placeholder="search stock"  (keyup)="onSearchType($event.target.value, tree)">
   </div>
   <tree-root #tree [nodes]="nodes" [focused]="true" [options]="treeOptions" (activate)="onEvent($event)"></tree-root>
 </div>

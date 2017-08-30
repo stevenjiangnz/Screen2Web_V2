@@ -5,7 +5,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import * as _ from 'underscore';
 import { ShareService } from '../../services/share.service';
 import { Share } from '../../model/EntityDefinitions';
-import { TREE_ACTIONS, KEYS, IActionMapping } from 'angular-tree-component';
+import { TREE_ACTIONS, KEYS, IActionMapping, TreeNode } from 'angular-tree-component';
 
 @Component({
   selector: 'app-stock-nav',
@@ -14,6 +14,8 @@ import { TREE_ACTIONS, KEYS, IActionMapping } from 'angular-tree-component';
 })
 export class StockNavComponent implements OnInit {
   private searchUpdated: Subject<string> = new Subject<string>();
+  private treeInstance: any;
+
   nodes = [
     {
       name: 'root1',
@@ -55,15 +57,14 @@ export class StockNavComponent implements OnInit {
 
   constructor(private service: ShareService) { }
 
-  private onSearchType(value: string) {
-    // console.log(value);
+  private onSearchType(value: string, tree: any) {
+    this.treeInstance = tree;
     this.searchUpdated.next(value); // Emit the event to all listeners that signed up - we will sign up in our contractor
   }
 
   ngOnInit() {
     this.searchUpdated.debounceTime(500).subscribe(searchTextValue => {
-      // this.handleSearch(searchTextValue);
-      console.log('about to search', searchTextValue);
+      this.filterTree(searchTextValue);
     });
     this.getShareList();
   }
@@ -73,10 +74,21 @@ export class StockNavComponent implements OnInit {
     console.log('in on event leaf', event);
   }
 
-  filterTree($event, filterHere, tree) {
-    console.log(filterHere);
+  filterTree(searchText: string) {
+    if (searchText === '') {
+      this.treeInstance.treeModel.clearFilter();
+      this.treeInstance.treeModel.collapseAll();
+    } else {
+      this.treeInstance.treeModel.filterNodes((node: TreeNode) => {
+        let isMatch = false;
+        if (node.data.name.toUpperCase().indexOf(searchText.toUpperCase()) >= 0 ||
+          (node.data.description && node.data.description.toUpperCase().indexOf(searchText.toUpperCase()) >= 0) ) {
+          isMatch = true;
+        }
 
-    tree.treeModel.filterNodes('ORG');
+        return isMatch;
+      });
+    }
   }
 
   private getShareList() {
