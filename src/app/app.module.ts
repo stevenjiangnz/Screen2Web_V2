@@ -18,7 +18,9 @@ import { ShareService } from './services/share.service';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { ServiceAccessService } from './services/service-access.service';
+import { MessageService } from './services/message.service';
 import { StockNavComponent } from './stock/stock-nav/stock-nav.component';
+import { StockChartComponent } from './stock/stock-chart/stock-chart.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { StockNavComponent } from './stock/stock-nav/stock-nav.component';
     StockListComponent,
     HomePortalComponent,
     TopNavComponent,
-    StockNavComponent
+    StockNavComponent,
+    StockChartComponent
   ],
   imports: [
     RouterModule,
@@ -45,7 +48,8 @@ import { StockNavComponent } from './stock/stock-nav/stock-nav.component';
     ShareService,
     ServiceAccessService,
     AuthService,
-    UserService
+    UserService,
+    MessageService
   ],
   bootstrap: [AppComponent]
 })

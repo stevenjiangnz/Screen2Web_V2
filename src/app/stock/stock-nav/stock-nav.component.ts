@@ -4,7 +4,8 @@ import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import * as _ from 'underscore';
 import { ShareService } from '../../services/share.service';
-import { Share } from '../../model/EntityDefinitions';
+import { MessageService } from '../../services/message.service';
+import { Share, StateEvent } from '../../model/EntityDefinitions';
 import { TREE_ACTIONS, KEYS, IActionMapping, TreeNode } from 'angular-tree-component';
 
 @Component({
@@ -16,28 +17,7 @@ export class StockNavComponent implements OnInit {
   private searchUpdated: Subject<string> = new Subject<string>();
   private treeInstance: any;
 
-  nodes = [
-    {
-      name: 'root1',
-      children: [
-        { id: 2, name: 'child1' },
-        { id: 3, name: 'child2' }
-      ]
-    },
-    {
-      name: 'root2',
-      children: [
-        { id: 5, name: 'child2.1' },
-        {
-          id: 6,
-          name: 'child2.2',
-          children: [
-            { id: 7, name: 'subsub' }
-          ]
-        }
-      ]
-    }
-  ];
+  nodes = null;
 
   actionMapping: IActionMapping = {
     mouse: {
@@ -55,7 +35,7 @@ export class StockNavComponent implements OnInit {
     actionMapping: this.actionMapping
   };
 
-  constructor(private service: ShareService) { }
+  constructor(private shareService: ShareService, private messageService: MessageService) { }
 
   private onSearchType(value: string, tree: any) {
     this.treeInstance = tree;
@@ -70,8 +50,13 @@ export class StockNavComponent implements OnInit {
   }
 
   onEvent(event) {
-    const node = event.node;
-    console.log('in on event leaf', event);
+    if (event.eventName === 'activate') {
+      const node = event.node;
+      const state = new StateEvent();
+      state.shareId = node.data.id;
+
+      this.messageService.publishStockSelect(state);
+    }
   }
 
   filterTree(searchText: string) {
@@ -92,7 +77,7 @@ export class StockNavComponent implements OnInit {
   }
 
   private getShareList() {
-    this.service.getShareList().then((shareList) => {
+    this.shareService.getShareList().then((shareList) => {
       const treeObj = this.buildTreeObj(shareList);
       this.nodes = treeObj;
     });

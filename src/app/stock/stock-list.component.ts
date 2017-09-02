@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MessageService } from '../services/message.service';
+import { StateEvent } from '../model/EntityDefinitions';
+
 import { ShareService } from '../services/share.service';
 
 @Component({
@@ -8,7 +11,11 @@ import { ShareService } from '../services/share.service';
 })
 export class StockListComponent implements OnInit {
 
-  constructor() { }
+  constructor(private messageService: MessageService) {
+    this.messageService.currentState$.subscribe(state => {
+      console.log('in receiver: ' + state.shareId);
+    });
+  }
 
   ngOnInit() {
   }
