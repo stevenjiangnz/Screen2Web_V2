@@ -5,7 +5,7 @@
 
 const settings = {
   apiBaseUrl: 'http://localhost:8002/api',
-  'indicatorSettings': {
+  indicatorSettings: {
     'sma5': {
       'parameter': 'sma,5',
       'ownPane': false,

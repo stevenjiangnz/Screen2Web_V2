@@ -32,6 +32,8 @@
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.26",
     "@types/underscore": "^1.8.1",
     "angular-tree-component": "^4.1.0",
+    "angular2-highcharts": "^0.5.5",
+    "angular2-logger": "^0.6.0",
     "bootstrap": "^4.0.0-alpha.6",
     "core-js": "^2.4.1",
     "font-awesome": "^4.7.0",
@@ -43,7 +45,7 @@
   },
   "devDependencies": {
     "@types/jasmine": "2.5.38",
-    "@types/node": "~6.0.60",
+    "@types/node": "^6.0.88",
     "codelyzer": "~2.0.0",
     "gulp": "^3.9.1",
     "jasmine-core": "~2.5.2",

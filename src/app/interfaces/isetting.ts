@@ -1,3 +1,4 @@
-export interface ISetting {
-    apiBaseUrl: string;
-}
+// export interface ISetting {
+//     apiBaseUrl: string;
+//     indicatorSettings: any;
+// }
