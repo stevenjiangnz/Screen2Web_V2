@@ -3,6 +3,7 @@ import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import * as _ from 'underscore';
+import { ToasterService } from 'angular2-toaster';
 import { ShareService } from '../../services/share.service';
 import { MessageService } from '../../services/message.service';
 import { Share, StateEvent } from '../../model/EntityDefinitions';
@@ -35,7 +36,7 @@ export class StockNavComponent implements OnInit {
     actionMapping: this.actionMapping
   };
 
-  constructor(private shareService: ShareService, private messageService: MessageService) { }
+  constructor(private shareService: ShareService, private messageService: MessageService, private toasterService: ToasterService) { }
 
   private onSearchType(value: string, tree: any) {
     this.treeInstance = tree;
@@ -55,6 +56,7 @@ export class StockNavComponent implements OnInit {
       const state = new StateEvent();
       state.shareId = node.data.id;
 
+      this.toasterService.pop('success', 'Args Title', 'Args Body');
       this.messageService.publishStockSelect(state);
     }
   }

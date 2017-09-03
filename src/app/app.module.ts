@@ -9,6 +9,8 @@ import { TreeModule } from 'angular-tree-component';
 import { routing } from './app.routes';
 import { Logger, Options, Level } from 'angular2-logger/core';
 import { ChartModule } from 'angular2-highcharts';
+import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
+import { ToasterModule, ToasterService } from 'angular2-toaster';
 
 import { AppComponent } from './app.component';
 import { LoginCompComponent } from './login-comp/login-comp.component';
@@ -25,7 +27,14 @@ import { MessageService } from './services/message.service';
 import { StockNavComponent } from './stock/stock-nav/stock-nav.component';
 import { StockChartComponent } from './stock/stock-chart/stock-chart.component';
 
-declare var require: any;
+export declare var require: any;
+
+export function highchartsFactory() {
+    const hc = require('highcharts/highstock');
+    const dd = require('highcharts/modules/exporting');
+    dd(hc);
+    return hc;
+}
 
 @NgModule({
   declarations: [
@@ -47,8 +56,8 @@ declare var require: any;
     MdCheckboxModule,
     routing,
     TreeModule,
-    ChartModule.forRoot(require('highcharts')),
-    ChartModule.forRoot(require('highcharts/highstock'))
+    ToasterModule,
+    ChartModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [StockService,
@@ -58,8 +67,13 @@ declare var require: any;
     AuthService,
     UserService,
     MessageService,
+    ToasterService,
     { provide: Options, useValue: { store: false, level: Level.DEBUG } },
-    Logger
+    Logger,
+    {
+      provide: HighchartsStatic,
+      useFactory: highchartsFactory
+    }
   ],
   bootstrap: [AppComponent]
 })
