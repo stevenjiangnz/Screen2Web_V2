@@ -1,3 +1,9 @@
+export class Node {
+    id: string;
+    name: string;
+    Children?: Node[];
+}
+
 export class StateEvent {
     shareId: number;
     currentDate: number;
@@ -19,14 +25,31 @@ export class Share {
     market?: string;
 }
 
-export class Node {
-    id: string;
-    name: string;
-    Children?: Node[];
+export class Ticker {
+    tradingDate: number;
+    open: number;
+    close: number;
+    high: number;
+    low: number;
+    volumn: number;
+    adjustedClose: number;
+    jsTicks: number;
+    shareId: number;
+    share: any;
+    id: number;
 }
 
 export class Token {
     token: string;
     tokeType: string;
     expiresIn: number;
+}
+
+export class Zone {
+    id: number;
+    name: string;
+    isCurrent: boolean;
+    tradingDate: number;
+    startDate: number;
+    endDate?: number;
 }

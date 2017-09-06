@@ -26,7 +26,7 @@ describe('ShareService', () => {
   // }));
 
 
-  fit('should return ShareList', (done) => {
+  it('should return ShareList', (done) => {
     inject([ShareService], async (service: ShareService) => {
       await service.getShareList().then((data) => {
         done();

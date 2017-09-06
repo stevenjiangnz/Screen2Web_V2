@@ -12,11 +12,11 @@ describe('UserService', () => {
     });
   });
 
-  it('should be created', inject([UserService], (service: UserService) => {
+  fit('should be created', inject([UserService], (service: UserService) => {
     expect(service).toBeTruthy();
   }));
 
-  fit('should be logged in', (done) => {
+  it('should be logged in', (done) => {
     inject([UserService], (service: UserService) => {
       service.ensureLogin('', '').then((data) => {
         expect(data).not.toBeNull();
@@ -25,7 +25,7 @@ describe('UserService', () => {
       });
     })();
   });
-  fit('should be logged in if token existing', (done) => {
+  it('should be logged in if token existing', (done) => {
     inject([UserService], (service: UserService) => {
       UserService.token = new Token();
       UserService.token.tokeType = 'type123';

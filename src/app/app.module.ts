@@ -22,6 +22,8 @@ import { ShareService } from './services/share.service';
 import { SharedService } from './services/shared.service';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
+import { TradeService } from './services/trade.service';
+import { TickerService } from './services/ticker.service';
 import { ServiceAccessService } from './services/service-access.service';
 import { MessageService } from './services/message.service';
 import { StockNavComponent } from './stock/stock-nav/stock-nav.component';

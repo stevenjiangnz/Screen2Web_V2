@@ -5,6 +5,10 @@
 
 const settings = {
   apiBaseUrl: 'http://localhost:8002/api',
+  general: {
+    stockWindow: 6000,
+    zone: 'current',
+  },
   indicatorSettings: {
     'sma5': {
       'parameter': 'sma,5',
