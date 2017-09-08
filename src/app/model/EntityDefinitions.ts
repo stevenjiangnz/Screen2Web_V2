@@ -46,10 +46,10 @@ export class Token {
 }
 
 export class Zone {
-    id: number;
-    name: string;
-    isCurrent: boolean;
-    tradingDate: number;
-    startDate: number;
-    endDate?: number;
+    public id: number;
+    public name: string;
+    public isCurrent: boolean;
+    public tradingDate: number;
+    public startDate: number;
+    public endDate?: number;
 }

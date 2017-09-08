@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import * as _ from 'underscore';
+import { ObjHelper } from '../utils/obj-helper';
 import { StorageKey } from '../global/enums';
 import { BaseService } from './baseService';
 import { UserService } from './user.service';
@@ -37,5 +38,20 @@ export class ShareService extends BaseService {
     }
 
     return shares;
+  }
+
+  public getStockDateRange(tradingDate?: number): any {
+    let endDate: number;
+    let startDate: number;
+
+    if (tradingDate) {
+      endDate = tradingDate;
+    } else {
+      endDate = ObjHelper.dateToInt(new Date());
+    }
+
+    startDate = endDate - this.settings.general.stockWindow;
+
+    return {start: startDate, end: endDate};
   }
 }

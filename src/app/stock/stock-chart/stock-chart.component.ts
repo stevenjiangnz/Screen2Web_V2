@@ -3,6 +3,8 @@ import { Logger } from 'angular2-logger/core';
 import { HttpModule, Http } from '@angular/http';
 import { ShareService } from '../../services/share.service';
 import { SharedService } from '../../services/shared.service';
+import { TickerService } from '../../services/ticker.service';
+import { TradeService } from '../../services/trade.service';
 
 @Component({
   selector: 'app-stock-chart',
@@ -42,7 +44,9 @@ export class StockChartComponent implements OnInit, DoCheck {
   };
   differ: any;
   
-  constructor(private _logger: Logger, private _sharedService: SharedService, private http: Http, private differs: KeyValueDiffers) {
+  constructor(private _logger: Logger, private _sharedService: SharedService, private _tradeService: TradeService,
+    private _shareService: ShareService, private _tickerService: TickerService,
+    private http: Http, private differs: KeyValueDiffers) {
     //   http.get('https://cdn.rawgit.com/gevgeny/angular2-highcharts/99c6324d/examples/aapl.json').subscribe(res => {
     //     this.options = {
     //         title : { text : 'AAPL Stock Price' },   
@@ -69,12 +73,20 @@ export class StockChartComponent implements OnInit, DoCheck {
 
     if (changes) {
       console.log('change here...');
-      console.log(this.getChartSettingInputString());
+
+      const indicatorString = this.getChartSettingInputString();
+      this.getDateRange();
+
+      this._tickerService.getTickers(1585, 20110721, 20170721, indicatorString)
       // console.log('changes detected');
       // changes.forEachChangedItem(r => console.log('changed ', r.currentValue));
       // changes.forEachAddedItem(r => console.log('added ' + r.currentValue));
       // changes.forEachRemovedItem(r => console.log('removed ' + r.currentValue));
     } 
+  }
+
+  public getDateRange() {
+    console.log(this._shareService.getStockDateRange());
   }
 
   private getColorStyle(name: string) {

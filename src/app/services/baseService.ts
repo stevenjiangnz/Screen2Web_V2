@@ -10,10 +10,12 @@ import { LocalStoreHelper } from '../utils/local-store-helper';
 
 export class BaseService {
     public baseUrl: string;
+    public settings: any;
     public token: Token;
 
     constructor(public http: Http) {
-        this.baseUrl =  new SharedService().getSettings().apiBaseUrl;
+        this.settings = new SharedService().getSettings();
+        this.baseUrl = this.settings.apiBaseUrl;
     }
 
     handleError(error: any) {

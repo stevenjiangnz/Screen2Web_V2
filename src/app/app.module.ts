@@ -70,6 +70,8 @@ export function highchartsFactory() {
     UserService,
     MessageService,
     ToasterService,
+    TradeService,
+    TickerService,
     { provide: Options, useValue: { store: false, level: Level.DEBUG } },
     Logger,
     {
