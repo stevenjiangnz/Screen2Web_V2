@@ -11,7 +11,7 @@ import { Logger, Options, Level } from 'angular2-logger/core';
 import { ChartModule } from 'angular2-highcharts';
 import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
-
+import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { AppComponent } from './app.component';
 import { LoginCompComponent } from './login-comp/login-comp.component';
 import { StockListComponent } from './stock/stock-list.component';
@@ -26,6 +26,7 @@ import { TradeService } from './services/trade.service';
 import { TickerService } from './services/ticker.service';
 import { ServiceAccessService } from './services/service-access.service';
 import { MessageService } from './services/message.service';
+import { UtilityService } from './services/utility.service';
 import { StockNavComponent } from './stock/stock-nav/stock-nav.component';
 import { StockChartComponent } from './stock/stock-chart/stock-chart.component';
 
@@ -60,6 +61,7 @@ export function highchartsFactory() {
     TreeModule,
     ToasterModule,
     ChartModule,
+    SlimLoadingBarModule.forRoot()
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [StockService,
@@ -72,6 +74,7 @@ export function highchartsFactory() {
     ToasterService,
     TradeService,
     TickerService,
+    UtilityService,
     { provide: Options, useValue: { store: false, level: Level.DEBUG } },
     Logger,
     {

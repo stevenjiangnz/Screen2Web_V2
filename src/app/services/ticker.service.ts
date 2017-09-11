@@ -12,18 +12,17 @@ export class TickerService extends BaseService {
     super(http);
    }
 
-  async getTickers(shareId, start, end, indicators): Promise<any[]> {
-    const tickers = new Array<any>();
+  async getTickers(shareId, start, end, indicators): Promise<any> {
+    let indicatorData; 
     const queryString = `?id=${shareId}&start=${start}&end=${end}&indicator=${indicators}`;
     await this._userService.ensureLogin().then(async (token) => {
       const opt = super.getOptions(token);
       const resPromise = await this.http.get(this.baseUrl + '/ticker' + queryString, opt).toPromise().then((data) => {
         const resObject = data.json();
-
-        console.log(resObject);
+        indicatorData = resObject;
       });
     });
-    return tickers;
+    return indicatorData;
   }
 
 }
