@@ -248,14 +248,11 @@ function setChartOptions() {
         contrastTextColor: '#F0F0F3',
         maskColor: 'rgba(255,255,255,0.3)'
     };
-
-    console.log('aboout to see highchart options');
-    // Apply the theme
-    Highcharts.setOptions(Highcharts.theme);
 }
 
 export function highchartsFactory() {
     const hc = require('highcharts/highstock');
+    // apply theme
     hc.setOptions(Highcharts.theme);
     const dd = require('highcharts/modules/exporting');
     dd(hc);

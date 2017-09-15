@@ -60,9 +60,10 @@ export class StockChartComponent implements OnInit, DoCheck {
     'flagType': null,
     'flags': null,
     'flagShareId': null,
-    'height': 1700,
+    'height': 700,
     'title': ''
   };
+
   differ: any;
 
   constructor(private _logger: Logger, private _sharedService: SharedService, private _tradeService: TradeService,
@@ -73,7 +74,6 @@ export class StockChartComponent implements OnInit, DoCheck {
 
   ngOnInit() {
     this.indicatorSettings = this._sharedService.getSettings().indicatorSettings;
-    console.log('indicator settings: ', this.indicatorSettings);
   }
 
   ngDoCheck() {
@@ -85,11 +85,13 @@ export class StockChartComponent implements OnInit, DoCheck {
   }
 
   public onPriceTypeChange(target) {
-    // this.displayChart();
+    this.displayChart();
   }
 
   public saveChartInstance(chartInstance) {
     this.chart = chartInstance;
+
+    console.log('chart: ', this.chart);
   }
 
   public displayChart() {
@@ -97,25 +99,27 @@ export class StockChartComponent implements OnInit, DoCheck {
     const indicatorString = this.getChartSettingInputString();
     const dateRange = this._shareService.getStockDateRange(null);
 
-    // this._tickerService.getTickers(1585, dateRange.start, dateRange.end, indicatorString).then((data) => {
-    //   this.tickers = data.tickerList;
-    //   this.prepareData(data.tickerList);
-    //   this.displayChartBase(data.indicators);
-    //   this.displayChartTickers();
-    // });
+    this._tickerService.getTickers(1585, dateRange.start, dateRange.end, indicatorString).then((data) => {
+      this.tickers = data.tickerList;
+      this.prepareData(data.tickerList);
+      this.displayChartBase(data.indicators);
 
-    this.http.get('https://cdn.rawgit.com/gevgeny/angular2-highcharts/99c6324d/examples/aapl.json').subscribe(res => {
-      this.options = {
-        title: { text: 'AAPL Stock Price' },
-        series: [{
-          name: 'AAPL',
-          data: res.json(),
-          tooltip: {
-            valueDecimals: 2
-          }
-        }]
-      };
+      setTimeout(() => {
+        this.displayChartTickers();
+      }, 10);
     });
+    // this.http.get('https://cdn.rawgit.com/gevgeny/angular2-highcharts/99c6324d/examples/aapl.json').subscribe(res => {
+    //   this.options = {
+    //     title: { text: 'AAPL Stock Price' },
+    //     series: [{
+    //       name: 'AAPL',
+    //       data: res.json(),
+    //       tooltip: {
+    //         valueDecimals: 2
+    //       }
+    //     }]
+    //   };
+    // });
   }
 
   private initChartOption() {
@@ -227,7 +231,6 @@ export class StockChartComponent implements OnInit, DoCheck {
         data[i].high
       ]);
     }
-
   }
 
   private displayChartBase(indicators) {
@@ -244,139 +247,139 @@ export class StockChartComponent implements OnInit, DoCheck {
       if (setting && setting.ownPane) {
 
         const indicatorName = setting.parameter.split(',')[0];
-          switch (indicatorName) {
-              case 'rsi':
-                  this.chartOptions.yAxis.push({
-                      id: 'RSI',
-                      title: {
-                          text: 'RSI'
-                      },
-                      min: 0,
-                      max: 100,
-                      plotLines: [{
-                          value: 30,
-                          color: plotColor,
-                          dashStyle: 'shortdash',
-                          width: 1
-                      }, {
-                          value: 70,
-                          color: plotColor,
-                          dashStyle: 'shortdash',
-                          width: 1
-                      }],
-                      lineWidth: 1,
-                      top: base + gap,
-                      height: setting.height
-                  });
+        switch (indicatorName) {
+          case 'rsi':
+            this.chartOptions.yAxis.push({
+              id: 'RSI',
+              title: {
+                text: 'RSI'
+              },
+              min: 0,
+              max: 100,
+              plotLines: [{
+                value: 30,
+                color: plotColor,
+                dashStyle: 'shortdash',
+                width: 1
+              }, {
+                value: 70,
+                color: plotColor,
+                dashStyle: 'shortdash',
+                width: 1
+              }],
+              lineWidth: 1,
+              top: base + gap,
+              height: setting.height
+            });
 
-                  this.chartOptions.height = base + gap + setting.height;
+            this.chartOptions.height = base + gap + setting.height;
 
-                  base = this.chartOptions.height;
-                  break;
-              case 'adx':
-                  if (!this.getChartOptionyAxisbyId('ADX')) {
-                      this.chartOptions.yAxis.push({
-                          id: 'ADX',
-                          title: {
-                              text: 'ADX'
-                          },
-                          lineWidth: 1,
-                          top: base + gap,
-                          height: setting.height
-                      });
-                      this.chartOptions.height = base + gap + setting.height;
-                      base = this.chartOptions.height;
-                  }
-                  break;
-              case 'macd':
-                  if (!this.getChartOptionyAxisbyId('MACD')) {
-                      this.chartOptions.yAxis.push({
-                          id: 'MACD',
-                          title: {
-                              text: 'MACD'
-                          },
-                          lineWidth: 1,
-                          top: base + gap,
-                          height: setting.height
-                      });
-                      this.chartOptions.height = base + gap + setting.height;
-                      base = this.chartOptions.height;
-                  }
-                  break;
-              case 'heikin':
-                  if (!this.getChartOptionyAxisbyId('HEIKIN')) {
-                      this.chartOptions.yAxis.push({
-                          id: 'HEIKIN',
-                          title: {
-                              text: 'HEIKIN'
-                          },
-                          lineWidth: 1,
-                          top: base + gap,
-                          height: setting.height
-                      });
-                      this.chartOptions.height = base + gap + setting.height;
-                      base = this.chartOptions.height;
-                  }
-                  break;
-              case 'stochastic':
-                  if (!this.getChartOptionyAxisbyId('STOCHASTIC')) {
-                      this.chartOptions.yAxis.push({
-                          id: 'STOCHASTIC',
-                          title: {
-                              text: 'STOCHASTIC'
-                          },
-                          lineWidth: 1,
-                          min: 0,
-                          max: 100,
-                          top: base + gap,
-                          height: setting.height,
-                          plotLines: [{
-                              value: 20,
-                              color: plotColor,
-                              dashStyle: 'shortdash',
-                              width: 1
-                          }, {
-                              value: 80,
-                              color: plotColor,
-                              dashStyle: 'shortdash',
-                              width: 1
-                          }]
-                      });
-                      this.chartOptions.height = base + gap + setting.height;
-                      base = this.chartOptions.height;
-                  }
-                  break;
-              case 'william':
-                  if (!this.getChartOptionyAxisbyId('WILLIAM')) {
-                      this.chartOptions.yAxis.push({
-                          id: 'WILLIAM',
-                          title: {
-                              text: 'WILLIAM'
-                          },
-                          lineWidth: 1,
-                          min: -100,
-                          max: 0,
-                          top: base + gap,
-                          height: setting.height,
-                          plotLines: [{
-                              value: setting.threshold1,
-                              color: plotColor,
-                              dashStyle: 'shortdash',
-                              width: 1
-                          }, {
-                              value: setting.threshold2,
-                              color: plotColor,
-                              dashStyle: 'shortdash',
-                              width: 1
-                          }]
-                      });
-                      this.chartOptions.height = base + gap + setting.height;
-                      base = this.chartOptions.height;
-                  }
-                  break;
-              default:
-                  break;
-          }
+            base = this.chartOptions.height;
+            break;
+          case 'adx':
+            if (!this.getChartOptionyAxisbyId('ADX')) {
+              this.chartOptions.yAxis.push({
+                id: 'ADX',
+                title: {
+                  text: 'ADX'
+                },
+                lineWidth: 1,
+                top: base + gap,
+                height: setting.height
+              });
+              this.chartOptions.height = base + gap + setting.height;
+              base = this.chartOptions.height;
+            }
+            break;
+          case 'macd':
+            if (!this.getChartOptionyAxisbyId('MACD')) {
+              this.chartOptions.yAxis.push({
+                id: 'MACD',
+                title: {
+                  text: 'MACD'
+                },
+                lineWidth: 1,
+                top: base + gap,
+                height: setting.height
+              });
+              this.chartOptions.height = base + gap + setting.height;
+              base = this.chartOptions.height;
+            }
+            break;
+          case 'heikin':
+            if (!this.getChartOptionyAxisbyId('HEIKIN')) {
+              this.chartOptions.yAxis.push({
+                id: 'HEIKIN',
+                title: {
+                  text: 'HEIKIN'
+                },
+                lineWidth: 1,
+                top: base + gap,
+                height: setting.height
+              });
+              this.chartOptions.height = base + gap + setting.height;
+              base = this.chartOptions.height;
+            }
+            break;
+          case 'stochastic':
+            if (!this.getChartOptionyAxisbyId('STOCHASTIC')) {
+              this.chartOptions.yAxis.push({
+                id: 'STOCHASTIC',
+                title: {
+                  text: 'STOCHASTIC'
+                },
+                lineWidth: 1,
+                min: 0,
+                max: 100,
+                top: base + gap,
+                height: setting.height,
+                plotLines: [{
+                  value: 20,
+                  color: plotColor,
+                  dashStyle: 'shortdash',
+                  width: 1
+                }, {
+                  value: 80,
+                  color: plotColor,
+                  dashStyle: 'shortdash',
+                  width: 1
+                }]
+              });
+              this.chartOptions.height = base + gap + setting.height;
+              base = this.chartOptions.height;
+            }
+            break;
+          case 'william':
+            if (!this.getChartOptionyAxisbyId('WILLIAM')) {
+              this.chartOptions.yAxis.push({
+                id: 'WILLIAM',
+                title: {
+                  text: 'WILLIAM'
+                },
+                lineWidth: 1,
+                min: -100,
+                max: 0,
+                top: base + gap,
+                height: setting.height,
+                plotLines: [{
+                  value: setting.threshold1,
+                  color: plotColor,
+                  dashStyle: 'shortdash',
+                  width: 1
+                }, {
+                  value: setting.threshold2,
+                  color: plotColor,
+                  dashStyle: 'shortdash',
+                  width: 1
+                }]
+              });
+              this.chartOptions.height = base + gap + setting.height;
+              base = this.chartOptions.height;
+            }
+            break;
+          default:
+            break;
+        }
       }
     }
 
@@ -388,48 +391,37 @@ export class StockChartComponent implements OnInit, DoCheck {
 
   private displayChartTickers() {
     const color = this.getColorStyle('ema20');
-    console.log('ema20 color ', color);
     if (this.setting.priceType === 'OCHL') {
-      console.log('about to display OCHL');
+      this.addChartIndicatorSeries('candlestick', 'OCHL', this.ohlc, null, 0);
     } else {
-      console.log('about to display line');
+      this.addChartIndicatorSeries('line', 'Line', this.close, color, 0);
     }
-
-        // // add base price
-        // if ($scope.setting.priceType === "OCHL") {
-        //     addChartIndicatorSeries('candlestick', 'OCHL', ohlc, null, 0);
-        // }
-        // else {
-        //     color = indicatorService.getIndicatorColorByName("closemain");
-        //     addChartIndicatorSeries('line', 'Line', close, color, 0);
-        // }
-        // displayIndicators(indicators);
   }
 
   private addChartIndicatorSeries(type, name, data, color, yAxis) {
-    // $scope.chart.addSeries(
-    //     {
-    //         type: type,
-    //         name: name,
-    //         data: data,
-    //         yAxis: yAxis,
-    //         color: color,
-    //         lineWidth: 1,
-    //         cursor: 'pointer',
-    //         // events: {
-    //         //     click: function (event) {
-    //         //         var tick = parseInt(event.point.category)
+    this.chart.addSeries(
+      {
+        type: type,
+        name: name,
+        data: data,
+        yAxis: yAxis,
+        color: color,
+        lineWidth: 1,
+        cursor: 'pointer',
+        // events: {
+        //     click: function (event) {
+        //         var tick = parseInt(event.point.category)
 
-    //         //         var intDate = utilService.dateToInt(new Date(tick));
+        //         var intDate = utilService.dateToInt(new Date(tick));
 
-    //         //         $scope.$emit('chartIndicatorSelected',
-    //         //             {
-    //         //                 'shareId': shareId,
-    //         //                 'tradingDate' : intDate
-    //         //             });
-    //         //     }
-    //         // }
-    //     });
+        //         $scope.$emit('chartIndicatorSelected',
+        //             {
+        //                 'shareId': shareId,
+        //                 'tradingDate' : intDate
+        //             });
+        //     }
+        // }
+      });
   }
 
 
@@ -437,10 +429,10 @@ export class StockChartComponent implements OnInit, DoCheck {
     let y = null;
 
     for (let i = 0; i < this.chartOptions.yAxis.length; i++) {
-        if (this.chartOptions.yAxis[i].id === id) {
-            y = this.chartOptions.yAxis[i];
-            break;
-        }
+      if (this.chartOptions.yAxis[i].id === id) {
+        y = this.chartOptions.yAxis[i];
+        break;
+      }
     }
     return y;
   }
