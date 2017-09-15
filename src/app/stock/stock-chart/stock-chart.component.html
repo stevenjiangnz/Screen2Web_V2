@@ -5,9 +5,9 @@
             <div class="pull-right">
             <span class="price-type">
                 <label class="radio-inline">
-                    <input type="radio" name="priceType" [(ngModel)]="setting.priceType" value="OCHL">OCHL</label>
+                    <input type="radio" name="priceType" [(ngModel)]="setting.priceType" value="OCHL" (change)="onPriceTypeChange($event.target)">OCHL</label>
                 <label class="radio-inline">
-                    <input type="radio" name="priceType" [(ngModel)]="setting.priceType" value="Line">Line</label>
+                    <input type="radio" name="priceType" [(ngModel)]="setting.priceType" value="Line"  (change)="onPriceTypeChange($event.target)">Line</label>
             </span>
                 <i class="fa fa-area-chart" (click)="setting.switch.sma5 = !setting.switch.sma5"
                    [ngStyle]="getColorStyle('sma5')">
@@ -71,6 +71,6 @@
         </div>
     </div>
     <div class="row chart-panel">
-        <chart type="StockChart" [options]="options"></chart>
+        <chart id="chart-container" type="StockChart" [options]="options" (load)="saveChartInstance($event.context)"></chart>
     </div>
 </div>

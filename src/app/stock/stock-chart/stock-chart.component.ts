@@ -14,6 +14,7 @@ import { UtilityService } from '../../services/utility.service';
 })
 
 export class StockChartComponent implements OnInit, DoCheck {
+  private chart;
   private indicatorSettings;
   private options: Object;
   private chartOptions; // used as stage
@@ -59,7 +60,7 @@ export class StockChartComponent implements OnInit, DoCheck {
     'flagType': null,
     'flags': null,
     'flagShareId': null,
-    'height': 700,
+    'height': 1700,
     'title': ''
   };
   differ: any;
@@ -76,15 +77,19 @@ export class StockChartComponent implements OnInit, DoCheck {
   }
 
   ngDoCheck() {
-    const changes = this.differ.diff(this.setting.switch);
+    const changeSwitch = this.differ.diff(this.setting.switch);
 
-    if (changes) {
+    if (changeSwitch) {
       this.displayChart();
-      // console.log('changes detected');
-      // changes.forEachChangedItem(r => console.log('changed ', r.currentValue));
-      // changes.forEachAddedItem(r => console.log('added ' + r.currentValue));
-      // changes.forEachRemovedItem(r => console.log('removed ' + r.currentValue));
     }
+  }
+
+  public onPriceTypeChange(target) {
+    // this.displayChart();
+  }
+
+  public saveChartInstance(chartInstance) {
+    this.chart = chartInstance;
   }
 
   public displayChart() {
@@ -92,11 +97,12 @@ export class StockChartComponent implements OnInit, DoCheck {
     const indicatorString = this.getChartSettingInputString();
     const dateRange = this._shareService.getStockDateRange(null);
 
-    this._tickerService.getTickers(1585, dateRange.start, dateRange.end, indicatorString).then((data) => {
-      this.tickers = data.tickerList;
-      this.prepareData(data.tickerList);
-      this.displayChartBase(data.indicators);
-    });
+    // this._tickerService.getTickers(1585, dateRange.start, dateRange.end, indicatorString).then((data) => {
+    //   this.tickers = data.tickerList;
+    //   this.prepareData(data.tickerList);
+    //   this.displayChartBase(data.indicators);
+    //   this.displayChartTickers();
+    // });
 
     this.http.get('https://cdn.rawgit.com/gevgeny/angular2-highcharts/99c6324d/examples/aapl.json').subscribe(res => {
       this.options = {
@@ -110,7 +116,6 @@ export class StockChartComponent implements OnInit, DoCheck {
         }]
       };
     });
-
   }
 
   private initChartOption() {
@@ -233,12 +238,9 @@ export class StockChartComponent implements OnInit, DoCheck {
     const bottom = 20;
     const plotColor = '#bbb';
 
-    console.log(indicators);
     // tslint:disable-next-line:forin
     for (const k in indicators) {
-      console.log(k);
       const setting = this.getIndicatorSettingByParameter(k);
-      console.log(setting);
       if (setting && setting.ownPane) {
 
         const indicatorName = setting.parameter.split(',')[0];
@@ -380,9 +382,56 @@ export class StockChartComponent implements OnInit, DoCheck {
 
     this.chartOptions.height = this.chartOptions.height + bottom;
 
-    // going to 
+    this.options = this.chartOptions;
     // $scope.chartOptions = chartOptions;
   }
+
+  private displayChartTickers() {
+    const color = this.getColorStyle('ema20');
+    console.log('ema20 color ', color);
+    if (this.setting.priceType === 'OCHL') {
+      console.log('about to display OCHL');
+    } else {
+      console.log('about to display line');
+    }
+
+        // // add base price
+        // if ($scope.setting.priceType === "OCHL") {
+        //     addChartIndicatorSeries('candlestick', 'OCHL', ohlc, null, 0);
+        // }
+        // else {
+        //     color = indicatorService.getIndicatorColorByName("closemain");
+        //     addChartIndicatorSeries('line', 'Line', close, color, 0);
+        // }
+        // displayIndicators(indicators);
+  }
+
+  private addChartIndicatorSeries(type, name, data, color, yAxis) {
+    // $scope.chart.addSeries(
+    //     {
+    //         type: type,
+    //         name: name,
+    //         data: data,
+    //         yAxis: yAxis,
+    //         color: color,
+    //         lineWidth: 1,
+    //         cursor: 'pointer',
+    //         // events: {
+    //         //     click: function (event) {
+    //         //         var tick = parseInt(event.point.category)
+
+    //         //         var intDate = utilService.dateToInt(new Date(tick));
+
+    //         //         $scope.$emit('chartIndicatorSelected',
+    //         //             {
+    //         //                 'shareId': shareId,
+    //         //                 'tradingDate' : intDate
+    //         //             });
+    //         //     }
+    //         // }
+    //     });
+  }
+
 
   private getChartOptionyAxisbyId(id) {
     let y = null;
@@ -428,7 +477,7 @@ export class StockChartComponent implements OnInit, DoCheck {
 
   private getChartSettingInputString() {
     let indicatorString = '';
-    for (let k in this.setting.switch) {
+    for (const k in this.setting.switch) {
       if (this.setting.switch[k]) {
         if (indicatorString.length === 0) {
           indicatorString = this.indicatorSettings[k].parameter;
