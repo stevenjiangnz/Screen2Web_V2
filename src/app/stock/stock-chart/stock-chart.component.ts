@@ -28,6 +28,7 @@ export class StockChartComponent implements OnInit, DoCheck {
   private high_heikinList = [];
   private low_heikinList = [];
   private close_heikinList = [];
+  private chartHeight = '470px';
 
   private groupingUnits = [[
     'week',                         // unit name
@@ -90,8 +91,6 @@ export class StockChartComponent implements OnInit, DoCheck {
 
   public saveChartInstance(chartInstance) {
     this.chart = chartInstance;
-
-    console.log('chart: ', this.chart);
   }
 
   public displayChart() {
