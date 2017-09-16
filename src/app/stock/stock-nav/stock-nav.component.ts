@@ -16,9 +16,10 @@ import { TREE_ACTIONS, KEYS, IActionMapping, TreeNode } from 'angular-tree-compo
 })
 export class StockNavComponent implements OnInit {
   private searchUpdated: Subject<string> = new Subject<string>();
-  private treeInstance: any;
+  private treeModel: any;
 
   nodes = null;
+  treeState = null;
 
   actionMapping: IActionMapping = {
     mouse: {
@@ -39,7 +40,6 @@ export class StockNavComponent implements OnInit {
   constructor(private shareService: ShareService, private messageService: MessageService, private toasterService: ToasterService) { }
 
   private onSearchType(value: string, tree: any) {
-    this.treeInstance = tree;
     this.searchUpdated.next(value); // Emit the event to all listeners that signed up - we will sign up in our contractor
   }
 
@@ -50,6 +50,10 @@ export class StockNavComponent implements OnInit {
     this.getShareList();
   }
 
+  private onTreeInitialized(event) {
+    this.treeModel = event.treeModel;
+    this.applyTreeState();
+  }
   onEvent(event) {
     if (event.eventName === 'activate') {
       const node = event.node;
@@ -63,10 +67,9 @@ export class StockNavComponent implements OnInit {
 
   filterTree(searchText: string) {
     if (searchText === '') {
-      this.treeInstance.treeModel.clearFilter();
-      this.treeInstance.treeModel.collapseAll();
+      this.treeModel.clearFilter();
     } else {
-      this.treeInstance.treeModel.filterNodes((node: TreeNode) => {
+      this.treeModel.filterNodes((node: TreeNode) => {
         let isMatch = false;
         if (node.data.name.toUpperCase().indexOf(searchText.toUpperCase()) >= 0 ||
           (node.data.description && node.data.description.toUpperCase().indexOf(searchText.toUpperCase()) >= 0) ) {
@@ -78,6 +81,10 @@ export class StockNavComponent implements OnInit {
     }
   }
 
+  private setState(state) {
+    localStorage.treeState = JSON.stringify(state);
+  }
+
   private getShareList() {
     this.shareService.getShareList().then((shareList) => {
       const treeObj = this.buildTreeObj(shareList);
@@ -85,12 +92,37 @@ export class StockNavComponent implements OnInit {
     });
   }
 
+  private applyTreeState() {
+    const state = localStorage.treeState && JSON.parse(localStorage.treeState);
+    // tslint:disable-next-line:forin
+    for (const id in state.expandedNodeIds) {
+      if(state.expandedNodeIds[id]) {
+        const node =  this.treeModel.getNodeById(id.toString());
+        if (node) {
+          node.expand();
+        }
+      }
+    }
+
+    for (const id in state.activeNodeIds) {
+      if(state.activeNodeIds[id]) {
+        const node =  this.treeModel.getNodeById(id.toString());
+        if (node) {
+          node.setActiveAndVisible();
+        }
+      }
+    }
+
+  }
+
   private buildTreeObj(shareList: Share[]): any {
     const nodes = [{
+      id: 'Stock',
       name: 'Stock',
       children: this.shareListToTreeObj(shareList, 'Stock', 'sector')
     },
     {
+      id: 'ETF',
       name: 'ETF',
       children: this.shareListToTreeObj(shareList, 'ETF', 'industry')
     },
@@ -110,10 +142,10 @@ export class StockNavComponent implements OnInit {
       const sectorShares = new Array();
 
       _.each(groupShares[prop], (share) => {
-        sectorShares.push({ id: share.id, name: share.symbol, description: share.name });
+        sectorShares.push({ id: share.id.toString(), name: share.symbol, description: share.name });
       });
 
-      nodes.push({ name: prop, children: _.sortBy(sectorShares, 'name') });
+      nodes.push({id:prop, name: prop, children: _.sortBy(sectorShares, 'name') });
     }
 
     return _.sortBy(nodes, 'name');
