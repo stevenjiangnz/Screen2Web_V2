@@ -41,7 +41,7 @@ export class StockChartComponent implements OnInit, DoCheck {
     'shareId': null,
     'switch': {
       'ema20': true,
-      'sma5': true,
+      'sma5': false,
       'sma10': true,
       'sma50': true,
       'sma200': true,
@@ -108,18 +108,6 @@ export class StockChartComponent implements OnInit, DoCheck {
         this.displayIndicators(data.indicators);
       }, 10);
     });
-    // this.http.get('https://cdn.rawgit.com/gevgeny/angular2-highcharts/99c6324d/examples/aapl.json').subscribe(res => {
-    //   this.options = {
-    //     title: { text: 'AAPL Stock Price' },
-    //     series: [{
-    //       name: 'AAPL',
-    //       data: res.json(),
-    //       tooltip: {
-    //         valueDecimals: 2
-    //       }
-    //     }]
-    //   };
-    // });
   }
 
   private initChartOption() {
@@ -400,21 +388,127 @@ export class StockChartComponent implements OnInit, DoCheck {
     // tslint:disable-next-line:forin
     for (let k in indicators) {
 
-        const setting = this.getIndicatorSettingByParameter(k);
+      const setting = this.getIndicatorSettingByParameter(k);
 
-        if (setting && (!setting.ownPane)) {
-            console.log('about to display indit ', k);
-            this.displayIndicatorChart(k, indicators[k]);
-        } else {
-          console.log('about to display indit panel ', k);
-          // displayIndicatorChartPane(k, indicators[k], setting);
-        }
+      if (setting && (!setting.ownPane)) {
+        console.log('about to display indit ', k);
+        this.displayIndicatorChart(k, indicators[k]);
+      } else {
+        console.log('about to display indit panel ', k);
+        this.displayIndicatorChartPane(k, indicators[k], setting);
+      }
     }
   }
 
   private displayIndicatorChart(name, indicatorData) {
     const data = [];
     let color;
+    for (let i = 0; i < indicatorData.length; i++) {
+      data.push(
+        [
+          this.ohlc[i][0], // the date
+          indicatorData[i]
+        ]
+      );
+    }
+
+    color = this.getIndicatorSettingByParameter(name).color;
+    this.addChartIndicatorSeries('line', name, data, color, 0);
+  }
+
+  private displayIndicator_RSI(name, indicatorData, color) {
+    const data = [];
+    let yAxisIndex;
+
+    for (let i = 0; i < this.chart.yAxis.length; i++) {
+      const y = this.getyAxisByID('RSI');
+      if (y) {
+        yAxisIndex = y.options.index;
+      }
+    }
+    for (let i = 0; i < indicatorData.length; i++) {
+      data.push(
+        [
+          this.ohlc[i][0], // the date
+          indicatorData[i]
+        ]
+      );
+    }
+
+    this.addChartIndicatorSeries('line', name, data, color, yAxisIndex);
+  }
+
+  private displayIndicator_ADX(name, indicatorData, color) {
+    const data = [];
+    let yAxisIndex;
+
+    for (let i = 0; i < this.chart.yAxis.length; i++) {
+      let y = this.getyAxisByID('ADX');
+      if (y) {
+        yAxisIndex = y.options.index;
+      }
+    }
+    for (let i = 0; i < indicatorData.length; i++) {
+      data.push(
+        [
+          this.ohlc[i][0], // the date
+          indicatorData[i]
+        ]
+      );
+    }
+
+    this.addChartIndicatorSeries('line', name, data, color, yAxisIndex);
+  }
+
+  private displayIndicator_MACD(name, indicatorData, color) {
+    const data = [];
+    let yAxisIndex;
+
+    for (let i = 0; i < this.chart.yAxis.length; i++) {
+      const y = this.getyAxisByID('MACD');
+      if (y) {
+        yAxisIndex = y.options.index;
+      }
+    }
+    for (let i = 0; i < indicatorData.length; i++) {
+      data.push(
+        [
+          this.ohlc[i][0], // the date
+          indicatorData[i]
+        ]
+      );
+    }
+
+    if (name.indexOf('hist') >= 0) {
+      this.addChartIndicatorSeries('column', name, data, color, yAxisIndex);
+    } else {
+      this.addChartIndicatorSeries('line', name, data, color, yAxisIndex);
+    }
+  }
+
+  private displayIndicator_HEIKIN(name, indicatorData) {
+    let yAxisIndex;
+
+    for (let i = 0; i < this.chart.yAxis.length; i++) {
+      const y = this.getyAxisByID('HEIKIN');
+      if (y) {
+        yAxisIndex = y.options.index;
+      }
+    }
+
+    this.addChartIndicatorSeries('candlestick', name, indicatorData, null, yAxisIndex);
+  }
+
+  private displayIndicator_STOCHASTIC(name, indicatorData, color) {
+    const data = [];
+    let yAxisIndex;
+
+    for (let i = 0; i < this.chart.yAxis.length; i++) {
+        const y = this.getyAxisByID('STOCHASTIC');
+        if (y) {
+            yAxisIndex = y.options.index;
+        }
+    }
     for (let i = 0; i < indicatorData.length; i++) {
         data.push(
             [
@@ -424,10 +518,105 @@ export class StockChartComponent implements OnInit, DoCheck {
         );
     }
 
-    color = this.getIndicatorSettingByParameter(name).color;
-
-    this.addChartIndicatorSeries('line', name, data, color, 0);
+    this.addChartIndicatorSeries('line', name, data, color, yAxisIndex);
   }
+
+  private displayIndicator_WILLIAM(name, indicatorData, color) {
+    const data = [];
+    let yAxisIndex;
+
+    for (let i = 0; i < this.chart.yAxis.length; i++) {
+        const y = this.getyAxisByID('WILLIAM');
+        if (y) {
+            yAxisIndex = y.options.index;
+        }
+    }
+    for (let i = 0; i < indicatorData.length; i++) {
+        data.push(
+            [
+                this.ohlc[i][0], // the date
+                indicatorData[i]
+            ]
+        );
+    }
+
+    this.addChartIndicatorSeries('line', name, data, color, yAxisIndex);
+}
+
+
+  private displayIndicatorChartPane(name, indicatorData, setting) {
+    const indicatorName = name.split(',')[0];
+
+    switch (indicatorName) {
+      case 'rsi':
+        const colorRsi = setting.colorRsi;
+        this.displayIndicator_RSI(name, indicatorData, colorRsi);
+        break;
+      case 'adx':
+        const colorAdx = setting.colorAdx;
+        this.displayIndicator_ADX(name, indicatorData, colorAdx);
+        break;
+      case 'adx_di+':
+        const colorPlus = setting.colorDiPlus;
+        this.displayIndicator_ADX(name, indicatorData, colorPlus);
+        break;
+      case 'adx_di-':
+        const colorMinus = setting.colorDiMinus;
+        this.displayIndicator_ADX(name, indicatorData, colorMinus);
+        break;
+      case 'macd':
+        const colorMacd = setting.colorMacd;
+        this.displayIndicator_MACD(name, indicatorData, colorMacd);
+        break;
+      case 'signal_macd':
+        const colorSignal = setting.colorSignal;
+        this.displayIndicator_MACD(name, indicatorData, colorSignal);
+        break;
+      case 'hist_macd':
+        const colorHist = setting.colorHist;
+        this.displayIndicator_MACD(name, indicatorData, colorHist);
+        break;
+      case 'open_heikin':
+        this.open_heikinList = indicatorData;
+        break;
+      case 'high_heikin':
+        this.high_heikinList = indicatorData;
+        break;
+      case 'low_heikin':
+        this.low_heikinList = indicatorData;
+        break;
+      case 'close_heikin':
+        this.close_heikinList = indicatorData;
+        const len = this.close_heikinList.length;
+        for (let i = 0; i < len; i++) {
+          this.heikinList.push([
+            this.ohlc[i][0],
+            this.open_heikinList[i],
+            this.high_heikinList[i],
+            this.low_heikinList[i],
+            this.close_heikinList[i]
+          ]);
+        }
+        this.displayIndicator_HEIKIN(name, this.heikinList);
+        break;
+      case 'stochastic':
+          let kdColor;
+          if (name.indexOf('_k') >= 0) {
+              kdColor = setting.colorK;
+          } else {
+              kdColor = setting.colorD;
+          }
+          this.displayIndicator_STOCHASTIC(name, indicatorData, kdColor);
+          break;
+      case 'william':
+          const colorW = setting.colorWilliam;
+          this.displayIndicator_WILLIAM(name, indicatorData, colorW);
+          break;
+      default:
+        break;
+    }
+  }
+
 
   private addChartIndicatorSeries(type, name, data, color, yAxis) {
     this.chart.addSeries(
@@ -440,19 +629,19 @@ export class StockChartComponent implements OnInit, DoCheck {
         lineWidth: 1,
         cursor: 'pointer',
         events: {
-            click: function (event) {
-                const tick = parseInt(event.point.category, 0);
+          click: function (event) {
+            const tick = parseInt(event.point.category, 0);
 
-                console.log(new Date(tick));
+            console.log(new Date(tick));
 
-                // var intDate = utilService.dateToInt(new Date(tick));
+            // var intDate = utilService.dateToInt(new Date(tick));
 
-                // $scope.$emit('chartIndicatorSelected',
-                //     {
-                //         'shareId': shareId,
-                //         'tradingDate' : intDate
-                //     });
-            }
+            // $scope.$emit('chartIndicatorSelected',
+            //     {
+            //         'shareId': shareId,
+            //         'tradingDate' : intDate
+            //     });
+          }
         }
       });
   }
@@ -469,7 +658,19 @@ export class StockChartComponent implements OnInit, DoCheck {
     }
     return y;
   }
+  private getyAxisByID(id) {
+    let y = null;
 
+    if (this.chart && this.chart.yAxis) {
+      for (let i = 0; i < this.chart.yAxis.length; i++) {
+        if (this.chart.yAxis[i].options.id === id) {
+          y = this.chart.yAxis[i];
+          break;
+        }
+      }
+    }
+    return y;
+  }
   private getIndicatorSettingByParameter(param) {
     let setting = null;
 
@@ -479,7 +680,6 @@ export class StockChartComponent implements OnInit, DoCheck {
       if (indicatorSettings[k].parameter &&
         param.indexOf(indicatorSettings[k].parameter) >= 0) {
         setting = indicatorSettings[k];
-        break;
       }
     }
 
@@ -510,7 +710,6 @@ export class StockChartComponent implements OnInit, DoCheck {
         }
       }
     }
-
     return indicatorString;
   }
 }
