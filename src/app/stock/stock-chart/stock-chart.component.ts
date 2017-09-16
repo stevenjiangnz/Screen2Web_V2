@@ -105,6 +105,7 @@ export class StockChartComponent implements OnInit, DoCheck {
       setTimeout(() => {
         this.chart.setSize(null, this.chart.userOptions.height);
         this.displayChartTickers();
+        this.displayIndicators(data.indicators);
       }, 10);
     });
     // this.http.get('https://cdn.rawgit.com/gevgeny/angular2-highcharts/99c6324d/examples/aapl.json').subscribe(res => {
@@ -387,12 +388,45 @@ export class StockChartComponent implements OnInit, DoCheck {
   }
 
   private displayChartTickers() {
-    const color = this.getColorStyle('ema20');
+    const color = this.getColorStyle('closemain');
     if (this.setting.priceType === 'OCHL') {
       this.addChartIndicatorSeries('candlestick', 'OCHL', this.ohlc, null, 0);
     } else {
-      this.addChartIndicatorSeries('line', 'Line', this.close, color, 0);
+      this.addChartIndicatorSeries('line', 'Line', this.close, color.color, 0);
     }
+  }
+
+  private displayIndicators(indicators) {
+    // tslint:disable-next-line:forin
+    for (let k in indicators) {
+
+        const setting = this.getIndicatorSettingByParameter(k);
+
+        if (setting && (!setting.ownPane)) {
+            console.log('about to display indit ', k);
+            this.displayIndicatorChart(k, indicators[k]);
+        } else {
+          console.log('about to display indit panel ', k);
+          // displayIndicatorChartPane(k, indicators[k], setting);
+        }
+    }
+  }
+
+  private displayIndicatorChart(name, indicatorData) {
+    const data = [];
+    let color;
+    for (let i = 0; i < indicatorData.length; i++) {
+        data.push(
+            [
+                this.ohlc[i][0], // the date
+                indicatorData[i]
+            ]
+        );
+    }
+
+    color = this.getIndicatorSettingByParameter(name).color;
+
+    this.addChartIndicatorSeries('line', name, data, color, 0);
   }
 
   private addChartIndicatorSeries(type, name, data, color, yAxis) {
@@ -405,19 +439,21 @@ export class StockChartComponent implements OnInit, DoCheck {
         color: color,
         lineWidth: 1,
         cursor: 'pointer',
-        // events: {
-        //     click: function (event) {
-        //         var tick = parseInt(event.point.category)
+        events: {
+            click: function (event) {
+                const tick = parseInt(event.point.category, 0);
 
-        //         var intDate = utilService.dateToInt(new Date(tick));
+                console.log(new Date(tick));
 
-        //         $scope.$emit('chartIndicatorSelected',
-        //             {
-        //                 'shareId': shareId,
-        //                 'tradingDate' : intDate
-        //             });
-        //     }
-        // }
+                // var intDate = utilService.dateToInt(new Date(tick));
+
+                // $scope.$emit('chartIndicatorSelected',
+                //     {
+                //         'shareId': shareId,
+                //         'tradingDate' : intDate
+                //     });
+            }
+        }
       });
   }
 
@@ -439,7 +475,7 @@ export class StockChartComponent implements OnInit, DoCheck {
 
     const indicatorSettings = this.indicatorSettings;
 
-    for (let k in indicatorSettings) {
+    for (const k in indicatorSettings) {
       if (indicatorSettings[k].parameter &&
         param.indexOf(indicatorSettings[k].parameter) >= 0) {
         setting = indicatorSettings[k];
@@ -448,7 +484,6 @@ export class StockChartComponent implements OnInit, DoCheck {
     }
 
     return setting;
-
   }
 
   private getColorStyle(name: string) {
