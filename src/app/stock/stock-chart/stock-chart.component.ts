@@ -28,7 +28,6 @@ export class StockChartComponent implements OnInit, DoCheck {
   private high_heikinList = [];
   private low_heikinList = [];
   private close_heikinList = [];
-  private chartHeight = '470px';
 
   private groupingUnits = [[
     'week',                         // unit name
@@ -104,6 +103,7 @@ export class StockChartComponent implements OnInit, DoCheck {
       this.displayChartBase(data.indicators);
 
       setTimeout(() => {
+        this.chart.setSize(null, this.chart.userOptions.height);
         this.displayChartTickers();
       }, 10);
     });
@@ -383,9 +383,7 @@ export class StockChartComponent implements OnInit, DoCheck {
     }
 
     this.chartOptions.height = this.chartOptions.height + bottom;
-
     this.options = this.chartOptions;
-    // $scope.chartOptions = chartOptions;
   }
 
   private displayChartTickers() {
