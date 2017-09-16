@@ -60,7 +60,7 @@ export class StockChartComponent implements OnInit, DoCheck {
     'flagType': null,
     'flags': null,
     'flagShareId': null,
-    'height': 700,
+    'height': 1330,
     'title': ''
   };
 
@@ -372,6 +372,8 @@ export class StockChartComponent implements OnInit, DoCheck {
     }
 
     this.chartOptions.height = this.chartOptions.height + bottom;
+    this.setting.height = this.chartOptions.height;
+    console.log(this.setting.height);
     this.options = this.chartOptions;
   }
 
@@ -386,15 +388,13 @@ export class StockChartComponent implements OnInit, DoCheck {
 
   private displayIndicators(indicators) {
     // tslint:disable-next-line:forin
-    for (let k in indicators) {
+    for (const k in indicators) {
 
       const setting = this.getIndicatorSettingByParameter(k);
 
       if (setting && (!setting.ownPane)) {
-        console.log('about to display indit ', k);
         this.displayIndicatorChart(k, indicators[k]);
       } else {
-        console.log('about to display indit panel ', k);
         this.displayIndicatorChartPane(k, indicators[k], setting);
       }
     }

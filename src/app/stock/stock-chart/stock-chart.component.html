@@ -71,6 +71,6 @@
         </div>
     </div>
     <div class="row chart-panel">
-        <chart id="chart-container" style="height:1310px" type="StockChart" [options]="options" (load)="saveChartInstance($event.context)"></chart>
+        <chart id="chart-container" [style.height.px]="setting.height" type="StockChart" [options]="options" (load)="saveChartInstance($event.context)"></chart>
     </div>
 </div>
