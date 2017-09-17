@@ -280,7 +280,7 @@ export function highchartsFactory() {
     routing,
     TreeModule,
     ToasterModule,
-    ChartModule.forRoot(Highcharts),
+    ChartModule,
     SlimLoadingBarModule.forRoot()
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

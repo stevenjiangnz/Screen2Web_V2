@@ -1,6 +1,8 @@
-import { Component, OnInit, DoCheck, KeyValueDiffers } from '@angular/core';
+import { Component, OnInit, DoCheck, KeyValueDiffers, OnDestroy } from '@angular/core';
 import { Logger } from 'angular2-logger/core';
+import { ISubscription } from 'rxjs/Subscription';
 import { HttpModule, Http } from '@angular/http';
+import { MessageService } from '../../services/message.service';
 import { ShareService } from '../../services/share.service';
 import { SharedService } from '../../services/shared.service';
 import { TickerService } from '../../services/ticker.service';
@@ -13,8 +15,11 @@ import { UtilityService } from '../../services/utility.service';
   styleUrls: ['./stock-chart.component.scss']
 })
 
-export class StockChartComponent implements OnInit, DoCheck {
+export class StockChartComponent implements OnInit, DoCheck, OnDestroy {
+  private alive = true; // flag for event listeners
+  private subscription: ISubscription;
   private chart;
+  private differ: any;
   private indicatorSettings;
   private options: Object;
   private chartOptions; // used as stage
@@ -64,12 +69,18 @@ export class StockChartComponent implements OnInit, DoCheck {
     'title': ''
   };
 
-  differ: any;
-
   constructor(private _logger: Logger, private _sharedService: SharedService, private _tradeService: TradeService,
     private _shareService: ShareService, private _tickerService: TickerService, private _utilityService: UtilityService,
+    private _messageService: MessageService,
     private http: Http, private differs: KeyValueDiffers) {
     this.differ = differs.find({}).create(null);
+
+    this.subscription = this._messageService.currentState$
+    .takeWhile(() => this.alive)
+    .subscribe(state => {
+      this._logger.info('in receiver of chart: ' + state.shareId);
+      this.displayChart(state.shareId);
+    });
   }
 
   ngOnInit() {
@@ -80,24 +91,27 @@ export class StockChartComponent implements OnInit, DoCheck {
     const changeSwitch = this.differ.diff(this.setting.switch);
 
     if (changeSwitch) {
-      this.displayChart();
+      this.displayChart(1585);
     }
   }
 
+  ngOnDestroy() {
+    this.alive = false;
+  }
+
   public onPriceTypeChange(target) {
-    this.displayChart();
+    this.displayChart(1585);
   }
 
   public saveChartInstance(chartInstance) {
     this.chart = chartInstance;
   }
 
-  public displayChart() {
-
+  public displayChart(shareId) {
     const indicatorString = this.getChartSettingInputString();
     const dateRange = this._shareService.getStockDateRange(null);
 
-    this._tickerService.getTickers(1585, dateRange.start, dateRange.end, indicatorString).then((data) => {
+    this._tickerService.getTickers(shareId, dateRange.start, dateRange.end, indicatorString).then((data) => {
       this.tickers = data.tickerList;
       this.prepareData(data.tickerList);
       this.displayChartBase(data.indicators);
