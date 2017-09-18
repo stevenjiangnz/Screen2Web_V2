@@ -58,7 +58,9 @@ export class StockNavComponent implements OnInit {
     if (event.eventName === 'activate') {
       const node = event.node;
       const state = new StateEvent();
+      state.eventType = 'Stock-Select';
       state.shareId = node.data.id;
+      state.data = node.data;
 
       this.toasterService.pop('success', 'Args Title', 'Args Body');
       this.messageService.publishStockSelect(state);

@@ -6,7 +6,8 @@ export class Node {
 
 export class StateEvent {
     shareId: number;
-    currentDate: number;
+    eventType: string;
+    data: any;
 }
 
 export class Share {

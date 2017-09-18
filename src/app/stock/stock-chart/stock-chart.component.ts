@@ -2,6 +2,7 @@ import { Component, OnInit, DoCheck, KeyValueDiffers, OnDestroy } from '@angular
 import { Logger } from 'angular2-logger/core';
 import { ISubscription } from 'rxjs/Subscription';
 import { HttpModule, Http } from '@angular/http';
+import { Share, StateEvent } from '../../model/EntityDefinitions';
 import { MessageService } from '../../services/message.service';
 import { ShareService } from '../../services/share.service';
 import { SharedService } from '../../services/shared.service';
@@ -18,6 +19,7 @@ import { UtilityService } from '../../services/utility.service';
 export class StockChartComponent implements OnInit, DoCheck, OnDestroy {
   private alive = true; // flag for event listeners
   private subscription: ISubscription;
+  private currentShareId: number;
   private chart;
   private differ: any;
   private indicatorSettings;
@@ -79,8 +81,17 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy {
     .takeWhile(() => this.alive)
     .subscribe(state => {
       this._logger.info('in receiver of chart: ' + state.shareId);
-      this.displayChart(state.shareId);
+      this.currentShareId = state.shareId;
+      this.setting.title = state.data.name + ' - ' + state.data.description;
+      console.log(state);
+      this.displayChart(this.currentShareId);
     });
+
+    const chartSwitch = localStorage.chartSwitch && JSON.parse(localStorage.chartSwitch);
+
+    if (chartSwitch) {
+      this.setting.switch = chartSwitch;
+    }
   }
 
   ngOnInit() {
@@ -91,7 +102,10 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy {
     const changeSwitch = this.differ.diff(this.setting.switch);
 
     if (changeSwitch) {
-      this.displayChart(1585);
+      localStorage.chartSwitch = JSON.stringify(this.setting.switch);
+      if(this.currentShareId) {
+        this.displayChart(this.currentShareId);
+      }
     }
   }
 
@@ -100,7 +114,9 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy {
   }
 
   public onPriceTypeChange(target) {
-    this.displayChart(1585);
+    if(this.currentShareId) {
+      this.displayChart(this.currentShareId);
+    }
   }
 
   public saveChartInstance(chartInstance) {
@@ -387,7 +403,6 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy {
 
     this.chartOptions.height = this.chartOptions.height + bottom;
     this.setting.height = this.chartOptions.height;
-    console.log(this.setting.height);
     this.options = this.chartOptions;
   }
 
@@ -646,7 +661,6 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy {
           click: function (event) {
             const tick = parseInt(event.point.category, 0);
 
-            console.log(new Date(tick));
 
             // var intDate = utilService.dateToInt(new Date(tick));
 
