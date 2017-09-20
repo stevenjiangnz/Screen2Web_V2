@@ -8,6 +8,7 @@ import { MdButtonModule, MdCheckboxModule } from '@angular/material';
 import { TreeModule } from 'angular-tree-component';
 import { routing } from './app.routes';
 import { Logger, Options, Level } from 'angular2-logger/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ChartModule } from 'angular2-highcharts';
 import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
@@ -29,6 +30,7 @@ import { MessageService } from './services/message.service';
 import { UtilityService } from './services/utility.service';
 import { StockNavComponent } from './stock/stock-nav/stock-nav.component';
 import { StockChartComponent } from './stock/stock-chart/stock-chart.component';
+import { StockDetailComponent } from './stock/stock-detail/stock-detail.component';
 
 export declare var require: any;
 
@@ -267,7 +269,8 @@ export function highchartsFactory() {
     HomePortalComponent,
     TopNavComponent,
     StockNavComponent,
-    StockChartComponent
+    StockChartComponent,
+    StockDetailComponent
   ],
   imports: [
     RouterModule,
@@ -281,6 +284,7 @@ export function highchartsFactory() {
     TreeModule,
     ToasterModule,
     ChartModule,
+    NgbModule.forRoot(),
     SlimLoadingBarModule.forRoot()
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

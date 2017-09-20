@@ -103,7 +103,7 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy {
 
     if (changeSwitch) {
       localStorage.chartSwitch = JSON.stringify(this.setting.switch);
-      if(this.currentShareId) {
+      if (this.currentShareId) {
         this.displayChart(this.currentShareId);
       }
     }
@@ -114,7 +114,7 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy {
   }
 
   public onPriceTypeChange(target) {
-    if(this.currentShareId) {
+    if (this.currentShareId) {
       this.displayChart(this.currentShareId);
     }
   }
