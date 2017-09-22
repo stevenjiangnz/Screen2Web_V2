@@ -62,7 +62,7 @@ export class StockNavComponent implements OnInit {
       state.shareId = node.data.id;
       state.data = node.data;
 
-      this.toasterService.pop('success', 'Args Title', 'Args Body');
+      // this.toasterService.pop('success', 'Args Title', 'Args Body');
       this.messageService.publishStockSelect(state);
     }
   }

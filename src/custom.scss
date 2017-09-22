@@ -2,6 +2,8 @@ $primaryColor: #ebebeb;
 $main-background-color: #2b3e50;
 $highlight-background-color: #4e5d6c;
 $tree-hover-color: #4caf50;
+$hover-background-color:  #111;
+$active-background-color: #4caf50;
 
 body {
   background: $main-background-color;
@@ -40,10 +42,10 @@ body {
         text-decoration: none;
       }
       a:hover:not(.active) {
-        background-color: #111;
+        background-color: $hover-background-color;
       }
       .active {
-        background-color: #4CAF50;
+        background-color: $active-background-color;
       }
     }
     .logo {
@@ -102,6 +104,39 @@ body {
 }
 .chart-panel {
   margin-top: 10px;
+}
+
+.tab-content-wrapper {
+  padding: 20px 10px;
+
+  .table-detail-key {
+    width: 35%;
+  }
+  .table-detail-value {
+    width: 65%;
+  }
+
+}
+.stock-detail-panel{
+  margin-top: 50px;
+  margin-right: 10px;
+  a.nav-link {
+    // background-color: $highlight-background-color;
+    color: $primaryColor;
+  }
+
+  .nav-pills .nav-item.show .nav-link, .nav-pills .nav-link.active {
+    background-color: $active-background-color;
+  }
+
+  a:hover:not(.active) {
+    background-color: $highlight-background-color;
+  }
+
+  .tab-pane.active{
+    background-color: $highlight-background-color;
+    padding: 10px 10px 20px 10px;
+  }
 }
 .stock-tree-wrapper {
   margin-top: 15px;
