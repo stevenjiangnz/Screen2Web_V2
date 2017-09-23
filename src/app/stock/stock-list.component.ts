@@ -19,7 +19,7 @@ export class StockListComponent implements OnInit, OnDestroy {
     this.subscription = this.messageService.currentState$
     .takeWhile(() => this.alive)
     .subscribe(state => {
-      this._logger.info('in receiver: ' + state.shareId);
+      // this._logger.info('in receiver: ' + state.shareId);
     });
   }
 

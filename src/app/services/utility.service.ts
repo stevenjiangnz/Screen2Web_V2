@@ -6,14 +6,12 @@ export class UtilityService {
 
   constructor(private _slimLoadingBarService: SlimLoadingBarService) { }
 
-  startProgressBar()
-  {
+  startProgressBar() {
       this._slimLoadingBarService.reset();
       this._slimLoadingBarService.start();
   }
 
-  completeProgressBar()
-  {
+  completeProgressBar() {
     this._slimLoadingBarService.complete();
   }
 

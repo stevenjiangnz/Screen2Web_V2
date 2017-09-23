@@ -80,10 +80,8 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy {
     this.subscription = this._messageService.currentState$
     .takeWhile(() => this.alive)
     .subscribe(state => {
-      this._logger.info('in receiver of chart: ' + state.shareId);
       this.currentShareId = state.shareId;
       this.setting.title = state.data.name + ' - ' + state.data.description;
-      console.log(state);
       this.displayChart(this.currentShareId);
     });
 
@@ -128,6 +126,8 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy {
     const dateRange = this._shareService.getStockDateRange(null);
 
     this._tickerService.getTickers(shareId, dateRange.start, dateRange.end, indicatorString).then((data) => {
+      this._utilityService.startProgressBar();
+
       this.tickers = data.tickerList;
       this.prepareData(data.tickerList);
       this.displayChartBase(data.indicators);
@@ -136,6 +136,8 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy {
         this.chart.setSize(null, this.chart.userOptions.height);
         this.displayChartTickers();
         this.displayIndicators(data.indicators);
+
+        this._utilityService.completeProgressBar();
       }, 10);
     });
   }
