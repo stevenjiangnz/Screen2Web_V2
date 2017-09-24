@@ -33,10 +33,7 @@ export class BaseService {
         headers.append('content-type', 'application/json; charset=utf-8');
 
         if (!BaseService.token) {
-            console.log('about to login');
             BaseService.token = await this.login('', '');
-
-            console.log('login done. ', BaseService.token);
         }
 
         headers.append('authorization', 'bearer ' + BaseService.token.token);

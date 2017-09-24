@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Share } from 'app/model/EntityDefinitions';
+import { ShareService } from '../../services/share.service';
 
 @Component({
   selector: 'app-stock-profile',
@@ -9,14 +10,16 @@ import { Share } from 'app/model/EntityDefinitions';
 
 export class StockProfileComponent implements OnInit, OnChanges {
   @Input() share: Share;
+  private shareInfo: any = {};
 
-  constructor() {
+  constructor(private _shareService: ShareService) {
   }
 
   ngOnInit() {
   }
 
-  ngOnChanges(...args: any[]) {
-    console.log('input: ', this.share);
+  async ngOnChanges(...args: any[]) {
+    this.shareInfo = {};
+    this.shareInfo = await this._shareService.getStockInfo(this.share.id);
   }
 }

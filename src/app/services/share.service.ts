@@ -22,26 +22,30 @@ export class ShareService extends BaseService {
     if (LocalStoreHelper.get(StorageKey.SHARE_LIST)) {
       shares = JSON.parse(LocalStoreHelper.get(StorageKey.SHARE_LIST));
     } else {
-      // await this.userService.ensureLogin().then(async (token) => {
-        const opt = await super.getOptions();
-        const resPromise = await this.http.get(this.baseUrl + '/share', opt).toPromise().then((data) => {
-          const resObject = data.json();
-          _.each(resObject, (item: any) => {
-            const share: Share = new Share();
-            if (item.isActive) {
-              shares.push(item as Share);
-            }
-          });
-          LocalStoreHelper.set(StorageKey.SHARE_LIST, shares);
+      const opt = await super.getOptions();
+      await this.http.get(this.baseUrl + '/share', opt).toPromise().then((data) => {
+        const resObject = data.json();
+        _.each(resObject, (item: any) => {
+          const share: Share = new Share();
+          if (item.isActive) {
+            shares.push(item as Share);
+          }
         });
-      // });
+        LocalStoreHelper.set(StorageKey.SHARE_LIST, shares);
+      });
     }
 
     return shares;
   }
 
   public async getStockInfo(shareId) {
-    return null;
+    let shareInfo = null;
+    const opt = await super.getOptions();
+    await this.http.get(this.baseUrl + '/shareinfo/getbyshareid/' + shareId, opt).toPromise().then((data) => {
+      const resObject = data.json();
+      shareInfo = resObject;
+    });
+    return shareInfo;
   }
 
   public getStockDateRange(tradingDate?: number): any {
@@ -56,7 +60,7 @@ export class ShareService extends BaseService {
 
     startDate = endDate - this.settings.general.stockWindow;
 
-    return {start: startDate, end: endDate};
+    return { start: startDate, end: endDate };
   }
 
   public async getShareByID(shareId: number): Promise<Share> {
