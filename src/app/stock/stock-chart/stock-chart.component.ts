@@ -2,6 +2,7 @@ import { Component, OnInit, DoCheck, KeyValueDiffers, OnDestroy } from '@angular
 import { Logger } from 'angular2-logger/core';
 import { ISubscription } from 'rxjs/Subscription';
 import { HttpModule, Http } from '@angular/http';
+import { ObjHelper } from '../../utils/obj-helper';
 import { Share, StateEvent } from '../../model/EntityDefinitions';
 import { MessageService } from '../../services/message.service';
 import { ShareService } from '../../services/share.service';
@@ -126,7 +127,7 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy {
     const dateRange = this._shareService.getStockDateRange(null);
 
     this._tickerService.getTickers(shareId, dateRange.start, dateRange.end, indicatorString).then((data) => {
-      this._utilityService.startProgressBar();
+      // this._utilityService.startProgressBar();
 
       this.tickers = data.tickerList;
       this.prepareData(data.tickerList);
@@ -137,7 +138,7 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy {
         this.displayChartTickers();
         this.displayIndicators(data.indicators);
 
-        this._utilityService.completeProgressBar();
+        // this._utilityService.completeProgressBar();
       }, 10);
     });
   }
@@ -660,17 +661,17 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy {
         lineWidth: 1,
         cursor: 'pointer',
         events: {
-          click: function (event) {
+          click: (event) => {
             const tick = parseInt(event.point.category, 0);
 
+            const state = new StateEvent();
+            state.eventType = 'Ticker-Select';
+            state.shareId = this.currentShareId;
+            const dateInt = ObjHelper.dateToInt(new Date(tick));
+            state.data = { 'shareId': this.currentShareId,
+              'tradingDate': dateInt };
 
-            // var intDate = utilService.dateToInt(new Date(tick));
-
-            // $scope.$emit('chartIndicatorSelected',
-            //     {
-            //         'shareId': shareId,
-            //         'tradingDate' : intDate
-            //     });
+            this._messageService.publishTickerSelect(state);
           }
         }
       });

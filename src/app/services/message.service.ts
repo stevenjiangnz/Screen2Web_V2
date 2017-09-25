@@ -6,13 +6,18 @@ import { StateEvent } from '../model/EntityDefinitions';
 export class MessageService {
 
   private currentState = new Subject<StateEvent>();
+  private currentTicker = new Subject<StateEvent>();
 
   currentState$ = this.currentState.asObservable();
+  currentTicker$ = this.currentTicker.asObservable();
 
   constructor() { }
 
-  // Service message commands
   publishStockSelect(data: StateEvent) {
     this.currentState.next(data);
+  }
+
+  publishTickerSelect(data: StateEvent) {
+    this.currentTicker.next(data);
   }
 }

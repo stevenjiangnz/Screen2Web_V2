@@ -16,9 +16,10 @@ import { NgbTabset } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './stock-detail.component.html',
   styleUrls: ['./stock-detail.component.scss']
 })
-export class StockDetailComponent implements OnInit, AfterViewInit {
+export class StockDetailComponent implements OnInit, OnDestroy, AfterViewInit {
   private alive = true; // flag for event listeners
-  private subscription: ISubscription;
+  private subscriptionShare: ISubscription;
+  private subscriptionTicker: ISubscription;
   private currentShareId: number;
   private currentShare: Share;
   private tabSet: ViewContainerRef;
@@ -32,10 +33,9 @@ export class StockDetailComponent implements OnInit, AfterViewInit {
     private _shareService: ShareService, private _tickerService: TickerService, private _utilityService: UtilityService,
     private _messageService: MessageService,
     private http: Http, private differs: KeyValueDiffers) {
-      this.subscription = this._messageService.currentState$
+    this.subscriptionShare = this._messageService.currentState$
       .takeWhile(() => this.alive)
       .subscribe(async (state) => {
-        // this._logger.info('in receiver of details: ' + state.shareId);
         this.currentShareId = state.shareId;
 
         if (!this.selectedTab) {
@@ -45,21 +45,35 @@ export class StockDetailComponent implements OnInit, AfterViewInit {
         await this.displayContent();
       });
 
-     }
+    this.subscriptionTicker = this._messageService.currentTicker$
+      .takeWhile(() => this.alive)
+      .subscribe(async (state) => {
+        console.log('ticker message', state);
+        this.displayIndicator(state.shareId, state.data.tradingDate);
+      });
+  }
 
   ngOnInit() {
   }
 
+  ngOnDestroy() {
+    this.alive = false;
+  }
+
   ngAfterViewInit() {
-    console.log((this.tabSet as any).activeId);
+    this.selectedTab = (this.tabSet as any).activeId;
   }
 
   private tabChange(event) {
-    console.log('tab change: ', event);
+    this.selectedTab = event.nextId;
   }
 
   private async displayContent() {
     this.currentShare = await this._shareService.getShareByID(this.currentShareId);
-    // console.log(this.currentShare);
+  }
+
+  private displayIndicator(shareId: number, tradingDate: number) {
+    (this.tabSet as any).select('indicator');
+    console.log(shareId, tradingDate);
   }
 }
