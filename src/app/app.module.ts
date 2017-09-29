@@ -33,6 +33,7 @@ import { StockChartComponent } from './stock/stock-chart/stock-chart.component';
 import { StockDetailComponent } from './stock/stock-detail/stock-detail.component';
 import { StockProfileComponent } from './stock/stock-profile/stock-profile.component';
 import { StockIndicatorComponent } from './stock/stock-indicator/stock-indicator.component';
+import { StockNavTreeComponent } from './stock/stock-nav-tree/stock-nav-tree.component';
 
 export declare var require: any;
 
@@ -274,7 +275,8 @@ export function highchartsFactory() {
     StockChartComponent,
     StockDetailComponent,
     StockProfileComponent,
-    StockIndicatorComponent
+    StockIndicatorComponent,
+    StockNavTreeComponent
   ],
   imports: [
     RouterModule,

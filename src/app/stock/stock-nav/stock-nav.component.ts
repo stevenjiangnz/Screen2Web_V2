@@ -74,7 +74,7 @@ export class StockNavComponent implements OnInit {
       this.treeModel.filterNodes((node: TreeNode) => {
         let isMatch = false;
         if (node.data.name.toUpperCase().indexOf(searchText.toUpperCase()) >= 0 ||
-          (node.data.description && node.data.description.toUpperCase().indexOf(searchText.toUpperCase()) >= 0) ) {
+          (node.data.description && node.data.description.toUpperCase().indexOf(searchText.toUpperCase()) >= 0)) {
           isMatch = true;
         }
 
@@ -96,25 +96,26 @@ export class StockNavComponent implements OnInit {
 
   private applyTreeState() {
     const state = localStorage.treeState && JSON.parse(localStorage.treeState);
-    // tslint:disable-next-line:forin
-    for (const id in state.expandedNodeIds) {
-      if(state.expandedNodeIds[id]) {
-        const node =  this.treeModel.getNodeById(id.toString());
-        if (node) {
-          node.expand();
+    if (state) {
+      // tslint:disable-next-line:forin
+      for (const id in state.expandedNodeIds) {
+        if (state.expandedNodeIds[id]) {
+          const node = this.treeModel.getNodeById(id.toString());
+          if (node) {
+            node.expand();
+          }
+        }
+      }
+
+      for (const id in state.activeNodeIds) {
+        if (state.activeNodeIds[id]) {
+          const node = this.treeModel.getNodeById(id.toString());
+          if (node) {
+            node.setActiveAndVisible();
+          }
         }
       }
     }
-
-    for (const id in state.activeNodeIds) {
-      if(state.activeNodeIds[id]) {
-        const node =  this.treeModel.getNodeById(id.toString());
-        if (node) {
-          node.setActiveAndVisible();
-        }
-      }
-    }
-
   }
 
   private buildTreeObj(shareList: Share[]): any {
@@ -147,7 +148,7 @@ export class StockNavComponent implements OnInit {
         sectorShares.push({ id: share.id.toString(), name: share.symbol, description: share.name });
       });
 
-      nodes.push({id:prop, name: prop, children: _.sortBy(sectorShares, 'name') });
+      nodes.push({ id: prop, name: prop, children: _.sortBy(sectorShares, 'name') });
     }
 
     return _.sortBy(nodes, 'name');
