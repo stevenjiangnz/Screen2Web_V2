@@ -1,4 +1,4 @@
-import { Component, OnInit, DoCheck, KeyValueDiffers, OnDestroy } from '@angular/core';
+import { Component, OnInit, DoCheck, KeyValueDiffers, OnDestroy, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Logger } from 'angular2-logger/core';
 import { ISubscription } from 'rxjs/Subscription';
 import { HttpModule, Http } from '@angular/http';
@@ -11,13 +11,18 @@ import { TickerService } from '../../services/ticker.service';
 import { TradeService } from '../../services/trade.service';
 import { UtilityService } from '../../services/utility.service';
 
+declare var $: any;
+declare var Highcharts: any;
+
 @Component({
   selector: 'app-stock-chart',
   templateUrl: './stock-chart.component.html',
   styleUrls: ['./stock-chart.component.scss']
 })
 
-export class StockChartComponent implements OnInit, DoCheck, OnDestroy {
+export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterViewInit {
+  @ViewChild('chartTarget') chartTarget: ElementRef;
+
   private alive = true; // flag for event listeners
   private subscription: ISubscription;
   private currentShareId: number;
@@ -76,6 +81,8 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy {
     private _shareService: ShareService, private _tickerService: TickerService, private _utilityService: UtilityService,
     private _messageService: MessageService,
     private http: Http, private differs: KeyValueDiffers) {
+
+    Highcharts.setOptions(this._sharedService.getSettings().chartTheme);
     this.differ = differs.find({}).create(null);
 
     this.subscription = this._messageService.currentState$
@@ -132,14 +139,14 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy {
       this.tickers = data.tickerList;
       this.prepareData(data.tickerList);
       this.displayChartBase(data.indicators);
+      this.chart = Highcharts.stockChart(this.chartTarget.nativeElement, this.options);
 
-      setTimeout(() => {
-        this.chart.setSize(null, this.chart.userOptions.height);
-        this.displayChartTickers();
-        this.displayIndicators(data.indicators);
-
+        if (this.chart) {
+          this.displayChartTickers();
+          this.displayIndicators(data.indicators);
+          this.chart.setSize(null, this.chart.userOptions.height);
+        }
         // this._utilityService.completeProgressBar();
-      }, 10);
     });
   }
 
@@ -742,5 +749,8 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy {
       }
     }
     return indicatorString;
+  }
+
+  ngAfterViewInit() {
   }
 }

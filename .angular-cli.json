@@ -30,6 +30,7 @@
         "../node_modules/jquery/dist/jquery.min.js",
         "../node_modules/tether/dist/js/tether.min.js",
         "../node_modules/bootstrap/dist/js/bootstrap.min.js",
+        "../node_modules/highcharts/highstock.js",
         "../node_modules/hammerjs/hammer.min.js",
         "../node_modules/underscore/underscore-min.js"
       ],
