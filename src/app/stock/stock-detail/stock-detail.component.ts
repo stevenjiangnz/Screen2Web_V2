@@ -21,6 +21,7 @@ export class StockDetailComponent implements OnInit, OnDestroy, AfterViewInit {
   private subscriptionShare: ISubscription;
   private subscriptionTicker: ISubscription;
   private currentShareId: number;
+  private currentTradingDate: number;
   private currentShare: Share;
   private tabSet: ViewContainerRef;
   private selectedTab: string;
@@ -48,7 +49,6 @@ export class StockDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     this.subscriptionTicker = this._messageService.currentTicker$
       .takeWhile(() => this.alive)
       .subscribe(async (state) => {
-        console.log('ticker message', state);
         this.displayIndicator(state.shareId, state.data.tradingDate);
       });
   }
@@ -74,6 +74,8 @@ export class StockDetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private displayIndicator(shareId: number, tradingDate: number) {
     (this.tabSet as any).select('indicator');
-    console.log(shareId, tradingDate);
+
+    this.currentShareId = shareId;
+    this.currentTradingDate = tradingDate;
   }
 }

@@ -75,4 +75,15 @@ export class ShareService extends BaseService {
 
     return foundShare;
   }
+
+  public async getIndicator(shareId, tradingDate) {
+    let indicator = null;
+    const opt = await super.getOptions();
+    await this.http.get(this.baseUrl + '/indicator/indicator/' + shareId + '/' + tradingDate, opt).toPromise().then((data) => {
+      const resObject = data.json();
+      indicator = resObject;
+    });
+    console.log(indicator);
+    return indicator;
+  }
 }

@@ -10,7 +10,7 @@
     <ngb-tab id="indicator" title="Indicator">
       <!-- <ng-template ngbTabTitle><b>Fancy</b> title</ng-template> -->
       <ng-template ngbTabContent>
-        <app-stock-indicator></app-stock-indicator>
+        <app-stock-indicator [shareId]="currentShareId" [tradingDate]="currentTradingDate"></app-stock-indicator>
       </ng-template>
     </ngb-tab>
     <ngb-tab id="watch" title="Disabled">
