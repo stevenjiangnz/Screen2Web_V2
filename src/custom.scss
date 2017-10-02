@@ -113,7 +113,7 @@ body {
     width: 30%;
   }
   .table-detail-value {
-    width: 70%;
+
   }
 
 }
@@ -136,6 +136,18 @@ body {
   .tab-pane.active{
     background-color: $highlight-background-color;
     padding: 10px 10px 20px 10px;
+  }
+
+  .detail-sub-title {
+    // border-bottom: 1px solid whitesmoke;
+    padding: 0 0 0 0;
+    margin-top: 10px;
+    label {
+      font-size: 1.2em;
+    }
+    i {
+      margin-top: 10px;
+    }
   }
 }
 .stock-tree-wrapper {

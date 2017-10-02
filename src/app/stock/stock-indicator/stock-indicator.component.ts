@@ -19,6 +19,7 @@ import { UtilityService } from '../../services/utility.service';
 export class StockIndicatorComponent implements OnInit, OnChanges {
   @Input() shareId: number;
   @Input() tradingDate: number;
+  indicator: any = null;
 
   constructor(private _logger: Logger, private _sharedService: SharedService, 
     private _shareService: ShareService, private _utilityService: UtilityService,
@@ -30,6 +31,7 @@ export class StockIndicatorComponent implements OnInit, OnChanges {
   async ngOnChanges(...args: any[]) {
     if (this.shareId && this.tradingDate) {
       this._shareService.getIndicator(this.shareId, this.tradingDate).then((result) => {
+        this.indicator = result;
         console.log('indicator result: ', result);
       });
     }

@@ -1,3 +1,106 @@
-<p>
-  stock-indicator works!
-</p>
+<div *ngIf="indicator" class="tab-content-wrapper">
+    <h4>Share Id: {{indicator.shareId}}</h4>
+    <div class="detail-sub-title">
+        <label>Indicators - {{indicator.tradingDate}}</label>
+    </div>
+    <div class="detail-sub-section">
+        <table class="table table-striped table-hover table-detail-view " style="font-size: 1em">
+
+            <tbody>
+            <tr>
+                <td class="table-detail-key" style="width: 50px">Price</td>
+                <td class="table-detail-value " >
+                  <div class="row">
+                    <div class="col-sm-6">Open: {{indicator.open | number:"1.3-4"}}</div>
+                    <div class="col-sm-6">Close: {{indicator.close| number:"1.3-4"}}</div>
+                    <div class="col-sm-6">Low: {{indicator.low | number:"1.3-4"}}</div>
+                    <div class="col-sm-6">High: {{indicator.high | number:"1.3-4"}}</div>
+                    <div class="col-sm-10">Volume: {{indicator.volumn}}</div>
+                  </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Move Average</td>
+                <td>
+                    <div class="row">
+                      <div class="col-sm-6">SMA5: {{indicator.smA5 | number:"1.3-4"}}</div>
+                      <div class="col-sm-6">SMA10: {{indicator.smA10 | number:"1.3-4"}}</div>
+                      <div class="col-sm-6">SMA30: {{indicator.smA30 | number:"1.3-4"}}</div>
+                      <div class="col-sm-6">SMA50: {{indicator.smA50 | number:"1.3-4"}}</div>
+                      <div class="col-sm-6">SMA200: {{indicator.smA200 | number:"1.3-4"}}</div>
+                      <div class="col-sm-6">EMA10: {{indicator.emA10 | number:"1.3-4"}}</div>
+                      <div class="col-sm-6">EMA20: {{indicator.emA20 | number:"1.3-4"}}</div>
+                      <div class="col-sm-6">EMA50: {{indicator.emA50 | number:"1.3-4"}}</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Bollinger Bands</td>
+                <td>
+                    <div class="row">
+                    <div class="col-sm-6">BB_High: {{indicator.bB_High | number:"1.3-4"}}</div>
+                    <div class="col-sm-6">BB_Middle: {{indicator.bB_Middle | number:"1.3-4"}}</div>
+                    <div class="col-sm-6">BB_Low: {{indicator.bB_Low | number:"1.3-4"}}</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>ADX</td>
+                <td>
+                  <div class="row">
+                    <div class="col-sm-6">ADX_+: {{indicator.adX_Plus | number:"1.3-4"}}</div>
+                    <div class="col-sm-6">ADX_-: {{indicator.adX_Minus | number:"1.3-4"}}</div>
+                    <div class="col-sm-6">ADX: {{indicator.adx | number:"1.3-4"}}</div>
+                  </div>
+                </td>
+            </tr>
+            <tr>
+                <td>MACD</td>
+                <td>
+                  <div class="row">
+                    <div class="col-sm-6">MACD: {{indicator.macd | number:"1.3-4"}}</div>
+                    <div class="col-sm-6">Signal: {{indicator.macD_Signal | number:"1.3-4"}}</div>
+                    <div class="col-sm-6">Hist: {{indicator.macD_Hist | number:"1.3-4"}}</div>
+                  </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Heikin Ashi</td>
+                <td>
+                  <div class="row">
+                    <div class="col-sm-6">Open: {{indicator.heikin_Open | number:"1.3-4"}}</div>
+                    <div class="col-sm-6">Close: {{indicator.heikin_Close| number:"1.3-4"}}</div>
+                    <div class="col-sm-6">Low: {{indicator.heikin_Low | number:"1.3-4"}}</div>
+                    <div class="col-sm-6">High: {{indicator.heikin_High | number:"1.3-4"}}</div>
+                  </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Stochastic</td>
+                <td>
+                  <div class="row">
+                    <div class="col-sm-6">K: {{indicator.stochastic_K | number:"1.3-4"}}</div>
+                    <div class="col-sm-6">D: {{indicator.stochastic_D | number:"1.3-4"}}</div>
+                  </div>
+                </td>
+            </tr>
+            <tr>
+                <td>RSI</td>
+                <td>
+                  <div class="row">
+                    <div class="col-sm-6">RSI: {{indicator.rsi | number:"1.3-4"}}</div>
+                  </div>
+                </td>
+            </tr>
+            <tr>
+                <td>Williams %R</td>
+                <td>
+                  <div class="row">
+                    <div class="col-sm-6">WR: {{indicator.wr | number:"1.3-4"}}</div>
+                  </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

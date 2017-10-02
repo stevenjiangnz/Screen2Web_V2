@@ -6,7 +6,7 @@
 const settings = {
   apiBaseUrl: 'http://localhost:8002/api',
   general: {
-    stockWindow: 20000,
+    stockWindow: 40000,
     zone: 'current',
   },
   indicatorSettings: {
