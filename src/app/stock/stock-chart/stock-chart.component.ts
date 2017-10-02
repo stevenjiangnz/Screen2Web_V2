@@ -412,9 +412,9 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
   private displayChartTickers() {
     const color = this.getColorStyle('closemain');
     if (this.setting.priceType === 'OCHL') {
-      this.addChartIndicatorSeries_Main('candlestick', 'OCHL', this.ohlc, null, 0);
+      this.addChartIndicatorSeries_Main('candlestick', 'OCHL', this.ohlc, null);
     } else {
-      this.addChartIndicatorSeries_Main('line', 'Line', this.close, color.color, 0);
+      this.addChartIndicatorSeries_Main('line', 'Line', this.close, color.color);
     }
   }
 
@@ -445,14 +445,11 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
     }
 
     color = this.getIndicatorSettingByParameter(name).color;
-    this.addChartIndicatorSeries_Main('line', name, data, color, 0);
+    this.addChartIndicatorSeries_Main('line', name, data, color);
   }
 
   private displayIndicator_RSI(name, indicatorData, color) {
     const data = [];
-    let yAxisIndex;
-
-    yAxisIndex = this.getChartOptionyAxisIndexbyId('RSI');
 
     for (let i = 0; i < indicatorData.length; i++) {
       data.push(
@@ -463,15 +460,11 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
       );
     }
 
-    console.log('name: ', name);
-    this.addChartIndicatorSeries_Main('line', name, data, color, yAxisIndex);
+    this.addChartIndicatorSeries_Main('line', name, data, color, 'RSI');
   }
 
   private displayIndicator_ADX(name, indicatorData, color) {
     const data = [];
-    let yAxisIndex;
-
-    yAxisIndex = this.getChartOptionyAxisIndexbyId('ADX');
 
     for (let i = 0; i < indicatorData.length; i++) {
       data.push(
@@ -482,14 +475,12 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
       );
     }
 
-    this.addChartIndicatorSeries_Main('line', name, data, color, yAxisIndex);
+    this.addChartIndicatorSeries_Main('line', name, data, color, 'ADX');
   }
 
   private displayIndicator_MACD(name, indicatorData, color) {
     const data = [];
-    let yAxisIndex;
 
-    yAxisIndex = this.getChartOptionyAxisIndexbyId('MACD');
     for (let i = 0; i < indicatorData.length; i++) {
       data.push(
         [
@@ -500,25 +491,19 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
     }
 
     if (name.indexOf('hist') >= 0) {
-      this.addChartIndicatorSeries_Main('column', name, data, color, yAxisIndex);
+      this.addChartIndicatorSeries_Main('column', name, data, color, 'MACD');
     } else {
-      this.addChartIndicatorSeries_Main('line', name, data, color, yAxisIndex);
+      this.addChartIndicatorSeries_Main('line', name, data, color, 'MACD');
     }
   }
 
   private displayIndicator_HEIKIN(name, indicatorData) {
-    let yAxisIndex;
 
-    yAxisIndex = this.getChartOptionyAxisIndexbyId('HEIKIN');
-
-    this.addChartIndicatorSeries_Main('candlestick', name, indicatorData, null, yAxisIndex);
+    this.addChartIndicatorSeries_Main('candlestick', name, indicatorData, null, 'HEIKIN');
   }
 
   private displayIndicator_STOCHASTIC(name, indicatorData, color) {
     const data = [];
-    let yAxisIndex;
-
-    yAxisIndex = this.getChartOptionyAxisIndexbyId('STOCHASTIC');
 
     for (let i = 0; i < indicatorData.length; i++) {
         data.push(
@@ -529,14 +514,12 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
         );
     }
 
-    this.addChartIndicatorSeries_Main('line', name, data, color, yAxisIndex);
+    this.addChartIndicatorSeries_Main('line', name, data, color, 'STOCHASTIC');
   }
 
   private displayIndicator_WILLIAM(name, indicatorData, color) {
     const data = [];
-    let yAxisIndex;
 
-    yAxisIndex = this.getChartOptionyAxisIndexbyId ('WILLIAM');
     for (let i = 0; i < indicatorData.length; i++) {
         data.push(
             [
@@ -546,7 +529,7 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
         );
     }
 
-    this.addChartIndicatorSeries_Main('line', name, data, color, yAxisIndex);
+    this.addChartIndicatorSeries_Main('line', name, data, color, 'WILLIAM');
 }
 
 
@@ -623,14 +606,19 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
     }
   }
 
+  private addChartIndicatorSeries_Main(type, name, data, color, yAxis = null) {
+    let yAxisIndex = 0;
 
-  private addChartIndicatorSeries_Main(type, name, data, color, yAxis) {
+    if (yAxis) {
+      yAxisIndex = this.getChartOptionyAxisIndexbyId(yAxis);
+    }
+
     this.chartOptions.series.push(
       {
         type: type,
         name: name,
         data: data,
-        yAxis: yAxis,
+        yAxis: yAxisIndex,
         color: color,
         lineWidth: 1,
         cursor: 'pointer',
