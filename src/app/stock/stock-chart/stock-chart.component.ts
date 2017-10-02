@@ -86,12 +86,12 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
     this.differ = differs.find({}).create(null);
 
     this.subscription = this._messageService.currentState$
-    .takeWhile(() => this.alive)
-    .subscribe(state => {
-      this.currentShareId = state.shareId;
-      this.setting.title = state.data.name + ' - ' + state.data.description;
-      this.displayChart(this.currentShareId);
-    });
+      .takeWhile(() => this.alive)
+      .subscribe(state => {
+        this.currentShareId = state.shareId;
+        this.setting.title = state.data.name + ' - ' + state.data.description;
+        this.displayChart(this.currentShareId);
+      });
 
     const chartSwitch = localStorage.chartSwitch && JSON.parse(localStorage.chartSwitch);
 
@@ -117,6 +117,10 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
 
   ngOnDestroy() {
     this.alive = false;
+  }
+
+  ngAfterViewInit() {
+
   }
 
   public onPriceTypeChange(target) {
@@ -268,34 +272,34 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
         const indicatorName = setting.parameter.split(',')[0];
         switch (indicatorName) {
           case 'rsi':
-          if (!this.getChartOptionyAxisIndexbyId('RSI')) {
-            this.chartOptions.yAxis.push({
-              id: 'RSI',
-              title: {
-                text: 'RSI'
-              },
-              min: 0,
-              max: 100,
-              plotLines: [{
-                value: 30,
-                color: plotColor,
-                dashStyle: 'shortdash',
-                width: 1
-              }, {
-                value: 70,
-                color: plotColor,
-                dashStyle: 'shortdash',
-                width: 1
-              }],
-              lineWidth: 1,
-              top: base + gap,
-              height: setting.height
-            });
+            if (!this.getChartOptionyAxisIndexbyId('RSI')) {
+              this.chartOptions.yAxis.push({
+                id: 'RSI',
+                title: {
+                  text: 'RSI'
+                },
+                min: 0,
+                max: 100,
+                plotLines: [{
+                  value: 30,
+                  color: plotColor,
+                  dashStyle: 'shortdash',
+                  width: 1
+                }, {
+                  value: 70,
+                  color: plotColor,
+                  dashStyle: 'shortdash',
+                  width: 1
+                }],
+                lineWidth: 1,
+                top: base + gap,
+                height: setting.height
+              });
 
-            this.chartOptions.height = base + gap + setting.height;
+              this.chartOptions.height = base + gap + setting.height;
 
-            base = this.chartOptions.height;
-          }
+              base = this.chartOptions.height;
+            }
             break;
           case 'adx':
             if (!this.getChartOptionyAxisIndexbyId('ADX')) {
@@ -433,105 +437,26 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
   }
 
   private displayIndicatorChart(name, indicatorData) {
-    const data = [];
     let color;
-    for (let i = 0; i < indicatorData.length; i++) {
-      data.push(
-        [
-          this.ohlc[i][0], // the date
-          indicatorData[i]
-        ]
-      );
-    }
 
     color = this.getIndicatorSettingByParameter(name).color;
-    this.addChartIndicatorSeries_Main('line', name, data, color);
+    this.addChartIndicatorSeries_Main('line', name, this.boxDatawithTimeLine(indicatorData), color);
   }
 
-  private displayIndicator_RSI(name, indicatorData, color) {
+  private boxDatawithTimeLine(indicatorData) {
     const data = [];
-
-    for (let i = 0; i < indicatorData.length; i++) {
-      data.push(
-        [
-          this.ohlc[i][0], // the date
-          indicatorData[i]
-        ]
-      );
-    }
-
-    this.addChartIndicatorSeries_Main('line', name, data, color, 'RSI');
-  }
-
-  private displayIndicator_ADX(name, indicatorData, color) {
-    const data = [];
-
-    for (let i = 0; i < indicatorData.length; i++) {
-      data.push(
-        [
-          this.ohlc[i][0], // the date
-          indicatorData[i]
-        ]
-      );
-    }
-
-    this.addChartIndicatorSeries_Main('line', name, data, color, 'ADX');
-  }
-
-  private displayIndicator_MACD(name, indicatorData, color) {
-    const data = [];
-
-    for (let i = 0; i < indicatorData.length; i++) {
-      data.push(
-        [
-          this.ohlc[i][0], // the date
-          indicatorData[i]
-        ]
-      );
-    }
-
-    if (name.indexOf('hist') >= 0) {
-      this.addChartIndicatorSeries_Main('column', name, data, color, 'MACD');
-    } else {
-      this.addChartIndicatorSeries_Main('line', name, data, color, 'MACD');
-    }
-  }
-
-  private displayIndicator_HEIKIN(name, indicatorData) {
-
-    this.addChartIndicatorSeries_Main('candlestick', name, indicatorData, null, 'HEIKIN');
-  }
-
-  private displayIndicator_STOCHASTIC(name, indicatorData, color) {
-    const data = [];
-
-    for (let i = 0; i < indicatorData.length; i++) {
+    if (indicatorData && indicatorData.length) {
+      for (let i = 0; i < indicatorData.length; i++) {
         data.push(
-            [
-                this.ohlc[i][0], // the date
-                indicatorData[i]
-            ]
+          [
+            this.ohlc[i][0], // the date
+            indicatorData[i]
+          ]
         );
+      }
     }
-
-    this.addChartIndicatorSeries_Main('line', name, data, color, 'STOCHASTIC');
+    return data;
   }
-
-  private displayIndicator_WILLIAM(name, indicatorData, color) {
-    const data = [];
-
-    for (let i = 0; i < indicatorData.length; i++) {
-        data.push(
-            [
-                this.ohlc[i][0], // the date
-                indicatorData[i]
-            ]
-        );
-    }
-
-    this.addChartIndicatorSeries_Main('line', name, data, color, 'WILLIAM');
-}
-
 
   private displayIndicatorChartPane(name, indicatorData, setting) {
     const indicatorName = name.split(',')[0];
@@ -539,31 +464,31 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
     switch (indicatorName) {
       case 'rsi':
         const colorRsi = setting.colorRsi;
-        this.displayIndicator_RSI(name, indicatorData, colorRsi);
+        this.addChartIndicatorSeries_Main('line', name, this.boxDatawithTimeLine(indicatorData), colorRsi, 'RSI');
         break;
       case 'adx':
         const colorAdx = setting.colorAdx;
-        this.displayIndicator_ADX(name, indicatorData, colorAdx);
+        this.addChartIndicatorSeries_Main('line', name, this.boxDatawithTimeLine(indicatorData), colorAdx, 'ADX');
         break;
       case 'adx_di+':
         const colorPlus = setting.colorDiPlus;
-        this.displayIndicator_ADX(name, indicatorData, colorPlus);
+        this.addChartIndicatorSeries_Main('line', name, this.boxDatawithTimeLine(indicatorData), colorPlus, 'ADX');
         break;
       case 'adx_di-':
         const colorMinus = setting.colorDiMinus;
-        this.displayIndicator_ADX(name, indicatorData, colorMinus);
+        this.addChartIndicatorSeries_Main('line', name, this.boxDatawithTimeLine(indicatorData), colorMinus, 'ADX');
         break;
       case 'macd':
         const colorMacd = setting.colorMacd;
-        this.displayIndicator_MACD(name, indicatorData, colorMacd);
+        this.addChartIndicatorSeries_Main('line', name, this.boxDatawithTimeLine(indicatorData), colorMacd, 'MACD');
         break;
       case 'signal_macd':
         const colorSignal = setting.colorSignal;
-        this.displayIndicator_MACD(name, indicatorData, colorSignal);
+        this.addChartIndicatorSeries_Main('line', name, this.boxDatawithTimeLine(indicatorData), colorSignal, 'MACD');
         break;
       case 'hist_macd':
         const colorHist = setting.colorHist;
-        this.displayIndicator_MACD(name, indicatorData, colorHist);
+        this.addChartIndicatorSeries_Main('column', name, this.boxDatawithTimeLine(indicatorData), colorHist, 'MACD');
         break;
       case 'open_heikin':
         this.open_heikinList = indicatorData;
@@ -586,27 +511,27 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
             this.close_heikinList[i]
           ]);
         }
-        this.displayIndicator_HEIKIN(name, this.heikinList);
+        this.addChartIndicatorSeries_Main('candlestick', name, this.heikinList, null, 'HEIKIN');
         break;
       case 'stochastic':
-          let kdColor;
-          if (name.indexOf('_k') >= 0) {
-              kdColor = setting.colorK;
-          } else {
-              kdColor = setting.colorD;
-          }
-          this.displayIndicator_STOCHASTIC(name, indicatorData, kdColor);
-          break;
+        let kdColor;
+        if (name.indexOf('_k') >= 0) {
+          kdColor = setting.colorK;
+        } else {
+          kdColor = setting.colorD;
+        }
+        this.addChartIndicatorSeries_Main('line', name, this.boxDatawithTimeLine(indicatorData), kdColor, 'STOCHASTIC');
+        break;
       case 'william':
-          const colorW = setting.colorWilliam;
-          this.displayIndicator_WILLIAM(name, indicatorData, colorW);
-          break;
+        const colorW = setting.colorWilliam;
+        this.addChartIndicatorSeries_Main('line', name, this.boxDatawithTimeLine(indicatorData), colorW, 'WILLIAM');
+        break;
       default:
         break;
     }
   }
 
-  private addChartIndicatorSeries_Main(type, name, data, color, yAxis = null) {
+  private addChartIndicatorSeries_Main(type, name, indicatorData, color, yAxis = null) {
     let yAxisIndex = 0;
 
     if (yAxis) {
@@ -617,7 +542,7 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
       {
         type: type,
         name: name,
-        data: data,
+        data: indicatorData,
         yAxis: yAxisIndex,
         color: color,
         lineWidth: 1,
@@ -630,8 +555,10 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
             state.eventType = 'Ticker-Select';
             state.shareId = this.currentShareId;
             const dateInt = ObjHelper.dateToInt(new Date(tick));
-            state.data = { 'shareId': this.currentShareId,
-              'tradingDate': dateInt };
+            state.data = {
+              'shareId': this.currentShareId,
+              'tradingDate': dateInt
+            };
 
             this._messageService.publishTickerSelect(state);
           }
@@ -691,8 +618,5 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
       }
     }
     return indicatorString;
-  }
-
-  ngAfterViewInit() {
   }
 }
