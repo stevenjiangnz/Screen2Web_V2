@@ -29,7 +29,7 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
   private chart;
   private differ: any;
   private indicatorSettings;
-  private options: Object;
+  private options;
   private chartOptions; // used as stage
   private tickers = [];
   private ohlc;
@@ -125,28 +125,21 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
     }
   }
 
-  public saveChartInstance(chartInstance) {
-    this.chart = chartInstance;
-  }
-
   public displayChart(shareId) {
     const indicatorString = this.getChartSettingInputString();
     const dateRange = this._shareService.getStockDateRange(null);
+    this.initChartOption();
 
     this._tickerService.getTickers(shareId, dateRange.start, dateRange.end, indicatorString).then((data) => {
-      // this._utilityService.startProgressBar();
-
       this.tickers = data.tickerList;
       this.prepareData(data.tickerList);
       this.displayChartBase(data.indicators);
-      this.chart = Highcharts.stockChart(this.chartTarget.nativeElement, this.options);
+      this.displayChartTickers();
 
-        if (this.chart) {
-          this.displayChartTickers();
-          this.displayIndicators(data.indicators);
-          this.chart.setSize(null, this.chart.userOptions.height);
-        }
-        // this._utilityService.completeProgressBar();
+      this.options.series[0].data = this.volume;
+      this.displayIndicators(data.indicators);
+      this.chart = Highcharts.stockChart(this.chartTarget.nativeElement, this.options);
+      this.chart.setSize(null, this.chart.userOptions.height);
     });
   }
 
@@ -262,8 +255,6 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
   }
 
   private displayChartBase(indicators) {
-    this.initChartOption();
-
     let base = 450;
     const gap = 10;
     const bottom = 20;
@@ -277,6 +268,7 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
         const indicatorName = setting.parameter.split(',')[0];
         switch (indicatorName) {
           case 'rsi':
+          if (!this.getChartOptionyAxisIndexbyId('RSI')) {
             this.chartOptions.yAxis.push({
               id: 'RSI',
               title: {
@@ -303,9 +295,10 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
             this.chartOptions.height = base + gap + setting.height;
 
             base = this.chartOptions.height;
+          }
             break;
           case 'adx':
-            if (!this.getChartOptionyAxisbyId('ADX')) {
+            if (!this.getChartOptionyAxisIndexbyId('ADX')) {
               this.chartOptions.yAxis.push({
                 id: 'ADX',
                 title: {
@@ -320,7 +313,7 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
             }
             break;
           case 'macd':
-            if (!this.getChartOptionyAxisbyId('MACD')) {
+            if (!this.getChartOptionyAxisIndexbyId('MACD')) {
               this.chartOptions.yAxis.push({
                 id: 'MACD',
                 title: {
@@ -335,7 +328,7 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
             }
             break;
           case 'heikin':
-            if (!this.getChartOptionyAxisbyId('HEIKIN')) {
+            if (!this.getChartOptionyAxisIndexbyId('HEIKIN')) {
               this.chartOptions.yAxis.push({
                 id: 'HEIKIN',
                 title: {
@@ -350,7 +343,7 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
             }
             break;
           case 'stochastic':
-            if (!this.getChartOptionyAxisbyId('STOCHASTIC')) {
+            if (!this.getChartOptionyAxisIndexbyId('STOCHASTIC')) {
               this.chartOptions.yAxis.push({
                 id: 'STOCHASTIC',
                 title: {
@@ -378,7 +371,7 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
             }
             break;
           case 'william':
-            if (!this.getChartOptionyAxisbyId('WILLIAM')) {
+            if (!this.getChartOptionyAxisIndexbyId('WILLIAM')) {
               this.chartOptions.yAxis.push({
                 id: 'WILLIAM',
                 title: {
@@ -419,9 +412,9 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
   private displayChartTickers() {
     const color = this.getColorStyle('closemain');
     if (this.setting.priceType === 'OCHL') {
-      this.addChartIndicatorSeries('candlestick', 'OCHL', this.ohlc, null, 0);
+      this.addChartIndicatorSeries_Main('candlestick', 'OCHL', this.ohlc, null, 0);
     } else {
-      this.addChartIndicatorSeries('line', 'Line', this.close, color.color, 0);
+      this.addChartIndicatorSeries_Main('line', 'Line', this.close, color.color, 0);
     }
   }
 
@@ -452,19 +445,15 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
     }
 
     color = this.getIndicatorSettingByParameter(name).color;
-    this.addChartIndicatorSeries('line', name, data, color, 0);
+    this.addChartIndicatorSeries_Main('line', name, data, color, 0);
   }
 
   private displayIndicator_RSI(name, indicatorData, color) {
     const data = [];
     let yAxisIndex;
 
-    for (let i = 0; i < this.chart.yAxis.length; i++) {
-      const y = this.getyAxisByID('RSI');
-      if (y) {
-        yAxisIndex = y.options.index;
-      }
-    }
+    yAxisIndex = this.getChartOptionyAxisIndexbyId('RSI');
+
     for (let i = 0; i < indicatorData.length; i++) {
       data.push(
         [
@@ -474,19 +463,16 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
       );
     }
 
-    this.addChartIndicatorSeries('line', name, data, color, yAxisIndex);
+    console.log('name: ', name);
+    this.addChartIndicatorSeries_Main('line', name, data, color, yAxisIndex);
   }
 
   private displayIndicator_ADX(name, indicatorData, color) {
     const data = [];
     let yAxisIndex;
 
-    for (let i = 0; i < this.chart.yAxis.length; i++) {
-      let y = this.getyAxisByID('ADX');
-      if (y) {
-        yAxisIndex = y.options.index;
-      }
-    }
+    yAxisIndex = this.getChartOptionyAxisIndexbyId('ADX');
+
     for (let i = 0; i < indicatorData.length; i++) {
       data.push(
         [
@@ -496,19 +482,14 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
       );
     }
 
-    this.addChartIndicatorSeries('line', name, data, color, yAxisIndex);
+    this.addChartIndicatorSeries_Main('line', name, data, color, yAxisIndex);
   }
 
   private displayIndicator_MACD(name, indicatorData, color) {
     const data = [];
     let yAxisIndex;
 
-    for (let i = 0; i < this.chart.yAxis.length; i++) {
-      const y = this.getyAxisByID('MACD');
-      if (y) {
-        yAxisIndex = y.options.index;
-      }
-    }
+    yAxisIndex = this.getChartOptionyAxisIndexbyId('MACD');
     for (let i = 0; i < indicatorData.length; i++) {
       data.push(
         [
@@ -519,35 +500,26 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
     }
 
     if (name.indexOf('hist') >= 0) {
-      this.addChartIndicatorSeries('column', name, data, color, yAxisIndex);
+      this.addChartIndicatorSeries_Main('column', name, data, color, yAxisIndex);
     } else {
-      this.addChartIndicatorSeries('line', name, data, color, yAxisIndex);
+      this.addChartIndicatorSeries_Main('line', name, data, color, yAxisIndex);
     }
   }
 
   private displayIndicator_HEIKIN(name, indicatorData) {
     let yAxisIndex;
 
-    for (let i = 0; i < this.chart.yAxis.length; i++) {
-      const y = this.getyAxisByID('HEIKIN');
-      if (y) {
-        yAxisIndex = y.options.index;
-      }
-    }
+    yAxisIndex = this.getChartOptionyAxisIndexbyId('HEIKIN');
 
-    this.addChartIndicatorSeries('candlestick', name, indicatorData, null, yAxisIndex);
+    this.addChartIndicatorSeries_Main('candlestick', name, indicatorData, null, yAxisIndex);
   }
 
   private displayIndicator_STOCHASTIC(name, indicatorData, color) {
     const data = [];
     let yAxisIndex;
 
-    for (let i = 0; i < this.chart.yAxis.length; i++) {
-        const y = this.getyAxisByID('STOCHASTIC');
-        if (y) {
-            yAxisIndex = y.options.index;
-        }
-    }
+    yAxisIndex = this.getChartOptionyAxisIndexbyId('STOCHASTIC');
+
     for (let i = 0; i < indicatorData.length; i++) {
         data.push(
             [
@@ -557,19 +529,14 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
         );
     }
 
-    this.addChartIndicatorSeries('line', name, data, color, yAxisIndex);
+    this.addChartIndicatorSeries_Main('line', name, data, color, yAxisIndex);
   }
 
   private displayIndicator_WILLIAM(name, indicatorData, color) {
     const data = [];
     let yAxisIndex;
 
-    for (let i = 0; i < this.chart.yAxis.length; i++) {
-        const y = this.getyAxisByID('WILLIAM');
-        if (y) {
-            yAxisIndex = y.options.index;
-        }
-    }
+    yAxisIndex = this.getChartOptionyAxisIndexbyId ('WILLIAM');
     for (let i = 0; i < indicatorData.length; i++) {
         data.push(
             [
@@ -579,7 +546,7 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
         );
     }
 
-    this.addChartIndicatorSeries('line', name, data, color, yAxisIndex);
+    this.addChartIndicatorSeries_Main('line', name, data, color, yAxisIndex);
 }
 
 
@@ -657,8 +624,8 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
   }
 
 
-  private addChartIndicatorSeries(type, name, data, color, yAxis) {
-    this.chart.addSeries(
+  private addChartIndicatorSeries_Main(type, name, data, color, yAxis) {
+    this.chartOptions.series.push(
       {
         type: type,
         name: name,
@@ -684,31 +651,18 @@ export class StockChartComponent implements OnInit, DoCheck, OnDestroy, AfterVie
       });
   }
 
-
-  private getChartOptionyAxisbyId(id) {
-    let y = null;
+  private getChartOptionyAxisIndexbyId(id) {
+    let index = null;
 
     for (let i = 0; i < this.chartOptions.yAxis.length; i++) {
       if (this.chartOptions.yAxis[i].id === id) {
-        y = this.chartOptions.yAxis[i];
+        index = i;
         break;
       }
     }
-    return y;
+    return index;
   }
-  private getyAxisByID(id) {
-    let y = null;
 
-    if (this.chart && this.chart.yAxis) {
-      for (let i = 0; i < this.chart.yAxis.length; i++) {
-        if (this.chart.yAxis[i].options.id === id) {
-          y = this.chart.yAxis[i];
-          break;
-        }
-      }
-    }
-    return y;
-  }
   private getIndicatorSettingByParameter(param) {
     let setting = null;
 
