@@ -1,3 +1,10 @@
-<p>
-  analysis works!
-</p>
+<div class="row">
+    <div class="col-sm-2">
+      <a [routerLink]="['/analysis/zone']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Zone</a><br>
+      <a [routerLink]="['/analysis/rule']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Rule</a>
+    </div>
+    <div class="col-sm-10">
+        <router-outlet></router-outlet>
+    </div>
+  
+  </div>

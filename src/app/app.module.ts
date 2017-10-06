@@ -34,6 +34,8 @@ import { StockDetailComponent } from './stock/stock-detail/stock-detail.componen
 import { StockProfileComponent } from './stock/stock-profile/stock-profile.component';
 import { StockIndicatorComponent } from './stock/stock-indicator/stock-indicator.component';
 import { AnalysisComponent } from './analysis/analysis.component';
+import { ZoneComponent } from './analysis/zone/zone.component';
+import { RuleComponent } from './analysis/rule/rule.component';
 
 export declare var require: any;
 declare var Highcharts: any;
@@ -73,6 +75,8 @@ function setChartOptions() {
     StockProfileComponent,
     StockIndicatorComponent,
     AnalysisComponent,
+    ZoneComponent,
+    RuleComponent,
   ],
   imports: [
     RouterModule,
