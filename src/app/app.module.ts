@@ -33,6 +33,7 @@ import { StockChartComponent } from './stock/stock-chart/stock-chart.component';
 import { StockDetailComponent } from './stock/stock-detail/stock-detail.component';
 import { StockProfileComponent } from './stock/stock-profile/stock-profile.component';
 import { StockIndicatorComponent } from './stock/stock-indicator/stock-indicator.component';
+import { AnalysisComponent } from './analysis/analysis.component';
 
 export declare var require: any;
 declare var Highcharts: any;
@@ -71,6 +72,7 @@ function setChartOptions() {
     StockDetailComponent,
     StockProfileComponent,
     StockIndicatorComponent,
+    AnalysisComponent,
   ],
   imports: [
     RouterModule,
