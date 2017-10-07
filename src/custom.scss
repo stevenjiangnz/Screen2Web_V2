@@ -191,3 +191,11 @@ body {
     }
   }
 }
+
+.left-panel {
+  padding: 50px 10px 20px 30px;
+  .side-bar a {
+    background-color: $highlight-background-color;
+    color: $primaryColor;
+  }
+}
