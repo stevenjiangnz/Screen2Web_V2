@@ -23,6 +23,8 @@
         "../node_modules/font-awesome/css/font-awesome.css",
         "../node_modules/angular2-toaster/toaster.css",
         "../node_modules/ng2-slim-loading-bar/style.css",
+        "../node_modules/datatables.net-bs/css/dataTables.bootstrap.css",
+        "../node_modules/datatables.net-select-bs/css/select.bootstrap.css",
         "custom.scss",
         "styles.css"
       ],
@@ -32,7 +34,8 @@
         "../node_modules/bootstrap/dist/js/bootstrap.min.js",
         "../node_modules/highcharts/highstock.js",
         "../node_modules/hammerjs/hammer.min.js",
-        "../node_modules/underscore/underscore-min.js"
+        "../node_modules/underscore/underscore-min.js",
+        "../node_modules/datatables.net/js/jquery.dataTables.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
