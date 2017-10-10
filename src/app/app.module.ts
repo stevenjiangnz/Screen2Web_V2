@@ -39,7 +39,6 @@ import { RuleComponent } from './analysis/rule/rule.component';
 
 export declare var require: any;
 declare var Highcharts: any;
-// const Highcharts = require('highcharts');
 
 setChartOptions();
 
@@ -89,7 +88,6 @@ function setChartOptions() {
     routing,
     TreeModule,
     ToasterModule,
-    // ChartModule,
     NgbModule.forRoot(),
     SlimLoadingBarModule.forRoot()
   ],
