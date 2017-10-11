@@ -21,6 +21,7 @@ import { TopNavComponent } from './component/top-nav/top-nav.component';
 import { StockService } from './services/stock.service';
 import { ShareService } from './services/share.service';
 import { SharedService } from './services/shared.service';
+import { AnalysisService } from './services/analysis.service';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { TradeService } from './services/trade.service';
@@ -96,6 +97,7 @@ function setChartOptions() {
     ShareService,
     SharedService,
     ServiceAccessService,
+    AnalysisService,
     AuthService,
     UserService,
     MessageService,
