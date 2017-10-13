@@ -11,6 +11,7 @@ import { Logger, Options, Level } from 'angular2-logger/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
+import { NgxPaginationModule } from 'ngx-pagination';
 import { OrderModule } from 'ngx-order-pipe';
 import { AppComponent } from './app.component';
 import { LoginCompComponent } from './login-comp/login-comp.component';
@@ -90,7 +91,8 @@ function setChartOptions() {
     ToasterModule,
     NgbModule.forRoot(),
     SlimLoadingBarModule.forRoot(),
-    OrderModule
+    OrderModule,
+    NgxPaginationModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [StockService,

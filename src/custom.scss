@@ -213,3 +213,13 @@ body {
     cursor: pointer;
   }
 }
+
+.ngx-pagination {
+  float: right;
+  .current{
+    background-color: $active-background-color !important;
+  }
+  a:hover {
+    background-color: $highlight-background-color !important;
+  }
+}

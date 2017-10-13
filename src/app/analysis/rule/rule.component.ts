@@ -11,6 +11,7 @@ declare var $: any;
 export class RuleComponent implements OnInit, AfterViewInit {
   private rules;
   private sortType = 'id';
+  p: number = 1;
   private sortReverse = false;
 
   constructor(private _analysisService: AnalysisService) { }
