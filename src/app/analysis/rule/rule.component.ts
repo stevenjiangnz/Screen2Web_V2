@@ -9,18 +9,26 @@ declare var $: any;
   styleUrls: ['./rule.component.scss']
 })
 export class RuleComponent implements OnInit, AfterViewInit {
+  private rules;
+  private sortType = 'id';
+  private sortReverse = false;
 
   constructor(private _analysisService: AnalysisService) { }
 
   async ngOnInit() {
-    const rules = await this._analysisService.getRuleList();
+    this.rules = await this._analysisService.getRuleList();
   }
 
   ngAfterViewInit() {
-    const exampleId: any = $('#example');
+    // const exampleId: any = $('#example');
 
-    // exampleId.hide();
-    console.log(exampleId);
-    exampleId.DataTable();
+    // // exampleId.hide();
+    // console.log(exampleId);
+    // exampleId.DataTable();
+  }
+
+  onClickOrder(header) {
+    this.sortType = header;
+    this.sortReverse = !this.sortReverse;
   }
 }

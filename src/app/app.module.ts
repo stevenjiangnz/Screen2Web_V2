@@ -9,10 +9,9 @@ import { TreeModule } from 'angular-tree-component';
 import { routing } from './app.routes';
 import { Logger, Options, Level } from 'angular2-logger/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-// import { ChartModule } from 'angular2-highcharts';
-// import { HighchartsStatic } from 'angular2-highcharts/dist/HighchartsService';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
+import { OrderModule } from 'ngx-order-pipe';
 import { AppComponent } from './app.component';
 import { LoginCompComponent } from './login-comp/login-comp.component';
 import { StockListComponent } from './stock/stock-list.component';
@@ -90,7 +89,8 @@ function setChartOptions() {
     TreeModule,
     ToasterModule,
     NgbModule.forRoot(),
-    SlimLoadingBarModule.forRoot()
+    SlimLoadingBarModule.forRoot(),
+    OrderModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [StockService,
