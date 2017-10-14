@@ -4,6 +4,8 @@ $highlight-background-color: #4e5d6c;
 $tree-hover-color: #4caf50;
 $hover-background-color:  #111;
 $active-background-color: #4caf50;
+$icon-color: #47d1ff;
+$icon-color-right: #ffe427;
 
 body {
   background: $main-background-color;
@@ -222,4 +224,25 @@ body {
   a:hover {
     background-color: $highlight-background-color !important;
   }
+}
+
+.icon-edit {
+  color: $icon-color-right;
+  cursor: pointer;
+  margin: 0 5px 0 5px;
+}
+
+.icon-delete {
+  color: #ff0000;
+  cursor: pointer;
+  margin: 0 5px 0 5px;
+}
+
+.indicator-required {
+  color: #ff006a;
+  font-size: 0.8em;
+}
+
+.control-error {
+  color: #F68D98;
 }

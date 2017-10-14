@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdButtonModule, MdCheckboxModule } from '@angular/material';
@@ -37,6 +37,7 @@ import { StockIndicatorComponent } from './stock/stock-indicator/stock-indicator
 import { AnalysisComponent } from './analysis/analysis.component';
 import { ZoneComponent } from './analysis/zone/zone.component';
 import { RuleComponent } from './analysis/rule/rule.component';
+import { RuleEditComponent } from './analysis/rule/rule-edit/rule-edit.component';
 
 export declare var require: any;
 declare var Highcharts: any;
@@ -77,11 +78,13 @@ function setChartOptions() {
     AnalysisComponent,
     ZoneComponent,
     RuleComponent,
+    RuleEditComponent,
   ],
   imports: [
     RouterModule,
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     BrowserAnimationsModule,
     MdButtonModule,

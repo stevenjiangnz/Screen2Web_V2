@@ -13,7 +13,7 @@
     </div>
 
     <div class="table-container">
-      <div class="row pull-right" style="padding-right: 20px">
+      <div class="row pull-right" style="padding-right: 20px" *ngIf="rules">
         <h4>Total: {{rules.length}}</h4>
       </div>
       <div class="row" style="clear:both">
@@ -74,7 +74,7 @@
               <td>{{rule.type}}</td>
               <td>{{rule.description}}</td>
               <td>{{rule.isSystem}}</td>
-              <td>
+              <td style="width:80px">
                 <i class="fa fa-pencil-square-o icon-edit"></i>
                 <i class="fa fa-trash-o icon-delete"></i>
               </td>
@@ -93,7 +93,7 @@
   </div>
 
   <div class="col-sm-4 right-panel">
-    <div>rule details</div>
+    <app-rule-edit></app-rule-edit>
   </div>
 </div>
 
