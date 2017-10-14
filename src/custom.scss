@@ -2,6 +2,10 @@ $primaryColor: #ebebeb;
 $main-background-color: #2b3e50;
 $highlight-background-color: #4e5d6c;
 $tree-hover-color: #4caf50;
+$hover-background-color:  #111;
+$active-background-color: #4caf50;
+$icon-color: #47d1ff;
+$icon-color-right: #ffe427;
 
 body {
   background: $main-background-color;
@@ -40,10 +44,10 @@ body {
         text-decoration: none;
       }
       a:hover:not(.active) {
-        background-color: #111;
+        background-color: $hover-background-color;
       }
       .active {
-        background-color: #4CAF50;
+        background-color: $active-background-color;
       }
     }
     .logo {
@@ -60,20 +64,185 @@ body {
     padding:0px;
 }
 
-.tree {
-  padding: 3px 5px;
-  background-color: #4e5d6c;
-  line-height: 1.1;
-  .node-content-wrapper:hover {
-    background: $tree-hover-color !important;
+.mid-panel {
+  margin-top: 20px;
+
+  .chart-switch {
+    line-height: 0.85em;
+    .price-type {
+      label {
+        font-size: 0.95em;
+      }
+      input {
+        margin-right: 5px;
+      }
+      margin-right: 15px;
+    }
+    i {
+      margin: 0 5px 0 5px;
+      cursor: pointer;
+      span {
+        color: $primaryColor;
+      }
+    }
+    span {
+      margin: 1px;
+      font-size: 0.90em;
+    }
+    span.selected {
+      text-decoration: underline;
+      font-weight: bold;
+    }
   }
-  .node-content-wrapper-active, .node-content-wrapper-focused {
-    background: darken($tree-hover-color, 10%) !important;
+}
+
+#chart-container {
+  width: 100%;
+  height: 100%;
+}
+
+.btn {
+  cursor: pointer;
+}
+.chart-panel {
+  margin-top: 10px;
+}
+
+.tab-content-wrapper {
+  padding: 20px 10px;
+
+  .table-detail-key {
+    width: 30%;
   }
-  .node-content-wrapper-active:hover, .node-content-wrapper-focused:hover {
-    background: $tree-hover-color !important;
+  .table-detail-value {
+
   }
-  // .node-content-wrapper-focused {
-  //   background: #00ffff !important;
-  // }
+
+}
+.stock-detail-panel{
+  margin-top: 50px;
+  margin-right: 10px;
+  a.nav-link {
+    // background-color: $highlight-background-color;
+    color: $primaryColor;
+  }
+
+  .nav-pills .nav-item.show .nav-link, .nav-pills .nav-link.active {
+    background-color: $active-background-color;
+  }
+
+  a:hover:not(.active) {
+    background-color: $highlight-background-color;
+  }
+
+  .tab-pane.active{
+    background-color: $highlight-background-color;
+    padding: 10px 10px 20px 10px;
+  }
+
+  .detail-sub-title {
+    // border-bottom: 1px solid whitesmoke;
+    padding: 0 0 0 0;
+    margin-top: 10px;
+    label {
+      font-size: 1.2em;
+    }
+    i {
+      margin-top: 10px;
+    }
+  }
+}
+.stock-tree-wrapper {
+  margin-top: 15px;
+
+  .stock-filter {
+    padding: 0.2rem 0.4rem;
+    font-size: 0.95rem;
+  }
+
+  .tree {
+    padding: 3px 5px;
+    background-color: #4e5d6c;
+    line-height: 1.1;
+    font-size: 90%;
+    .node-content-wrapper:hover {
+      background: $tree-hover-color !important;
+    }
+    .node-content-wrapper-active, .node-content-wrapper-focused {
+      background: darken($tree-hover-color, 10%) !important;
+    }
+    .node-content-wrapper-active:hover, .node-content-wrapper-focused:hover {
+      background: $tree-hover-color !important;
+    }
+    .tree-node-level-3 .node-content-wrapper{
+      margin-left: 6px;
+    }
+  
+    .tree-node-level-3 tree-node-expander ::after{
+      content: "\f15c";
+      font-family: FontAwesome;
+      font-style: normal;
+      font-weight: bold;
+      text-decoration: inherit;
+  /*--adjust as necessary--*/
+      color: #fff;
+      font-size: 12px;
+      padding-right: 0.5em;
+      position: absolute;
+      left: 0;
+    }
+  }
+}
+
+.left-panel {
+  padding: 50px 10px 20px 30px;
+  .side-bar a {
+    background-color: $highlight-background-color;
+    color: $primaryColor;
+  }
+}
+
+.content-panel {
+  .mid-panel {
+    padding-top: 20px;
+  }
+}
+
+.table-container {
+  margin-top: 30px;
+
+  .sortable-header {
+    cursor: pointer;
+  }
+}
+
+.ngx-pagination {
+  float: right;
+  .current{
+    background-color: $active-background-color !important;
+  }
+  a:hover {
+    background-color: $highlight-background-color !important;
+  }
+}
+
+.icon-edit {
+  color: $icon-color-right;
+  cursor: pointer;
+  margin: 0 5px 0 5px;
+}
+
+.icon-delete {
+  color: #ff0000;
+  cursor: pointer;
+  margin: 0 5px 0 5px;
+}
+
+.indicator-required {
+  color: #ff006a;
+  font-size: 0.8em;
+}
+
+.control-error {
+  color: #F68D98;
 }

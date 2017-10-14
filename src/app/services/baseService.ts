@@ -3,15 +3,22 @@ import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { SharedService } from './shared.service';
 import 'rxjs/add/operator/map';
 import { AuthService } from './auth.service';
+import { UserService } from './user.service';
 import { StorageKey } from '../global/enums';
 import { Token } from '../model/EntityDefinitions';
 import { LocalStoreHelper } from '../utils/local-store-helper';
 
 export class BaseService {
+    public static token: Token;
     public baseUrl: string;
+    public settings: any;
+    url = 'http://localhost:8002/oauth/token';
+    userName = 'stevenjiangnz';
+    password = 'L@ve@ver77';
 
     constructor(public http: Http) {
-        this.baseUrl =  new SharedService().getSettings().apiBaseUrl;
+        this.settings = new SharedService().getSettings();
+        this.baseUrl = this.settings.apiBaseUrl;
     }
 
     handleError(error: any) {
@@ -21,31 +28,39 @@ export class BaseService {
         return Observable.throw(errMsg);
     }
 
-    getOptions(autoLogin: boolean = true): RequestOptions {
-        if (autoLogin) {
-            this.checkLogin(autoLogin);
-        }
-
+    async getOptions(token?: Token): Promise<RequestOptions> {
         const headers: Headers = new Headers();
         headers.append('content-type', 'application/json; charset=utf-8');
 
-        if (autoLogin) {
-            const token: Token = JSON.parse(LocalStoreHelper.get(StorageKey.SECURITY_TOKEN)) as Token;
-            headers.append('authorization', 'bearer ' + token.token);
+        if (!BaseService.token) {
+            BaseService.token = await this.login('', '');
         }
-        const opts = new RequestOptions({headers: headers});
+
+        headers.append('authorization', 'bearer ' + BaseService.token.token);
+
+        const opts = new RequestOptions({ headers: headers });
         opts.headers = headers;
         return opts;
     }
 
-    async checkLogin(autoLogin: boolean) {
-        if (autoLogin) {
-            const tokenString = LocalStoreHelper.get(StorageKey.SECURITY_TOKEN);
+    public async login(userName: string, password: string): Promise<Token> {
+        const headers = new Headers();
+        let token: Token;
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
 
-            if (!tokenString) {
-                const authService = new AuthService(this.http);
-                await authService.login('', '');
-            }
-        }
+        const opt =  new RequestOptions({ headers: headers });
+        const body = new URLSearchParams();
+        body.set('username', this.userName);
+        body.set('password', this.password);
+        body.set('grant_type', 'password');
+
+        const retPromise = await this.http.post(this.url, body.toString(), { headers }).map((response) => response.json())
+            .toPromise().then((response) => {
+                token = new Token();
+                token.token = response.access_token;
+                token.tokeType = response.token_type;
+                token.expiresIn = response.expires_in;
+            });
+        return token;
     }
 }

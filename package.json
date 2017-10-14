@@ -4,13 +4,14 @@
   "license": "MIT",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --port 4208",
     "build": "ng build",
     "build-prod": "ng build --environment=prod",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "karma": "karma start --reporters teamcity --single-run"
+    "karma": "karma start --reporters teamcity --single-run",
+    "test-debug": "karma start karma.conf.js --browsers Chrome_with_debugging"
   },
   "private": true,
   "dependencies": {
@@ -31,18 +32,31 @@
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.26",
     "@types/underscore": "^1.8.1",
     "angular-tree-component": "^4.1.0",
+    "angular2-highcharts": "^0.5.5",
+    "angular2-logger": "^0.6.0",
+    "angular2-toaster": "^4.0.1",
     "bootstrap": "^4.0.0-alpha.6",
+    "classlist.js": "^1.1.20150312",
     "core-js": "^2.4.1",
+    "datatables.net": "^1.10.16",
+    "datatables.net-bs": "^1.10.16",
+    "datatables.net-select": "^1.2.3",
+    "datatables.net-select-bs": "^1.2.3",
     "font-awesome": "^4.7.0",
     "hammerjs": "^2.0.8",
+    "highcharts": "^5.0.14",
     "jquery": "^3.2.1",
+    "ng2-slim-loading-bar": "^4.0.0",
+    "ngx-order-pipe": "^1.0.2",
+    "ngx-pagination": "^3.0.1",
     "rxjs": "^5.1.0",
     "underscore": "^1.8.3",
+    "web-animations-js": "^2.3.1",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
     "@types/jasmine": "2.5.38",
-    "@types/node": "~6.0.60",
+    "@types/node": "^6.0.88",
     "codelyzer": "~2.0.0",
     "gulp": "^3.9.1",
     "jasmine-core": "~2.5.2",
@@ -59,6 +73,6 @@
     "ts-node": "~2.0.0",
     "tslint": "~4.5.0",
     "typemoq": "^1.8.0",
-    "typescript": "~2.2.0"
+    "typescript": "^2.6.0-dev.20171007"
   }
 }

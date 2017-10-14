@@ -1,0 +1,25 @@
+<div class="stock-detail-panel" >
+  <ngb-tabset type="pills" #tasbset="ngbTabset" (tabChange)="tabChange($event)">
+    <ngb-tab id="profile" title="Profile">
+      <ng-template ngbTabContent>
+        <div *ngIf="currentShare">
+          <app-stock-profile [share]="currentShare" [isOnTop]="true"></app-stock-profile>
+        </div>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab id="indicator" title="Indicator">
+      <!-- <ng-template ngbTabTitle><b>Fancy</b> title</ng-template> -->
+      <ng-template ngbTabContent>
+        <app-stock-indicator [shareId]="currentShareId" [tradingDate]="currentTradingDate"></app-stock-indicator>
+      </ng-template>
+    </ngb-tab>
+    <ngb-tab id="watch" title="Disabled">
+      <ng-template ngbTabContent>
+        <p>Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master
+          cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher
+          synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan
+          aliquip quis cardigan american apparel, butcher voluptate nisi qui.</p>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+</div>

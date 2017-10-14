@@ -1,0 +1,55 @@
+<div class="tab-content-wrapper">
+  <table class="table table-striped table-hover table-detail-view ">
+    <tbody>
+      <tr>
+        <td class="table-detail-key">ID</td>
+        <td class="table-detail-value">{{share.id}}</td>
+      </tr>
+      <tr>
+        <td>Symbol</td>
+        <td>{{share.symbol}}</td>
+      </tr>
+      <tr>
+        <td>Name</td>
+        <td>{{share.name}}</td>
+      </tr>
+      <tr>
+        <td>Sector</td>
+        <td>{{share.sector}}</td>
+      </tr>
+      <tr>
+        <td>Industry</td>
+        <td>{{share.industry}}</td>
+      </tr>
+      <tr>
+        <td>Type</td>
+        <td>{{share.shareType}}</td>
+      </tr>
+      <tr>
+        <td>CFD</td>
+        <td>{{share.iscfd}}</td>
+      </tr>
+      <tr>
+        <td>Market Cap(m)</td>
+        <td>{{shareInfo.marketCapM}}</td>
+      </tr>
+      <tr>
+        <td>Employee Number</td>
+        <td>{{shareInfo.employeeNumber}}</td>
+      </tr>
+      <tr>
+        <td>Company Summary</td>
+        <td>{{shareInfo.companySummary}}</td>
+      </tr>
+      <tr>
+        <td>Company Url</td>
+        <td><a target="_blank" [attr.href]="shareInfo.companyUrl">{{shareInfo.companyUrl}}</a>
+        </td>
+      </tr>
+      <tr>
+        <td>Data Start Date</td>
+        <td>{{shareInfo.dataStartDate}}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

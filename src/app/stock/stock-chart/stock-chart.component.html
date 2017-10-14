@@ -1,0 +1,77 @@
+<div class="mid-panel">
+    <div class="page-title"><h1>Stock</h1></div>
+    <div class="row">
+        <div class="col-lg-12 chart-switch pull-right">
+            <div class="pull-right">
+            <span class="price-type">
+                <label class="radio-inline">
+                    <input type="radio" name="priceType" [(ngModel)]="setting.priceType" value="OCHL" (change)="onPriceTypeChange($event.target)">OCHL</label>
+                <label class="radio-inline">
+                    <input type="radio" name="priceType" [(ngModel)]="setting.priceType" value="Line"  (change)="onPriceTypeChange($event.target)">Line</label>
+            </span>
+                <i class="fa fa-area-chart" (click)="setting.switch.sma5 = !setting.switch.sma5"
+                   [ngStyle]="getColorStyle('sma5')">
+                    <span [ngClass]="{'selected': setting.switch.sma5}">SMA5</span>
+                </i>
+                <i class="fa fa-area-chart" (click)="setting.switch.sma10 = !setting.switch.sma10" [ngStyle]="getColorStyle('sma10')" ng-style="getColorStyle('sma10')">
+                    <span [ngClass]="{'selected': setting.switch.sma10}">SMA10</span>
+                </i>
+                <i class="fa fa-area-chart" (click)="setting.switch.sma30 = !setting.switch.sma30"
+                   [ngStyle]="getColorStyle('sma30')">
+                    <span [ngClass]="{'selected': setting.switch.sma30}">SMA30</span>
+                </i>
+                <i class="fa fa-area-chart" (click)="setting.switch.sma50 = !setting.switch.sma50"
+                   [ngStyle]="getColorStyle('sma50')">
+                    <span [ngClass]="{'selected': setting.switch.sma50}">SMA50</span>
+                </i>
+                <i class="fa fa-area-chart" (click)="setting.switch.sma200 = !setting.switch.sma200"
+                   [ngStyle]="getColorStyle('sma200')">
+                    <span [ngClass]="{'selected': setting.switch.sma200}">SMA200</span>
+                </i>
+                <i class="fa fa-area-chart" (click)="setting.switch.ema10 = !setting.switch.ema10"
+                   [ngStyle]="getColorStyle('ema10')">
+                    <span [ngClass]="{'selected': setting.switch.ema10}">EMA10</span>
+                </i>
+                <i class="fa fa-area-chart" (click)="setting.switch.ema20 = !setting.switch.ema20"
+                   [ngStyle]="getColorStyle('ema20')">
+                    <span [ngClass]="{'selected': setting.switch.ema20}">EMA20</span>
+                </i>
+                <i class="fa fa-area-chart" (click)="setting.switch.bb = !setting.switch.bb"
+                   [ngStyle]="getColorStyle('bb')">
+                    <span [ngClass]="{'selected': setting.switch.bb}">BB</span>
+                </i></div>
+        </div>
+        <div class="col-lg-12 chart-switch pull-right ">
+            <div class="pull-right">
+                <i class="fa fa-line-chart" (click)="setting.switch.adx = !setting.switch.adx"
+                   [ngStyle]="getColorStyle('adx')">
+                    <span [ngClass]="{'selected': setting.switch.adx}">ADX</span>
+                </i>
+                <i class="fa fa-line-chart" (click)="setting.switch.macd = !setting.switch.macd"
+                   [ngStyle]="getColorStyle('macd')">
+                    <span [ngClass]="{'selected': setting.switch.macd}">MACD</span>
+                </i>
+                <i class="fa fa-line-chart" (click)="setting.switch.heikin = !setting.switch.heikin"
+                   [ngStyle]="getColorStyle('heikin')">
+                    <span [ngClass]="{'selected': setting.switch.heikin}">Heikin Ashi</span>
+                </i>
+                <i class="fa fa-line-chart" (click)="setting.switch.stochastic = !setting.switch.stochastic"
+                   [ngStyle]="getColorStyle('stochastic')">
+                    <span [ngClass]="{'selected': setting.switch.stochastic}">Slow Stochastic</span>
+                </i>
+                <i class="fa fa-line-chart" (click)="setting.switch.rsi = !setting.switch.rsi"
+                   [ngStyle]="getColorStyle('rsi')">
+                    <span [ngClass]="{'selected': setting.switch.rsi}">RSI</span>
+                </i>
+                <i class="fa fa-line-chart" (click)="setting.switch.william = !setting.switch.william"
+                   [ngStyle]="getColorStyle('william')">
+                    <span [ngClass]="{'selected': setting.switch.william}">William %R</span>
+                </i>
+            </div>
+        </div>
+    </div>
+    <div class="row chart-panel">
+        <div #chartTarget id="chart-container" [style.height.px]="setting.height">
+        </div>
+    </div>
+</div>

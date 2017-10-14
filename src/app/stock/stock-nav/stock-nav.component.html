@@ -1,4 +1,6 @@
-<p>
-  stock-nav works!
-  <tree-root [nodes]="nodes"></tree-root>
-</p>
+<div class="stock-tree-wrapper">
+  <div>
+    <input type="text" class="form-control stock-filter" placeholder="search stock"  (keyup)="onSearchType($event.target.value, tree)">
+  </div>
+  <tree-root [state]="treeState" (stateChange)="setState($event)" (initialized)="onTreeInitialized($event)" #tree [nodes]="nodes" [focused]="true" [options]="treeOptions" (activate)="onEvent($event)"></tree-root>
+</div>

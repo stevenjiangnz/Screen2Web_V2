@@ -26,7 +26,15 @@
                 "webpack:///./*": "${webRoot}/*"
             }
         },
-         {
+        {
+            "name": "Debug tests in Chrome",
+            "type": "chrome",
+            "request": "attach",
+            "port": 9222,
+            "sourceMaps": true,
+            "webRoot": "${workspaceRoot}"
+        },
+        {
             "name": "PowerShell",
             "type": "PowerShell",
             "request": "launch",
