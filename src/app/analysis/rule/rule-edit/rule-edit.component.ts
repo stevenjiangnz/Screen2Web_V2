@@ -17,7 +17,12 @@ export class RuleEditComponent implements OnInit {
 
   createForm() {
     this.ruleForm = this.fb.group({
-      name: ['', Validators.required], // <--- the FormControl called "name"
+      name: ['', Validators.required],
+      direction: 'long',
+    });
+
+    this.ruleForm.patchValue({
+      direction: 'long'
     });
   }
 
