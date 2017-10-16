@@ -75,8 +75,8 @@
               <td>{{rule.description}}</td>
               <td>{{rule.isSystem}}</td>
               <td style="width:80px">
-                <i class="fa fa-pencil-square-o icon-edit"></i>
-                <i class="fa fa-trash-o icon-delete"></i>
+                <i class="fa fa-pencil-square-o icon-edit" (click)= "editRule(rule.id)"></i>
+                <i class="fa fa-trash-o icon-delete" (click)= "deleteRule(rule.id)"></i>
               </td>
             </tr>
           </tbody>

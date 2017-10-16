@@ -14,9 +14,26 @@ export class AnalysisService extends BaseService {
 
       await this.http.get(this.baseUrl + '/rule', opt).toPromise().then((data) => {
         const resObject = data.json();
-        console.log(resObject);
         ruleList = resObject;
       });
       return ruleList;
     }
+
+    public async createRule(rule) {
+      let newRule = null;
+      const opt = await super.getOptions();
+
+      await this.http.put(this.baseUrl + '/rule', JSON.stringify(rule), opt).toPromise().then((data) => {
+        const resObject = data.json();
+        newRule = resObject;
+      });
+      return newRule;
+    }
+
+    public async deleteRule(ruleId) {
+      const opt = await super.getOptions();
+
+      await this.http.delete(this.baseUrl + '/rule?id=' + ruleId, opt).toPromise();
+    }
+
 }

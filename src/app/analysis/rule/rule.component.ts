@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { AnalysisService } from '../../services/analysis.service';
+import { ToasterService } from 'angular2-toaster';
 
 declare var $: any;
 
@@ -14,7 +15,7 @@ export class RuleComponent implements OnInit, AfterViewInit {
   p: number = 1;
   private sortReverse = false;
 
-  constructor(private _analysisService: AnalysisService) { }
+  constructor(private _analysisService: AnalysisService, private _toasterService: ToasterService) { }
 
   async ngOnInit() {
     this.rules = await this._analysisService.getRuleList();
@@ -32,4 +33,14 @@ export class RuleComponent implements OnInit, AfterViewInit {
     this.sortType = header;
     this.sortReverse = !this.sortReverse;
   }
+
+  async deleteRule(ruleId) {
+    await this._analysisService.deleteRule(ruleId);
+    this._toasterService.pop('success', 'Validation error', 'Formula is required.');
+  }
+
+  editRule(ruleId) {
+    console.log('edit rule id: ', ruleId);
+  }
+
 }
