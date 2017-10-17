@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdButtonModule, MdCheckboxModule, MdTooltipModule } from '@angular/material';
+import { MdButtonModule, MdCheckboxModule, MdTooltipModule, MdDialogModule } from '@angular/material';
 import { TreeModule } from 'angular-tree-component';
 import { routing } from './app.routes';
 import { Logger, Options, Level } from 'angular2-logger/core';
@@ -39,6 +39,7 @@ import { AnalysisComponent } from './analysis/analysis.component';
 import { ZoneComponent } from './analysis/zone/zone.component';
 import { RuleComponent } from './analysis/rule/rule.component';
 import { RuleEditComponent } from './analysis/rule/rule-edit/rule-edit.component';
+import { DialogConfirmComponent } from './component/dialog-confirm/dialog-confirm.component';
 
 export declare var require: any;
 declare var Highcharts: any;
@@ -80,6 +81,7 @@ function setChartOptions() {
     ZoneComponent,
     RuleComponent,
     RuleEditComponent,
+    DialogConfirmComponent,
   ],
   imports: [
     RouterModule,
@@ -91,6 +93,7 @@ function setChartOptions() {
     MdButtonModule,
     MdCheckboxModule,
     MdTooltipModule,
+    MdDialogModule,
     routing,
     TreeModule,
     ToasterModule,
@@ -120,6 +123,7 @@ function setChartOptions() {
     //   useFactory: highchartsFactory
     // }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DialogConfirmComponent]
 })
 export class AppModule { }
