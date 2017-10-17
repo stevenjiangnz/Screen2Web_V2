@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import * as _ from 'underscore';
 import { AnalysisService } from '../../services/analysis.service';
 import { DialogConfirmComponent } from '../../component/dialog-confirm/dialog-confirm.component';
 import { ToasterService } from 'angular2-toaster';
@@ -41,6 +42,7 @@ export class RuleComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(async (result) => {
       if (result && result === 'Yes') {
         await this._analysisService.deleteRule(ruleId);
+        this.rules = _.without(this.rules, _.findWhere(this.rules, {id: ruleId}));
         this._toasterService.pop('success', 'Validation error', 'Formula is required.');
       }
     });
