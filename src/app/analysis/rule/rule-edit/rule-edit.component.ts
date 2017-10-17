@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToasterService } from 'angular2-toaster';
 import { AnalysisService } from '../../../services/analysis.service';
@@ -6,7 +6,8 @@ import { AnalysisService } from '../../../services/analysis.service';
 @Component({
   selector: 'app-rule-edit',
   templateUrl: './rule-edit.component.html',
-  styleUrls: ['./rule-edit.component.scss']
+  styleUrls: ['./rule-edit.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class RuleEditComponent implements OnInit {
   ruleForm: FormGroup;

@@ -253,3 +253,24 @@ body {
     margin: 0 8px 0 8px;
   }
 }
+
+.md-tooltip .md-content {
+  height: 35px !important;
+  background-color: red !important;
+  color: white !important;
+  border-radius: 5px;
+}
+
+.mat-tooltip {
+  /* your own custom styles here */ 
+  /* e.g. */
+  color: #F1EFEF !important;
+  height: auto !important;
+  background-color: #202135 !important;
+  border-radius: 5px;
+  font-size: 16px !important;
+}
+
+.ng-tool-tip {
+  font-size: 16px !important;
+}

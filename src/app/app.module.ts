@@ -4,11 +4,12 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdButtonModule, MdCheckboxModule } from '@angular/material';
+import { MdButtonModule, MdCheckboxModule, MdTooltipModule } from '@angular/material';
 import { TreeModule } from 'angular-tree-component';
 import { routing } from './app.routes';
 import { Logger, Options, Level } from 'angular2-logger/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxDialogModule } from 'ngx-dialog';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -89,13 +90,15 @@ function setChartOptions() {
     BrowserAnimationsModule,
     MdButtonModule,
     MdCheckboxModule,
+    MdTooltipModule,
     routing,
     TreeModule,
     ToasterModule,
     NgbModule.forRoot(),
     SlimLoadingBarModule.forRoot(),
     OrderModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgxDialogModule.forRoot(),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [StockService,
