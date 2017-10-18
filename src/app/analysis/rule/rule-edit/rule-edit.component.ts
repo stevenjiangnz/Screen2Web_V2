@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToasterService } from 'angular2-toaster';
 import { AnalysisService } from '../../../services/analysis.service';
@@ -11,6 +11,24 @@ import { AnalysisService } from '../../../services/analysis.service';
 })
 export class RuleEditComponent implements OnInit {
   ruleForm: FormGroup;
+  mode: string;
+
+  private _currentRule: any;
+
+  @Input() set currentRule (value: any) {
+    this._currentRule = value;
+
+    if (this._currentRule) {
+      this.mode = 'edit';
+    } else {
+      this.mode = 'create';
+    }
+
+    this.initForm();
+  }
+
+  @Output() ruleCreated = new EventEmitter<any>();
+
   constructor(private fb: FormBuilder, private _toasterService: ToasterService, private _analysisService: AnalysisService) {
     this.createForm();
   }
@@ -43,13 +61,41 @@ export class RuleEditComponent implements OnInit {
         this._toasterService.pop('success', 'Rule create success', '');
         this.ruleForm.reset();
       }
+
+      this.ruleCreated.emit(result);
+    }
+  }
+
+  initForm() {
+    if (this.mode === 'create') {
+      this.ruleForm.setValue({
+        name: '',
+        direction: 'long',
+        description: '',
+        type: 'formula',
+        assembly: '',
+        formula: '',
+        note: '',
+        isSystem: true
+      });
+    } else {
+      this.ruleForm.setValue({
+        name: this._currentRule.name,
+        direction: this._currentRule.direction,
+        description: this._currentRule.description,
+        type: this._currentRule.type,
+        assembly: this._currentRule.assembly,
+        formula: this._currentRule.formula,
+        note: this._currentRule.note,
+        isSystem: this._currentRule.isSystem,
+      });
     }
   }
 
   customValid(value) {
     let isValid = true;
     if (value.type === 'formula') {
-      if(!value.formula) {
+      if (!value.formula) {
         isValid = false;
         this._toasterService.pop('error', 'Validation error', 'Formula is required.');
       }
@@ -66,8 +112,7 @@ export class RuleEditComponent implements OnInit {
   }
 
   cancelForm() {
-    console.log('cancel form....');
-
     this.ruleForm.reset();
+    this.initForm();
   }
 }

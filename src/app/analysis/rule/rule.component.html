@@ -6,7 +6,7 @@
       </div>
 
       <div class="col-lg-7 pull-right">
-        <div class="btn btn-primary pull-right">
+        <div class="btn btn-primary pull-right" (click)="createRule()">
           Create
         </div>
       </div>
@@ -93,7 +93,7 @@
   </div>
 
   <div class="col-sm-4 right-panel">
-    <app-rule-edit></app-rule-edit>
+    <app-rule-edit [currentRule]="selectedRule" (ruleCreated)="onRuleCreated($event)"></app-rule-edit>
   </div>
 </div>
 

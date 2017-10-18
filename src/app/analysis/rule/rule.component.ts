@@ -15,6 +15,7 @@ declare var $: any;
 export class RuleComponent implements OnInit, AfterViewInit {
   private rules;
   private sortType = 'id';
+  private selectedRule;
   p: number = 1;
   private sortReverse = false;
 
@@ -49,11 +50,13 @@ export class RuleComponent implements OnInit, AfterViewInit {
   }
 
   editRule(ruleId) {
-    console.log('edit rule id: ', ruleId);
-    this.openDialog();
+    this.selectedRule = _.findWhere(this.rules, {id: ruleId});
   }
 
-  openDialog(): void {
-
+  createRule() {
+    this.selectedRule = null;
+  }
+  onRuleCreated(newRule) {
+    this.rules.push(newRule);
   }
 }
