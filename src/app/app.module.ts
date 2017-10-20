@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MdButtonModule, MdCheckboxModule, MdTooltipModule, MdDialogModule } from '@angular/material';
 import { TreeModule } from 'angular-tree-component';
+import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
 import { routing } from './app.routes';
 import { Logger, Options, Level } from 'angular2-logger/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -41,6 +42,7 @@ import { RuleEditComponent } from './analysis/rule/rule-edit/rule-edit.component
 import { DialogConfirmComponent } from './component/dialog-confirm/dialog-confirm.component';
 import { TradePortalComponent } from './trade/trade-portal.component';
 import { ZoneComponent } from './trade/zone/zone.component';
+import { ZoneEditComponent } from './trade/zone/zone-edit/zone-edit.component';
 
 export declare var require: any;
 declare var Highcharts: any;
@@ -84,6 +86,7 @@ function setChartOptions() {
     DialogConfirmComponent,
     TradePortalComponent,
     ZoneComponent,
+    ZoneEditComponent,
   ],
   imports: [
     RouterModule,
@@ -104,6 +107,7 @@ function setChartOptions() {
     OrderModule,
     NgxPaginationModule,
     NgxDialogModule.forRoot(),
+    NgxMyDatePickerModule.forRoot(),
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [StockService,

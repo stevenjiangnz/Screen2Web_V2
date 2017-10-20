@@ -3963,6 +3963,10 @@ ngx-dialog@^0.1.7:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/ngx-dialog/-/ngx-dialog-0.1.7.tgz#f4ad62455bc28b14f8f50b91021e73586b5ee5c9"
 
+ngx-mydatepicker@^2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/ngx-mydatepicker/-/ngx-mydatepicker-2.1.4.tgz#7b65186d645e8c9819f6ce6de0fe0810655d3f31"
+
 ngx-order-pipe@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/ngx-order-pipe/-/ngx-order-pipe-1.0.2.tgz#a50bbaa1259c96c6dd5c8dfebfe715b4de7893b9"

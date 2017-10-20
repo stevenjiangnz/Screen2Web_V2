@@ -1,0 +1,79 @@
+<div class="stock-detail-panel">
+    <ngb-tabset type="pills" #tasbset="ngbTabset">
+      <ngb-tab id="edit" title="Edit">
+        <ng-template ngbTabContent>
+  
+            <div class="panel-body">
+                <div>
+                    <h4>Zone Details</h4>
+                    <p>Form value: {{ zoneForm.value | json }}</p>
+                    <p>Form status: {{ zoneForm.status | json }}</p>
+                </div>
+                <div class="detail-sub-section">
+                    <form class="form-vertical" name="zoneForm" (ngSubmit)="onSubmit(zoneForm)" [formGroup]="zoneForm" novalidate>
+                        <fieldset>
+                            <div class="form-group" *ngIf="mode==='edit'">
+                                <label>ID: {{_currentZone.id}}</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="zoneName" class="control-label">Name</label>
+                                <i class="fa fa-asterisk indicator-required"></i>
+                                <div>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Name"
+                                           formControlName="name">
+                                </div>
+                                <label class="control-error" *ngIf="zoneForm.controls['name'].invalid && (zoneForm.controls['name'].dirty || zoneForm.controls['name'].touched)">Name is required.</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="zoneDescription" class="control-label">Description</label>
+                                <div>
+                                    <textarea rows="2" class="form-control" id="zoneDescription" placeholder="Description"
+                                        formControlName="description"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                    <label for="zoneStartDate" class="control-label">Start Date</label>
+                                    <div>
+                                        <input class="form-control" style="float:left; width:92%" placeholder="Select a date" ngx-mydatepicker name="myDate"
+                                        formControlName="myDate" [options]="myOptions" #dp="ngx-mydatepicker"/>
+                                        <i class="fa fa-calendar calendar-icon" aria-hidden="true" (click)="dp.toggleCalendar()"></i>
+                                        
+                                    </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Type</label>
+                                <div>
+                                    <label class="radio-inline"><input type="radio" value="formula" [checked]="zoneForm.value['type'] === 'formula'"
+                                                                       formControlName="type">Formula</label>
+  
+                                    <label class="radio-inline"><input type="radio" value="assembly" [checked]="zoneForm.value['type'] === 'assembly'"
+                                                                       formControlName="type">Assembly</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="zoneNote" class="control-label">Note</label>
+                                <div>
+                                    <textarea rows="2" class="form-control" id="note" placeholder="Note"
+                                    formControlName="note"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div>
+                                    <button type="submit" class="btn btn-primary"
+                                            [disabled]="zoneForm.invalid">Submit
+                                    </button>
+                                    <button type="button" class="btn btn-default"
+                                            (click)="cancelForm()">Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </ng-template>
+      </ngb-tab>
+    </ngb-tabset>
+  </div>
