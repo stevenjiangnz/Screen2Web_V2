@@ -18,4 +18,15 @@ export class TradeService extends BaseService {
     zone.isCurrent = true;
     return zone;
   }
+
+  public async getZoneList() {
+    let zoneList = null;
+    const opt = await super.getOptions();
+
+    await this.http.get(this.baseUrl + '/zone', opt).toPromise().then((data) => {
+      const resObject = data.json();
+      zoneList = resObject;
+    });
+    return zoneList;
+  }
 }

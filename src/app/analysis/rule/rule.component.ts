@@ -16,7 +16,7 @@ export class RuleComponent implements OnInit, AfterViewInit {
   private rules;
   private sortType = 'id';
   private selectedRule;
-  p: number = 1;
+  private currentPage = 1;
   private sortReverse = false;
 
   constructor(private _analysisService: AnalysisService, private _toasterService: ToasterService, public dialog: MdDialog) { }
