@@ -36,16 +36,16 @@
                                     <i class="fa fa-asterisk indicator-required"></i>
                                     <div>
                                         <input class="form-control" style="float:left; width:92%" placeholder="Select a date" ngx-mydatepicker name="startDate"
-                                        formControlName="startDate" [options]="myOptions" #dpStart="ngx-mydatepicker"/>
+                                        formControlName="startDateObj" [options]="myOptions" #dpStart="ngx-mydatepicker"/>
                                         <i class="fa fa-calendar calendar-icon" aria-hidden="true" (click)="dpStart.toggleCalendar()"></i>
                                     </div>
-                                    <label class="control-error" *ngIf="zoneForm.controls['startDate'].invalid && (zoneForm.controls['startDate'].dirty || zoneForm.controls['startDate'].touched)">Start Date is required.</label>
+                                    <label class="control-error" *ngIf="zoneForm.controls['startDateObj'].invalid && (zoneForm.controls['startDateObj'].dirty || zoneForm.controls['startDateObj'].touched)">Start Date is required.</label>
                             </div>
                             <div class="form-group">
                                     <label for="zoneStartDate" class="control-label">End Date</label>
                                     <div>
                                         <input class="form-control" style="float:left; width:92%" placeholder="Select a date" ngx-mydatepicker name="endDate"
-                                        formControlName="endDate" [options]="myOptions" #dpEnd="ngx-mydatepicker"/>
+                                        formControlName="endDateObj" [options]="myOptions" #dpEnd="ngx-mydatepicker"/>
                                         <i class="fa fa-calendar calendar-icon" aria-hidden="true" (click)="dpEnd.toggleCalendar()"></i>
                                     </div>
                             </div>

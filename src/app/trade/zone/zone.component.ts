@@ -25,8 +25,6 @@ export class ZoneComponent implements OnInit {
 
   async ngOnInit() {
     this.zones = await this._tradeService.getZoneList();
-
-    console.log('zone list', this.zones);
   }
 
   onClickOrder(header) {
@@ -35,6 +33,29 @@ export class ZoneComponent implements OnInit {
   }
 
   dateToInt(d) {
-    return ObjHelper.dateToInt( new Date(d));
+    return ObjHelper.dateToInt(new Date(d));
+  }
+
+  editZone(zoneId) {
+    this.selectedZone = _.findWhere(this.zones, {id: zoneId});
+  }
+
+  async deleteZone(zoneId) {
+    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      width: '450px',
+      data: { hint: `Are sure you want to remove rule ${zoneId}?` }
+    });
+
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result && result === 'Yes') {
+        await this._tradeService.deleteZone(zoneId);
+        this.zones = _.without(this.zones, _.findWhere(this.zones, { id: zoneId }));
+        this._toasterService.pop('success', 'Zone deleted.', '');
+      }
+    });
+  }
+
+  onZoneCreated(newZone) {
+    this.zones.push(newZone);
   }
 }

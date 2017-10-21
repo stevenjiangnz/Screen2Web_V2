@@ -12,7 +12,7 @@ export class TradeService extends BaseService {
     super(http);
   }
 
-  getCurrentZone() : Zone {
+  getCurrentZone(): Zone {
     const zone = new Zone();
     zone.id = 0;
     zone.isCurrent = true;
@@ -28,5 +28,22 @@ export class TradeService extends BaseService {
       zoneList = resObject;
     });
     return zoneList;
+  }
+
+  public async createZone(zone) {
+    let newZone = null;
+    const opt = await super.getOptions();
+
+    await this.http.put(this.baseUrl + '/zone', JSON.stringify(zone), opt).toPromise().then((data) => {
+      const resObject = data.json();
+      newZone = resObject;
+    });
+    return newZone;
+  }
+
+  public async deleteZone(zoneId) {
+    const opt = await super.getOptions();
+
+    await this.http.delete(this.baseUrl + '/zone?id=' + zoneId, opt).toPromise();
   }
 }

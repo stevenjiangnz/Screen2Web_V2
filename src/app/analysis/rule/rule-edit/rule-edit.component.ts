@@ -70,6 +70,7 @@ export class RuleEditComponent implements OnInit {
         if (result && result.id) {
           this._toasterService.pop('success', 'Rule create success', '');
           this.ruleForm.reset();
+          this.initForm();
           this.ruleCreated.emit(result);
         }
       } else {

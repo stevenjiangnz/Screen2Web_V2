@@ -45,7 +45,7 @@ export class RuleComponent implements OnInit, AfterViewInit {
       if (result && result === 'Yes') {
         await this._analysisService.deleteRule(ruleId);
         this.rules = _.without(this.rules, _.findWhere(this.rules, {id: ruleId}));
-        this._toasterService.pop('success', 'Validation error', 'Formula is required.');
+        this._toasterService.pop('success', 'Rule deleted.', '');
       }
     });
   }

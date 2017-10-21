@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { INgxMyDpOptions, IMyDateModel } from 'ngx-mydatepicker';
+import { ObjHelper } from '../../../utils/obj-helper';
 import { ToasterService } from 'angular2-toaster';
 import { TradeService } from '../../../services/trade.service';
 
@@ -38,7 +39,7 @@ export class ZoneEditComponent implements OnInit {
 
   @Output() zoneCreated = new EventEmitter<any>();
 
-  constructor(private fb: FormBuilder, private _toasterService: ToasterService, private _analysisService: TradeService) {
+  constructor(private fb: FormBuilder, private _toasterService: ToasterService, private _tradeService: TradeService) {
     this.createForm();
   }
 
@@ -54,8 +55,8 @@ export class ZoneEditComponent implements OnInit {
     this.zoneForm = this.fb.group({
       name: ['', Validators.required],
       description: '',
-      startDate: [null, Validators.required],
-      endDate: [null],
+      startDateObj: [null, Validators.required],
+      endDateObj: [null],
       status: 'active',
       note: '',
     });
@@ -67,14 +68,23 @@ export class ZoneEditComponent implements OnInit {
 
   async onSubmit({ value, valid }: { value: any, valid: boolean }) {
     if (this.customValid(value)) {
-      // const result = await this._analysisService.getCurrentZone();
+      value.startDate = new Date(value.startDateObj.jsdate).toISOString();
 
-      // if (result && result.id) {
-      //   this._toasterService.pop('success', 'Zone create success', '');
-      //   this.zoneForm.reset();
-      // }
+      if (value.endDateObj) {
+        value.endDate = new Date(value.endDateObj.jsdate).toISOString();
+      }
 
-      // this.zoneCreated.emit(result);
+      if (this.mode === 'create') {
+        value.tradingDate = ObjHelper.dateToInt(new Date(new Date(value.startDateObj.jsdate).toISOString()));
+        const result = await this._tradeService.createZone(value);
+
+        if (result && result.id) {
+          this._toasterService.pop('success', 'Zone create success', '');
+          this.zoneForm.reset();
+          this.initForm();
+          this.zoneCreated.emit(result);
+        }
+      }
     }
   }
 
@@ -83,29 +93,43 @@ export class ZoneEditComponent implements OnInit {
       this.zoneForm.setValue({
         name: '',
         description: '',
-        startDate: null,
-        endDate: null,
+        startDateObj: null,
+        endDateObj: null,
         status: 'active',
         note: '',
       });
     } else {
+      console.log('about to set value', this._currentZone);
+      const startDate = new Date(this._currentZone.startDate);
+      const startDateObj = {date: {
+        year: startDate.getFullYear(),
+        month: startDate.getMonth() + 1,
+        day: startDate.getDate(),
+      }};
+
+      let endDateObj = null;
+      if (this._currentZone.endDate) {
+        const endDate = new Date(this._currentZone.endDate);
+        endDateObj = {date: {
+          year: endDate.getFullYear(),
+          month: endDate.getMonth() + 1,
+          day: endDate.getDate(),
+        }};
+      }
+
       this.zoneForm.setValue({
         name: this._currentZone.name,
-        direction: this._currentZone.direction,
         description: this._currentZone.description,
-        type: this._currentZone.type,
-        assembly: this._currentZone.assembly,
-        formula: this._currentZone.formula,
+        startDateObj: startDateObj,
+        endDateObj: endDateObj,
+        status: this._currentZone.status,
         note: this._currentZone.note,
-        isSystem: this._currentZone.isSystem,
       });
     }
   }
 
   customValid(value) {
     let isValid = true;
-
-    console.log(value);
 
     if (value.endDate) {
       if (value.endDate.epoc < value.startDate.epoc) {

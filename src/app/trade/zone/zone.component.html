@@ -93,7 +93,7 @@
     </div>
   
     <div class="col-sm-4 right-panel">
-        <app-zone-edit></app-zone-edit>
+        <app-zone-edit [currentZone]="selectedZone" (zoneCreated)="onZoneCreated($event)"></app-zone-edit>
     </div>
   </div>
   
