@@ -13,7 +13,7 @@ import { TradeService } from '../../../services/trade.service';
 
 export class ZoneEditComponent implements OnInit {
   zoneForm: FormGroup;
-  mode: string;
+  mode = 'create';
 
   private _currentZone: any;
 
@@ -53,14 +53,11 @@ export class ZoneEditComponent implements OnInit {
   createForm() {
     this.zoneForm = this.fb.group({
       name: ['', Validators.required],
-      myDate: [null, Validators.required],
-      direction: 'long',
       description: '',
-      type: 'formula',
-      assembly: '',
-      formula: '',
+      startDate: [null, Validators.required],
+      endDate: [null],
+      status: 'active',
       note: '',
-      isSystem: true
     });
   }
 
@@ -70,14 +67,14 @@ export class ZoneEditComponent implements OnInit {
 
   async onSubmit({ value, valid }: { value: any, valid: boolean }) {
     if (this.customValid(value)) {
-      const result = await this._analysisService.getCurrentZone();
+      // const result = await this._analysisService.getCurrentZone();
 
-      if (result && result.id) {
-        this._toasterService.pop('success', 'Zone create success', '');
-        this.zoneForm.reset();
-      }
+      // if (result && result.id) {
+      //   this._toasterService.pop('success', 'Zone create success', '');
+      //   this.zoneForm.reset();
+      // }
 
-      this.zoneCreated.emit(result);
+      // this.zoneCreated.emit(result);
     }
   }
 
@@ -85,13 +82,11 @@ export class ZoneEditComponent implements OnInit {
     if (this.mode === 'create') {
       this.zoneForm.setValue({
         name: '',
-        direction: 'long',
         description: '',
-        type: 'formula',
-        assembly: '',
-        formula: '',
+        startDate: null,
+        endDate: null,
+        status: 'active',
         note: '',
-        isSystem: true
       });
     } else {
       this.zoneForm.setValue({
@@ -109,17 +104,13 @@ export class ZoneEditComponent implements OnInit {
 
   customValid(value) {
     let isValid = true;
-    if (value.type === 'formula') {
-      if (!value.formula) {
-        isValid = false;
-        this._toasterService.pop('error', 'Validation error', 'Formula is required.');
-      }
-    }
 
-    if (value.type === 'assembly') {
-      if (!value.assembly) {
+    console.log(value);
+
+    if (value.endDate) {
+      if (value.endDate.epoc < value.startDate.epoc) {
         isValid = false;
-        this._toasterService.pop('error', 'Validation error', 'Assembly is required.');
+        this._toasterService.pop('error', 'Validation error', 'Start Date can not be later than End Date.');
       }
     }
 

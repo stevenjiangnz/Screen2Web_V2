@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import { ObjHelper } from '../../utils/obj-helper';
 import * as _ from 'underscore';
 import { AnalysisService } from '../../services/analysis.service';
 import { DialogConfirmComponent } from '../../component/dialog-confirm/dialog-confirm.component';
@@ -56,7 +57,12 @@ export class RuleComponent implements OnInit, AfterViewInit {
   createRule() {
     this.selectedRule = null;
   }
+
   onRuleCreated(newRule) {
     this.rules.push(newRule);
+  }
+
+  onRuleUpdated(updatedRule) {
+    ObjHelper.copyObject(updatedRule, this.selectedRule);
   }
 }

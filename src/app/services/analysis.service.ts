@@ -30,6 +30,17 @@ export class AnalysisService extends BaseService {
       return newRule;
     }
 
+    public async updateRule(rule) {
+      let newRule = null;
+      const opt = await super.getOptions();
+
+      await this.http.post(this.baseUrl + '/rule', JSON.stringify(rule), opt).toPromise().then((data) => {
+        const resObject = data.json();
+        newRule = resObject;
+      });
+      return newRule;
+    }
+
     public async deleteRule(ruleId) {
       const opt = await super.getOptions();
 

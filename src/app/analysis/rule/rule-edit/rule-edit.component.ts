@@ -15,7 +15,7 @@ export class RuleEditComponent implements OnInit {
 
   private _currentRule: any;
 
-  @Input() set currentRule (value: any) {
+  @Input() set currentRule(value: any) {
     this._currentRule = value;
 
     if (this._currentRule) {
@@ -28,6 +28,8 @@ export class RuleEditComponent implements OnInit {
   }
 
   @Output() ruleCreated = new EventEmitter<any>();
+
+  @Output() ruleUpdated = new EventEmitter<any>();
 
   constructor(private fb: FormBuilder, private _toasterService: ToasterService, private _analysisService: AnalysisService) {
     this.createForm();
@@ -55,14 +57,31 @@ export class RuleEditComponent implements OnInit {
 
   async onSubmit({ value, valid }: { value: any, valid: boolean }) {
     if (this.customValid(value)) {
-      const result = await this._analysisService.createRule(value);
-
-      if (result && result.id) {
-        this._toasterService.pop('success', 'Rule create success', '');
-        this.ruleForm.reset();
+      console.log(value);
+      if (value.type === 'formula') {
+        value.assembly = null;
+      } else {
+        value.formula = null;
       }
 
-      this.ruleCreated.emit(result);
+      if (this.mode === 'create') {
+        const result = await this._analysisService.createRule(value);
+
+        if (result && result.id) {
+          this._toasterService.pop('success', 'Rule create success', '');
+          this.ruleForm.reset();
+          this.ruleCreated.emit(result);
+        }
+      } else {
+        value.id = this._currentRule.id;
+
+        const result = await this._analysisService.updateRule(value);
+
+        if (result && result.id) {
+          this._toasterService.pop('success', 'Rule update success', '');
+          this.ruleUpdated.emit(result);
+        }
+      }
     }
   }
 
@@ -102,7 +121,7 @@ export class RuleEditComponent implements OnInit {
     }
 
     if (value.type === 'assembly') {
-      if(!value.assembly) {
+      if (!value.assembly) {
         isValid = false;
         this._toasterService.pop('error', 'Validation error', 'Assembly is required.');
       }

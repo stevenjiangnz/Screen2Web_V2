@@ -93,7 +93,7 @@
   </div>
 
   <div class="col-sm-4 right-panel">
-    <app-rule-edit [currentRule]="selectedRule" (ruleCreated)="onRuleCreated($event)"></app-rule-edit>
+    <app-rule-edit [currentRule]="selectedRule" (ruleCreated)="onRuleCreated($event)" (ruleUpdated)="onRuleUpdated($event)"></app-rule-edit>
   </div>
 </div>
 
