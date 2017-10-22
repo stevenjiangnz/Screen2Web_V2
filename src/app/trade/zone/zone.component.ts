@@ -36,6 +36,10 @@ export class ZoneComponent implements OnInit {
     return ObjHelper.dateToInt(new Date(d));
   }
 
+  createZone() {
+    this.selectedZone = null;
+  }
+
   editZone(zoneId) {
     this.selectedZone = _.findWhere(this.zones, {id: zoneId});
   }
@@ -57,5 +61,9 @@ export class ZoneComponent implements OnInit {
 
   onZoneCreated(newZone) {
     this.zones.push(newZone);
+  }
+
+  onZoneUpdated(updatedZone) {
+    ObjHelper.copyObject(updatedZone, this.selectedZone);
   }
 }

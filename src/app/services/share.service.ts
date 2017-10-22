@@ -83,7 +83,6 @@ export class ShareService extends BaseService {
       const resObject = data.json();
       indicator = resObject;
     });
-    console.log(indicator);
     return indicator;
   }
 }

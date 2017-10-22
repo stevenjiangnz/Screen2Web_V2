@@ -38,6 +38,7 @@ export class ZoneEditComponent implements OnInit {
   }
 
   @Output() zoneCreated = new EventEmitter<any>();
+  @Output() zoneUpdated = new EventEmitter<any>();
 
   constructor(private fb: FormBuilder, private _toasterService: ToasterService, private _tradeService: TradeService) {
     this.createForm();
@@ -68,14 +69,15 @@ export class ZoneEditComponent implements OnInit {
 
   async onSubmit({ value, valid }: { value: any, valid: boolean }) {
     if (this.customValid(value)) {
-      value.startDate = new Date(value.startDateObj.jsdate).toISOString();
+      console.log(value);
+      value.startDate = ObjHelper.CalendarToDate(value.startDateObj.date).toISOString();
 
       if (value.endDateObj) {
-        value.endDate = new Date(value.endDateObj.jsdate).toISOString();
+        value.endDate = ObjHelper.CalendarToDate(value.endDateObj.date).toISOString();
       }
 
       if (this.mode === 'create') {
-        value.tradingDate = ObjHelper.dateToInt(new Date(new Date(value.startDateObj.jsdate).toISOString()));
+        value.tradingDate = ObjHelper.dateToInt(new Date(value.startDate));
         const result = await this._tradeService.createZone(value);
 
         if (result && result.id) {
@@ -83,6 +85,18 @@ export class ZoneEditComponent implements OnInit {
           this.zoneForm.reset();
           this.initForm();
           this.zoneCreated.emit(result);
+        }
+      } else {
+        console.log('about to submit update');
+
+        value.id = this._currentZone.id;
+        value.tradingDate = this._currentZone.tradingDate;
+
+        const result = await this._tradeService.updateZone(value);
+
+        if (result && result.id) {
+          this._toasterService.pop('success', 'Rule update success', '');
+          this.zoneUpdated.emit(result);
         }
       }
     }
@@ -99,22 +113,25 @@ export class ZoneEditComponent implements OnInit {
         note: '',
       });
     } else {
-      console.log('about to set value', this._currentZone);
       const startDate = new Date(this._currentZone.startDate);
-      const startDateObj = {date: {
-        year: startDate.getFullYear(),
-        month: startDate.getMonth() + 1,
-        day: startDate.getDate(),
-      }};
+      const startDateObj = {
+        date: {
+          year: startDate.getFullYear(),
+          month: startDate.getMonth() + 1,
+          day: startDate.getDate(),
+        }
+      };
 
       let endDateObj = null;
       if (this._currentZone.endDate) {
         const endDate = new Date(this._currentZone.endDate);
-        endDateObj = {date: {
-          year: endDate.getFullYear(),
-          month: endDate.getMonth() + 1,
-          day: endDate.getDate(),
-        }};
+        endDateObj = {
+          date: {
+            year: endDate.getFullYear(),
+            month: endDate.getMonth() + 1,
+            day: endDate.getDate(),
+          }
+        };
       }
 
       this.zoneForm.setValue({

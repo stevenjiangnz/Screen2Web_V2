@@ -39,4 +39,8 @@ export class ObjHelper {
 
         return returnDate;
     }
+
+    public static CalendarToDate(calendarDate) {
+        return new Date(calendarDate.year, calendarDate.month -1, calendarDate.day);
+    }
 }

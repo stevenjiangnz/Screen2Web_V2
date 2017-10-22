@@ -46,4 +46,15 @@ export class TradeService extends BaseService {
 
     await this.http.delete(this.baseUrl + '/zone?id=' + zoneId, opt).toPromise();
   }
+
+  public async updateZone(zone) {
+    let updatedZone = null;
+    const opt = await super.getOptions();
+
+    await this.http.post(this.baseUrl + '/zone', JSON.stringify(zone), opt).toPromise().then((data) => {
+      const resObject = data.json();
+      updatedZone = resObject;
+    });
+    return updatedZone;
+  }
 }

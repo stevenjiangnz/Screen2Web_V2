@@ -32,7 +32,6 @@ export class StockIndicatorComponent implements OnInit, OnChanges {
     if (this.shareId && this.tradingDate) {
       this._shareService.getIndicator(this.shareId, this.tradingDate).then((result) => {
         this.indicator = result;
-        console.log('indicator result: ', result);
       });
     }
   }

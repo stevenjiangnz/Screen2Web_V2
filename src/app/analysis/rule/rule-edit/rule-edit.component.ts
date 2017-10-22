@@ -57,7 +57,6 @@ export class RuleEditComponent implements OnInit {
 
   async onSubmit({ value, valid }: { value: any, valid: boolean }) {
     if (this.customValid(value)) {
-      console.log(value);
       if (value.type === 'formula') {
         value.assembly = null;
       } else {

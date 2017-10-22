@@ -6,8 +6,8 @@
             <div class="panel-body">
                 <div>
                     <h4>Zone Details</h4>
-                    <p>Form value: {{ zoneForm.value | json }}</p>
-                    <p>Form status: {{ zoneForm.status | json }}</p>
+                    <!-- <p>Form value: {{ zoneForm.value | json }}</p>
+                    <p>Form status: {{ zoneForm.status | json }}</p> -->
                 </div>
                 <div class="detail-sub-section">
                     <form class="form-vertical" name="zoneForm" (ngSubmit)="onSubmit(zoneForm)" [formGroup]="zoneForm" novalidate>
@@ -53,10 +53,10 @@
                             <div class="form-group">
                                 <label class="control-label">Status</label>
                                 <div>
-                                    <label class="radio-inline"><input type="radio" value="active" [checked]="zoneForm.value['status'] === 'active'"
+                                    <label class="radio-inline"><input type="radio" value="Active" [checked]="zoneForm.value['status'] === 'Active'"
                                                                        formControlName="status">Active</label>
   
-                                    <label class="radio-inline"><input type="radio" value="inactive" [checked]="zoneForm.value['status'] === 'inactive'"
+                                    <label class="radio-inline"><input type="radio" value="Inactive" [checked]="zoneForm.value['status'] === 'Inactive'"
                                                                        formControlName="status">Inactive</label>
                                 </div>
                             </div>
