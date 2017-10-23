@@ -43,6 +43,8 @@ import { DialogConfirmComponent } from './component/dialog-confirm/dialog-confir
 import { TradePortalComponent } from './trade/trade-portal.component';
 import { ZoneComponent } from './trade/zone/zone.component';
 import { ZoneEditComponent } from './trade/zone/zone-edit/zone-edit.component';
+import { BrokerComponent } from './trade/broker/broker.component';
+import { BrokerEditComponent } from './trade/broker/broker-edit/broker-edit.component';
 
 export declare var require: any;
 declare var Highcharts: any;
@@ -87,6 +89,8 @@ function setChartOptions() {
     TradePortalComponent,
     ZoneComponent,
     ZoneEditComponent,
+    BrokerComponent,
+    BrokerEditComponent,
   ],
   imports: [
     RouterModule,

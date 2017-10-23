@@ -57,4 +57,21 @@ export class TradeService extends BaseService {
     });
     return updatedZone;
   }
+
+  public async getBrokerList() {
+    let brokerList = null;
+    const opt = await super.getOptions();
+
+    await this.http.get(this.baseUrl + '/broker', opt).toPromise().then((data) => {
+      const resObject = data.json();
+      brokerList = resObject;
+    });
+    return brokerList;
+  }
+
+  public async deleteBroker(brokerId) {
+    const opt = await super.getOptions();
+
+    await this.http.delete(this.baseUrl + '/broker?id=' + brokerId, opt).toPromise();
+  }
 }
