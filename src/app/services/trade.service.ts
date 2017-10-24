@@ -69,6 +69,28 @@ export class TradeService extends BaseService {
     return brokerList;
   }
 
+  public async createBroker(broker) {
+    let newBroker = null;
+    const opt = await super.getOptions();
+
+    await this.http.put(this.baseUrl + '/broker', JSON.stringify(broker), opt).toPromise().then((data) => {
+      const resObject = data.json();
+      newBroker = resObject;
+    });
+    return newBroker;
+  }
+
+  public async updateBroker(broker) {
+    let updatedBroker = null;
+    const opt = await super.getOptions();
+
+    await this.http.post(this.baseUrl + '/broker', JSON.stringify(broker), opt).toPromise().then((data) => {
+      const resObject = data.json();
+      updatedBroker = resObject;
+    });
+    return updatedBroker;
+  }
+
   public async deleteBroker(brokerId) {
     const opt = await super.getOptions();
 

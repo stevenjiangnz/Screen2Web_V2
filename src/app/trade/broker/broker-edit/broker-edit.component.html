@@ -46,9 +46,13 @@
                   <label class="control-error" *ngIf="brokerForm.controls['feeRate'].invalid && (brokerForm.controls['feeRate'].dirty || brokerForm.controls['feeRate'].touched)">Fee Rate is required.</label>
                 </div>
                 <div class="form-group">
-                  <label for="shortable" class="control-label">Shortable</label>
-                  <div>
-                    <input type="checkbox" class="form-control" id="shartable" formControlName="shortable"/>
+                  <div class="checkbox">
+                        <input type="checkbox" class="form-control" id="shartable" formControlName="shortable">Is Shortable
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="checkbox">
+                        <input type="checkbox" class="form-control" id="isActive" formControlName="isActive">Is Active
                   </div>
                 </div>
                 <div class="form-group">

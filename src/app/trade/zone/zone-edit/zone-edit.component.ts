@@ -69,7 +69,6 @@ export class ZoneEditComponent implements OnInit {
 
   async onSubmit({ value, valid }: { value: any, valid: boolean }) {
     if (this.customValid(value)) {
-      console.log(value);
       value.startDate = ObjHelper.CalendarToDate(value.startDateObj.date).toISOString();
 
       if (value.endDateObj) {
@@ -87,8 +86,6 @@ export class ZoneEditComponent implements OnInit {
           this.zoneCreated.emit(result);
         }
       } else {
-        console.log('about to submit update');
-
         value.id = this._currentZone.id;
         value.tradingDate = this._currentZone.tradingDate;
 

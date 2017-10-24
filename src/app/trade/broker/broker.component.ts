@@ -22,8 +22,6 @@ export class BrokerComponent implements OnInit {
 
   async ngOnInit() {
     this.brokers = await this._tradeService.getBrokerList();
-
-    console.log(this.brokers);
   }
 
   onClickOrder(header) {

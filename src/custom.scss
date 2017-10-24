@@ -281,3 +281,12 @@ body {
   cursor: pointer; 
   color: $icon-color-right;
 }
+
+.checkbox {
+  input {
+    width: 35px;
+    float: left;
+    margin-top: 7px;
+    margin-left: 5px;
+  }
+}

@@ -44,11 +44,6 @@ export class BrokerEditComponent implements OnInit {
     this.createForm();
   }
 
-  // optional date changed callback
-  onDateChanged(event: IMyDateModel): void {
-    // date selected
-  }
-
   ngOnInit() {
   }
 
@@ -56,9 +51,10 @@ export class BrokerEditComponent implements OnInit {
     this.brokerForm = this.fb.group({
       name: ['', Validators.required],
       description: '',
-      minFee: 0,
-      feeRate: 0,
+      minFee: [null, Validators.required],
+      feeRate: [null, Validators.required],
       shortable: true,
+      isActive: true,
     });
   }
 
@@ -68,35 +64,24 @@ export class BrokerEditComponent implements OnInit {
 
   async onSubmit({ value, valid }: { value: any, valid: boolean }) {
     if (this.customValid(value)) {
-      console.log(value);
-      value.startDate = ObjHelper.CalendarToDate(value.startDateObj.date).toISOString();
-
-      if (value.endDateObj) {
-        value.endDate = ObjHelper.CalendarToDate(value.endDateObj.date).toISOString();
-      }
-
       if (this.mode === 'create') {
-        value.tradingDate = ObjHelper.dateToInt(new Date(value.startDate));
-        // const result = await this._tradeService.createBroker(value);
+        const result = await this._tradeService.createBroker(value);
 
-        // if (result && result.id) {
-        //   this._toasterService.pop('success', 'Broker create success', '');
-        //   this.brokerForm.reset();
-        //   this.initForm();
-        //   this.brokerCreated.emit(result);
-        // }
+        if (result && result.id) {
+          this._toasterService.pop('success', 'Broker create success', '');
+          this.brokerForm.reset();
+          this.initForm();
+          this.brokerCreated.emit(result);
+        }
       } else {
-        console.log('about to submit update');
-
         value.id = this._currentBroker.id;
-        value.tradingDate = this._currentBroker.tradingDate;
 
-        // const result = await this._tradeService.updateBroker(value);
+        const result = await this._tradeService.updateBroker(value);
 
-        // if (result && result.id) {
-        //   this._toasterService.pop('success', 'Rule update success', '');
-        //   this.brokerUpdated.emit(result);
-        // }
+        if (result && result.id) {
+          this._toasterService.pop('success', 'Broker update success', '');
+          this.brokerUpdated.emit(result);
+        }
       }
     }
   }
@@ -106,39 +91,19 @@ export class BrokerEditComponent implements OnInit {
       this.brokerForm.setValue({
         name: '',
         description: '',
-        minFee: 0,
-        feeRate: 0,
+        minFee: null,
+        feeRate: null,
         shortable: true,
+        isActive: true,
       });
     } else {
-      const startDate = new Date(this._currentBroker.startDate);
-      const startDateObj = {
-        date: {
-          year: startDate.getFullYear(),
-          month: startDate.getMonth() + 1,
-          day: startDate.getDate(),
-        }
-      };
-
-      let endDateObj = null;
-      if (this._currentBroker.endDate) {
-        const endDate = new Date(this._currentBroker.endDate);
-        endDateObj = {
-          date: {
-            year: endDate.getFullYear(),
-            month: endDate.getMonth() + 1,
-            day: endDate.getDate(),
-          }
-        };
-      }
-
       this.brokerForm.setValue({
         name: this._currentBroker.name,
         description: this._currentBroker.description,
-        startDateObj: startDateObj,
-        endDateObj: endDateObj,
-        status: this._currentBroker.status,
-        note: this._currentBroker.note,
+        minFee: this._currentBroker.minFee,
+        feeRate: this._currentBroker.feeRate,
+        shortable: this._currentBroker.shortable,
+        isActive: this._currentBroker.isActive,
       });
     }
   }
