@@ -45,6 +45,8 @@ import { ZoneComponent } from './trade/zone/zone.component';
 import { ZoneEditComponent } from './trade/zone/zone-edit/zone-edit.component';
 import { BrokerComponent } from './trade/broker/broker.component';
 import { BrokerEditComponent } from './trade/broker/broker-edit/broker-edit.component';
+import { AccountComponent } from './trade/account/account.component';
+import { AccountEditComponent } from './trade/account/account-edit/account-edit.component';
 
 export declare var require: any;
 declare var Highcharts: any;
@@ -91,6 +93,8 @@ function setChartOptions() {
     ZoneEditComponent,
     BrokerComponent,
     BrokerEditComponent,
+    AccountComponent,
+    AccountEditComponent,
   ],
   imports: [
     RouterModule,

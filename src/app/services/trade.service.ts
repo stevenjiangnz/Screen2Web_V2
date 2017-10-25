@@ -96,4 +96,16 @@ export class TradeService extends BaseService {
 
     await this.http.delete(this.baseUrl + '/broker?id=' + brokerId, opt).toPromise();
   }
+
+
+  public async getAccountList() {
+    let accountList = null;
+    const opt = await super.getOptions();
+
+    await this.http.get(this.baseUrl + '/tradeaccount/getlistfull', opt).toPromise().then((data) => {
+      const resObject = data.json();
+      accountList = resObject;
+    });
+    return accountList;
+  }
 }
