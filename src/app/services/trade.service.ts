@@ -108,4 +108,21 @@ export class TradeService extends BaseService {
     });
     return accountList;
   }
+
+  public async createAccount(account) {
+    let newAccount = null;
+    const opt = await super.getOptions();
+
+    await this.http.put(this.baseUrl + '/tradeaccount', JSON.stringify(account), opt).toPromise().then((data) => {
+      const resObject = data.json();
+      newAccount = resObject;
+    });
+    return newAccount;
+  }
+
+  public async deleteAccount(accountId) {
+    const opt = await super.getOptions();
+
+    await this.http.delete(this.baseUrl + '/tradeaccount?id=' + accountId, opt).toPromise();
+  }
 }

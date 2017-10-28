@@ -53,7 +53,7 @@ export class AccountComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(async (result) => {
       if (result && result === 'Yes') {
-        // await this._tradeService.deleteAccount(accountId);
+        await this._tradeService.deleteAccount(accountId);
         this.accounts = _.without(this.accounts, _.findWhere(this.accounts, { id: accountId }));
         this._toasterService.pop('success', 'Account deleted.', '');
       }
@@ -62,6 +62,7 @@ export class AccountComponent implements OnInit {
 
   onAccountCreated(newAccount) {
     this.accounts.push(newAccount);
+    this.boxAccountList();
   }
 
   onAccountUpdated(updatedAccount) {
@@ -87,7 +88,5 @@ export class AccountComponent implements OnInit {
       }
 
     });
-
-    console.log(this.accounts);
   }
 }
