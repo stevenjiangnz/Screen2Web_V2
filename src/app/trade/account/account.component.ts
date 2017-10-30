@@ -67,6 +67,13 @@ export class AccountComponent implements OnInit {
 
   onAccountUpdated(updatedAccount) {
     ObjHelper.copyObject(updatedAccount, this.selectedAccount);
+    this.boxAccountList();
+  }
+
+  async onFundTransfered() {
+    this.accounts = await this._tradeService.getAccountList();
+
+    this.boxAccountList();
   }
 
   async boxAccountList() {
@@ -86,7 +93,6 @@ export class AccountComponent implements OnInit {
       } else {
         (acc as any).zone = 'current';
       }
-
     });
   }
 }

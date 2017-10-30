@@ -1,0 +1,40 @@
+<div>
+  <h4>Fund Details</h4>
+  <!-- <p>Form value: {{ fundForm.value | json }}</p>
+  <p>Form status: {{ fundForm.status | json }}</p> -->
+</div>
+<div class="detail-sub-section">
+  <form class="form-vertical" name="fundForm" (ngSubmit)="onSubmit(fundForm)" [formGroup]="fundForm" novalidate>
+    <fieldset>
+      <div class="form-group">
+        <label style="font-weight: bolder; margin-top:30px">{{_currentAccount.name}} ({{_currentAccount.accountId}}) </label>
+      </div>
+      <div class="form-group">
+        <label class="control-label">Operation Type</label>
+        <div>
+          <label class="radio-inline"><input type="radio" value="deposit" [checked]="fundForm.value['operation'] === 'deposit'"
+                                                         formControlName="operation">Desposit</label>
+
+          <label class="radio-inline"><input type="radio" value="withdraw" [checked]="fundForm.value['operation'] === 'withdraw'"
+                                                          formControlName="operation">Withdraw</label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="minFee" class="control-label">Fund Amount</label>
+        <i class="fa fa-asterisk indicator-required"></i>
+        <div>
+          <input type="number" class="form-control" id="fundAmount" name="fundAmount" placeholder="Fund Amount" min="0" formControlName="fundAmount">
+        </div>
+        <label class="control-error" *ngIf="fundForm.controls['fundAmount'].invalid && (fundForm.controls['fundAmount'].dirty || fundForm.controls['fundAmount'].touched)">Fund Amount is required.</label>
+      </div>
+      <div class="form-group">
+        <div>
+          <button type="submit" class="btn btn-primary" [disabled]="fundForm.invalid">Submit
+                                  </button>
+          <button type="button" class="btn btn-default" (click)="cancelForm()">Cancel
+                                  </button>
+        </div>
+      </div>
+    </fieldset>
+  </form>
+</div>

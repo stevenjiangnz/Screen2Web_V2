@@ -120,9 +120,32 @@ export class TradeService extends BaseService {
     return newAccount;
   }
 
+  public async updateAccount(account) {
+    let updatedAccount = null;
+    const opt = await super.getOptions();
+
+    await this.http.post(this.baseUrl + '/tradeaccount', JSON.stringify(account), opt).toPromise().then((data) => {
+      const resObject = data.json();
+      updatedAccount = resObject;
+    });
+    return updatedAccount;
+  }
+
   public async deleteAccount(accountId) {
     const opt = await super.getOptions();
 
     await this.http.delete(this.baseUrl + '/tradeaccount?id=' + accountId, opt).toPromise();
+  }
+
+  public async transferFund(accountId, operation, amount) {
+    let updatedBalance = null;
+    const opt = await super.getOptions();
+
+    // tslint:disable-next-line:max-line-length
+    await this.http.post(this.baseUrl + `/tradeaccount/transferfund?accountid=${accountId}&operation=${operation}&amount=${amount}`, null, opt).toPromise().then((data) => {
+      const resObject = data.json();
+      updatedBalance = resObject;
+    });
+    return updatedBalance;
   }
 }

@@ -84,5 +84,14 @@
         </div>
       </ng-template>
     </ngb-tab>
+
+    <ngb-tab id="fund" title="Fund" *ngIf="mode==='edit'">
+      <ng-template ngbTabContent>
+
+        <div class="panel-body" >
+          <app-fund-transfer [currentAccount]="_currentAccount" (fundTransfered) = "onFundTransfered()" ></app-fund-transfer>
+        </div>
+      </ng-template>
+    </ngb-tab>
   </ngb-tabset>
 </div>

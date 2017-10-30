@@ -47,6 +47,7 @@ import { BrokerComponent } from './trade/broker/broker.component';
 import { BrokerEditComponent } from './trade/broker/broker-edit/broker-edit.component';
 import { AccountComponent } from './trade/account/account.component';
 import { AccountEditComponent } from './trade/account/account-edit/account-edit.component';
+import { FundTransferComponent } from './trade/account/fund-transfer/fund-transfer.component';
 
 export declare var require: any;
 declare var Highcharts: any;
@@ -95,6 +96,7 @@ function setChartOptions() {
     BrokerEditComponent,
     AccountComponent,
     AccountEditComponent,
+    FundTransferComponent,
   ],
   imports: [
     RouterModule,

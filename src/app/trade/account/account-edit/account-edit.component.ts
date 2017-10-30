@@ -38,10 +38,18 @@ export class AccountEditComponent implements OnInit {
     }
 
     this.initForm();
+    const fundAmountCtrl = this.accountForm.get('fundAmount');
+
+    if (this.mode === 'edit') {
+      fundAmountCtrl.disable();
+    } else {
+      fundAmountCtrl.enable();
+    }
   }
 
   @Output() accountCreated = new EventEmitter<any>();
   @Output() accountUpdated = new EventEmitter<any>();
+  @Output() fundTransfered = new EventEmitter<any>();
 
   constructor(private fb: FormBuilder, private _toasterService: ToasterService, private _tradeService: TradeService) {
     this.createForm();
@@ -76,7 +84,6 @@ export class AccountEditComponent implements OnInit {
   async onSubmit({ value, valid }: { value: any, valid: boolean }) {
     if (this.customValid(value)) {
       if (this.mode === 'create') {
-        console.log(value);
         const result = await this._tradeService.createAccount({
           availableFund: value.fundAmount,
           status: value.status,
@@ -94,14 +101,23 @@ export class AccountEditComponent implements OnInit {
           this.accountCreated.emit(result);
         }
       } else {
-        value.id = this._currentAccount.id;
+        const result = await this._tradeService.updateAccount({
+          id: this._currentAccount.id,
+          status: value.status,
+          zoneId: value.zone.id,
+          brokerId: value.broker.id,
+          name: value.name,
+          description: value.description,
+          isTrackingAccount: value.isTrackingAccount,
+          owner: this._currentAccount.owner,
+          createDate: this._currentAccount.createDate,
+          createBy: this._currentAccount.createBy,
+        });
 
-        // const result = await this._tradeService.updateAccount(value);
-
-        // if (result && result.id) {
-        //   this._toasterService.pop('success', 'Account update success', '');
-        //   this.accountUpdated.emit(result);
-        // }
+        if (result && result.id) {
+          this._toasterService.pop('success', 'Account update success', '');
+          this.accountUpdated.emit(result);
+        }
       }
     }
   }
@@ -120,11 +136,12 @@ export class AccountEditComponent implements OnInit {
     } else {
       this.accountForm.setValue({
         name: this._currentAccount.name,
+        zone: this.getZoneById(this._currentAccount.zoneId),
+        broker: this.getBrokerById(this._currentAccount.brokerId),
         description: this._currentAccount.description,
-        minFee: this._currentAccount.minFee,
-        feeRate: this._currentAccount.feeRate,
-        shortable: this._currentAccount.shortable,
-        // isActive: this._currentAccount.isActive,
+        fundAmount: this._currentAccount.fundAmount,
+        isTrackingAccount: false,
+        status: 'Active'
       });
     }
   }
@@ -132,14 +149,19 @@ export class AccountEditComponent implements OnInit {
   customValid(value) {
     let isValid = true;
 
-    // if (value.endDate) {
-    //   if (value.endDate.epoc < value.startDate.epoc) {
-    //     isValid = false;
-    //     this._toasterService.pop('error', 'Validation error', 'Start Date can not be later than End Date.');
-    //   }
-    // }
-
     return isValid;
+  }
+
+  private getObjectForSevice(value) {
+    return {
+      availableFund: value.fundAmount,
+      status: value.status,
+      zoneId: value.zone.id,
+      brokerId: value.broker.id,
+      name: value.name,
+      description: value.description,
+      isTrackingAccount: value.isTrackingAccount,
+    };
   }
 
   cancelForm() {
@@ -147,4 +169,15 @@ export class AccountEditComponent implements OnInit {
     this.initForm();
   }
 
+  private getZoneById(id) {
+     return _.findWhere(this.zones, {id: id});
+  }
+
+  private getBrokerById(id) {
+    return _.findWhere(this.brokers, {id: id});
+ }
+
+ private onFundTransfered() {
+   this.fundTransfered.emit();
+ }
 }

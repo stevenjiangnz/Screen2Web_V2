@@ -125,7 +125,7 @@
   </div>
 
   <div class="col-sm-4 right-panel">
-      <app-account-edit [currentAccount]="selectedAccount" (accountCreated)="onAccountCreated($event)" (accountUpdated)="onAccountUpdated($event)"></app-account-edit>
+      <app-account-edit [currentAccount]="selectedAccount" (accountCreated)="onAccountCreated($event)" (accountUpdated)="onAccountUpdated($event)" (fundTransfered)="onFundTransfered()"></app-account-edit>
   </div>
 </div>
 
