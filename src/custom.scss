@@ -290,3 +290,17 @@ body {
     margin-left: 5px;
   }
 }
+
+.zone-selector{
+  padding-top: 13px;
+  span {
+    font-size: 18px;
+    font-weight: bold;
+
+    i {
+      margin: 0 10px 0 10px;
+      color: $icon-color;
+      cursor: pointer;
+    }
+  }
+}
