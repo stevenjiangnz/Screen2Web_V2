@@ -304,3 +304,19 @@ body {
     }
   }
 }
+
+.main-panel-form, .card {
+  margin-top: 30px;
+  padding: 0px;
+  border: 0px;
+
+  .card-header {
+    background-color: $highlight-background-color;
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+
+  .card-block {
+    background-color: darken($highlight-background-color, 5%);
+  }
+}

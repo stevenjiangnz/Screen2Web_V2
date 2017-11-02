@@ -1,3 +1,44 @@
-<p>
-  trade-setting works!
-</p>
+<div class="mid-panel">
+  <div>
+    <div>
+      <h1>Update Zone and Account</h1>
+    </div>
+  </div>
+
+  <div class="main-panel-form col-lg-7 card" style="padding:0px">
+    <div class="card-header">Update current zone and account</div>
+    <div class="card-block">
+      <div class="detail-sub-section">
+        <form class="form-vertical" name="settingForm" (ngSubmit)="onSubmit(settingForm)" [formGroup]="settingForm" novalidate>
+          <fieldset>
+            <div class="form-group" *ngIf="mode==='edit'">
+              <label>ID: {{_currentBroker.id}}</label>
+            </div>
+            <div class="form-group">
+              <label for="zone" class="control-label">Zone</label>
+              <i class="fa fa-asterisk indicator-required"></i>
+              <select class="form-control" id="ruleCategory" formControlName="zone">
+                    <option *ngFor="let z of zones" [ngValue]="z">{{getZoneOptionString(z)}}</option> 
+                  </select>
+            </div>
+            <div class="form-group">
+              <label for="account" class="control-label">Account</label>
+              <i class="fa fa-asterisk indicator-required"></i>
+              <select class="form-control" id="ruleCategory" formControlName="account">
+                      <option *ngFor="let a of accounts" [ngValue]="a">{{getAccountOptionString(a)}}</option> 
+                  </select>
+            </div>
+            <div class="form-group">
+              <div>
+                <button type="submit" class="btn btn-primary" [disabled]="settingForm.invalid">Submit
+                                  </button>
+                <button type="button" class="btn btn-default" (click)="cancelForm()">Cancel
+                                  </button>
+              </div>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

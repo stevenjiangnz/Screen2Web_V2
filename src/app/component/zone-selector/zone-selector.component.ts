@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 })
 export class ZoneSelectorComponent implements OnInit {
   private currentZone;
+  private currentAccount;
   private tradingDate;
   constructor(private router: Router) { }
 
@@ -15,6 +16,10 @@ export class ZoneSelectorComponent implements OnInit {
     this.currentZone = {
       name: 'zone 1'
     };
+
+    this.currentAccount = {
+      name: 'account 001'
+    }
     this.tradingDate = 20111009;
   }
 
