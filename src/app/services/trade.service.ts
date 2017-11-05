@@ -148,4 +148,15 @@ export class TradeService extends BaseService {
     });
     return updatedBalance;
   }
+
+  public async getNextTradingDay(zoneId) {
+    let updatedZone = null;
+    const opt = await super.getOptions();
+
+    await this.http.get(this.baseUrl + '/zone/nextdayzone?zoneid=' + zoneId, opt).toPromise().then((data) => {
+      const resObject = data.json();
+      updatedZone = resObject;
+    });
+    return updatedZone;
+  }
 }

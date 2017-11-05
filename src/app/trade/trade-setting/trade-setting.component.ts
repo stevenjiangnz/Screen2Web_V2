@@ -5,6 +5,7 @@ import { INgxMyDpOptions, IMyDateModel } from 'ngx-mydatepicker';
 import { ObjHelper } from '../../utils/obj-helper';
 import { ToasterService } from 'angular2-toaster';
 import { TradeService } from '../../services/trade.service';
+import { MessageService } from '../../services/message.service';
 import { StorageKey } from '../../global/enums';
 import { LocalStoreHelper } from '../../utils/local-store-helper';
 
@@ -22,7 +23,8 @@ export class TradeSettingComponent implements OnInit {
   settingForm: FormGroup;
   mode = 'create';
 
-  constructor(private fb: FormBuilder, private _toasterService: ToasterService, private _tradeService: TradeService) {
+  constructor(private fb: FormBuilder, private _toasterService: ToasterService,
+    private _tradeService: TradeService, private _messageService: MessageService) {
     this.createForm();
   }
 
@@ -32,6 +34,12 @@ export class TradeSettingComponent implements OnInit {
 
     this.zones = _.filter(zones, function (z) {
       return (z as any).status.toLowerCase() === 'active';
+    });
+
+    this.zones.unshift({
+      id: -1,
+      name: 'Current',
+      description: null
     });
 
     this.accounts = _.filter(accounts, function (a) {
@@ -57,14 +65,18 @@ export class TradeSettingComponent implements OnInit {
   }
 
   async onSubmit({ value, valid }: { value: any, valid: boolean }) {
-    LocalStoreHelper.set(StorageKey.TRADE_SETTING, {
+    const tradeSetting = {
       currentZone: value.zone,
       currentAccount: value.account,
       timestamp: new Date().getTime(),
-    });
+    };
+
+    LocalStoreHelper.set(StorageKey.TRADE_SETTING, tradeSetting);
     this._toasterService.pop('success', 'Set current zone success', '');
     this.currentAccount = value.account;
     this.currentZone = value.zone;
+
+    this._messageService.publicTradeSettingChange(tradeSetting);
   }
 
   initForm() {
