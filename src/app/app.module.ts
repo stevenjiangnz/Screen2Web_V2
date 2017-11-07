@@ -51,6 +51,7 @@ import { FundTransferComponent } from './trade/account/fund-transfer/fund-transf
 import { ZoneSelectorComponent } from './component/zone-selector/zone-selector.component';
 import { TradeSettingComponent } from './trade/trade-setting/trade-setting.component';
 import { TradeSummaryComponent } from './trade/trade-summary/trade-summary.component';
+import { OrderEditComponent } from './trade/order-edit/order-edit.component';
 
 export declare var require: any;
 declare var Highcharts: any;
@@ -103,6 +104,7 @@ function setChartOptions() {
     ZoneSelectorComponent,
     TradeSettingComponent,
     TradeSummaryComponent,
+    OrderEditComponent,
   ],
   imports: [
     RouterModule,

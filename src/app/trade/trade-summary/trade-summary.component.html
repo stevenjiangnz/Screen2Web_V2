@@ -1,3 +1,50 @@
-<p>
-  trade-summary works!
-</p>
+<div class="row">
+  <div class="col-sm-8 mid-panel">
+    <div class="row">
+      <div class="col-lg-8">
+        <h1>Trade Summary</h1>
+      </div>
+
+      <div class="col-lg-4 pull-right">
+      </div>
+    </div>
+
+    <div class="table-container tab-wrapper">
+      <ngb-tabset type="pills" #tasbset="ngbTabset" [justify]="'fill'">
+        <ngb-tab id="summaryInfo" title="Summary">
+          <ng-template ngbTabContent>
+            Summary Info
+          </ng-template>
+        </ngb-tab>
+
+        <ngb-tab id="orders" title="Order">
+          <ng-template ngbTabContent>
+            Order
+          </ng-template>
+        </ngb-tab>
+        <ngb-tab id="positions" title="Positions">
+            <ng-template ngbTabContent>
+              Positions
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab id="transactions" title="Transactions">
+            <ng-template ngbTabContent>
+              Transactions
+            </ng-template>
+        </ngb-tab>
+        <ngb-tab id="history" title="History">
+            <ng-template ngbTabContent>
+              History
+            </ng-template>
+        </ngb-tab>
+
+      </ngb-tabset>
+    </div>
+
+  </div>
+
+  <div class="col-sm-4 right-panel">
+    <app-order-edit></app-order-edit>
+    <!-- <app-broker-edit [currentBroker]="selectedBroker" (brokerCreated)="onBrokerCreated($event)" (brokerUpdated)="onBrokerUpdated($event)"></app-broker-edit> -->
+  </div>
+</div>
