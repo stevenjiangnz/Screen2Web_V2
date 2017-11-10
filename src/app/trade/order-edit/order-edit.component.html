@@ -6,8 +6,8 @@
           <div class="panel-body">
             <div>
               <h4>New Order</h4>
-              <!-- <p>Form value: {{ orderForm.value | json }}</p>
-                    <p>Form status: {{ orderForm.status | json }}</p> -->
+              <p>Form value: {{ orderForm.value | json }}</p>
+                    <p>Form status: {{ orderForm.status | json }}</p>
             </div>
             <div class="detail-sub-section">
               <form class="form-vertical" name="orderForm" (ngSubmit)="onSubmit(orderForm)" [formGroup]="orderForm" novalidate>
@@ -16,13 +16,36 @@
                     <label>ID: {{_currentOrder.id}}</label>
                   </div>
                   <!-- <div class="form-group">
-                    <label for="accountName" class="control-label">Name</label>
+                      <label for="account">Account</label>
+                      <i class="fa fa-asterisk indicator-required"></i>
+                      <select class="form-control" id="account" formControlName="account">
+                              <option *ngFor="let a of accounts" [ngValue]="a">{{a.name}}</option> 
+                      </select>
+                  </div> -->
+                  <div class="form-group">
+                      <label for="accountName" class="control-label">Share</label>
+                      <i class="fa fa-asterisk indicator-required"></i>
+                      <input  ngui-auto-complete
+                      formControlName="share"
+                      [source]="shares"
+                      [list-formatter]="autocompleListFormatter"
+                      value-property-name="id"
+                      display-property-name="symbol"
+                      placeholder="Select Share"
+                      accept-user-input="false"
+                      (valueChanged)="onShareChanged($event)"
+                      class="form-control">
+                  </div>
+
+                  <div class="form-group">
+                    <label for="tradingDate" class="control-label">Trading Date</label>
                     <i class="fa fa-asterisk indicator-required"></i>
                     <div>
-                      <input type="text" class="form-control" id="name" name="name" placeholder="Name" formControlName="name">
+                      <input type="text" class="form-control" id="tradingDate" name="tradingDate" placeholder="Trading Date" formControlName="tradingDate">
                     </div>
-                    <label class="control-error" *ngIf="orderForm.controls['name'].invalid && (orderForm.controls['name'].dirty || orderForm.controls['name'].touched)">Name is required.</label>
+                    <label class="control-error" *ngIf="orderForm.controls['tradingDate'].invalid && (orderForm.controls['tradingDate'].dirty || orderForm.controls['tradingDate'].touched)">Trading date is required.</label>
                   </div>
+                  <!--
                   <div class="form-group">
                     <label for="ruleCategory">Zone</label>
                     <i class="fa fa-asterisk indicator-required"></i>
@@ -69,7 +92,7 @@
                         <label class="radio-inline"><input type="radio" value="Close" [checked]="orderForm.value['status'] === 'Close'"
                                                             formControlName="status">Close</label>
                     </div>
-                </div>
+                </div>-->
                   <div class="form-group">
                     <div>
                       <button type="submit" class="btn btn-primary" [disabled]="orderForm.invalid">Submit
@@ -77,7 +100,7 @@
                       <button type="button" class="btn btn-default" (click)="cancelForm()">Cancel
                                     </button>
                     </div>
-                  </div> -->
+                  </div> 
                 </fieldset>
               </form>
             </div>

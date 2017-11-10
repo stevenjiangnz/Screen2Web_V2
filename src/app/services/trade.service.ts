@@ -2,21 +2,16 @@ import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, Response } from '@angular/http';
 import { SharedService } from './shared.service';
 import { BaseService } from './baseService';
+import { StorageKey } from '../global/enums';
+import { LocalStoreHelper } from '../utils/local-store-helper';
 
 import { ObjHelper } from '../utils/obj-helper';
 import { Zone } from '../model/EntityDefinitions';
 
 @Injectable()
 export class TradeService extends BaseService {
-  constructor(public http: Http, private _sharedService: SharedService) { 
+  constructor(public http: Http, private _sharedService: SharedService) {
     super(http);
-  }
-
-  getCurrentZone(): Zone {
-    const zone = new Zone();
-    zone.id = 0;
-    zone.isCurrent = true;
-    return zone;
   }
 
   public async getZoneList() {
@@ -158,5 +153,16 @@ export class TradeService extends BaseService {
       updatedZone = resObject;
     });
     return updatedZone;
+  }
+
+  public async getTradeSetting() {
+    let ts = null;
+    const tradeSetting = LocalStoreHelper.get(StorageKey.TRADE_SETTING);
+
+    if (tradeSetting) {
+      ts = JSON.parse(tradeSetting);
+    }
+
+    return ts;
   }
 }

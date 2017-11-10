@@ -51,7 +51,8 @@ export class AccountEditComponent implements OnInit {
   @Output() accountUpdated = new EventEmitter<any>();
   @Output() fundTransfered = new EventEmitter<any>();
 
-  constructor(private fb: FormBuilder, private _toasterService: ToasterService, private _tradeService: TradeService) {
+  constructor(private fb: FormBuilder, private _toasterService: ToasterService, 
+    private _tradeService: TradeService) {
     this.createForm();
   }
 

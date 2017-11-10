@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { INgxMyDpOptions, IMyDateModel } from 'ngx-mydatepicker';
 import { ObjHelper } from '../../utils/obj-helper';
 import { ToasterService } from 'angular2-toaster';
 import { TradeService } from '../../services/trade.service';
+import { ShareService } from '../../services/share.service';
 
 @Component({
   selector: 'app-order-edit',
@@ -13,17 +15,33 @@ import { TradeService } from '../../services/trade.service';
 export class OrderEditComponent implements OnInit {
   orderForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private _toasterService: ToasterService, private _tradeService: TradeService) { 
+  private shares;
+  private accounts;
+
+  // tslint:disable-next-line:max-line-length
+  constructor(private fb: FormBuilder, private _sanitizer: DomSanitizer, private _toasterService: ToasterService,
+    private _tradeService: TradeService, private _shareService: ShareService) {
+
     this.createForm();
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.shares = await this._shareService.getShareList();
   }
 
   createForm() {
     this.orderForm = this.fb.group({
-      name: ['', Validators.required],
+      share: ['', Validators.required],
+      tradingDate: ['', Validators.required]
     });
   }
 
+  autocompleListFormatter = (data: any) : SafeHtml => {
+    const html = `<span>${data.symbol} - ${data.name}</span>`;
+    return this._sanitizer.bypassSecurityTrustHtml(html);
+  }
+
+  onShareChanged(event) {
+    console.log(event);
+  }
 }

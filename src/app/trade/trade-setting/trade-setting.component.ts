@@ -46,15 +46,11 @@ export class TradeSettingComponent implements OnInit {
       return (a as any).status.toLowerCase() === 'active';
     });
 
-    const tradeSetting = LocalStoreHelper.get(StorageKey.TRADE_SETTING);
+    const ts = await this._tradeService.getTradeSetting();
+    this.currentAccount = ts.currentAccount;
+    this.currentZone = ts.currentZone;
 
-    if (tradeSetting) {
-      const ts = JSON.parse(tradeSetting);
-      this.currentAccount = ts.currentAccount;
-      this.currentZone = ts.currentZone;
-
-      this.initForm();
-    }
+    this.initForm();
   }
 
   createForm() {
@@ -81,8 +77,8 @@ export class TradeSettingComponent implements OnInit {
 
   initForm() {
     this.settingForm.setValue({
-      zone: _.findWhere(this.zones, {id: this.currentZone.id}),
-      account: _.findWhere(this.accounts, {id: this.currentAccount.id}),
+      zone: _.findWhere(this.zones, { id: this.currentZone.id }),
+      account: _.findWhere(this.accounts, { id: this.currentAccount.id }),
     });
   }
 

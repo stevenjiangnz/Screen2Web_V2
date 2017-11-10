@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 import { MdButtonModule, MdCheckboxModule, MdTooltipModule, MdDialogModule } from '@angular/material';
 import { TreeModule } from 'angular-tree-component';
 import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
@@ -126,6 +127,7 @@ function setChartOptions() {
     NgxPaginationModule,
     NgxDialogModule.forRoot(),
     NgxMyDatePickerModule.forRoot(),
+    NguiAutoCompleteModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [StockService,
