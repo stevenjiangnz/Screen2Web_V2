@@ -24,4 +24,28 @@ export class TickerService extends BaseService {
     return indicatorData;
   }
 
+  async getLatestByZone(shareId, zoneId) {
+    let latestData;
+    const queryString = `?shareid=${shareId}&zoneid=${zoneId}`;
+    const opt = await super.getOptions();
+
+    const resPromise = await this.http.get(this.baseUrl + '/ticker/getlatestbyzone' + queryString, opt).toPromise().then((data) => {
+      const resObject = data.json();
+      latestData = resObject;
+    });
+    return latestData;
+  }
+
+
+  async getNextByZone(shareId, zoneId) {
+    let nextData;
+    const queryString = `?shareid=${shareId}&zoneid=${zoneId}`;
+    const opt = await super.getOptions();
+
+    const resPromise = await this.http.get(this.baseUrl + '/ticker/getnextbyzone' + queryString, opt).toPromise().then((data) => {
+      const resObject = data.json();
+      nextData = resObject;
+    });
+    return nextData;
+  }
 }
