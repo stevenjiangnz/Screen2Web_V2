@@ -22,6 +22,7 @@ export class OrderEditComponent implements OnInit {
   private nextTicker;
   private openPeeked = false;
   private closePeeked = false;
+  private reasons;
 
   // tslint:disable-next-line:max-line-length
   constructor(private fb: FormBuilder, private _sanitizer: DomSanitizer, private _toasterService: ToasterService,
@@ -33,16 +34,29 @@ export class OrderEditComponent implements OnInit {
   async ngOnInit() {
     this.shares = await this._shareService.getShareList();
     this.tradeSetting = await this._tradeService.getTradeSetting();
+
+    this.reasons = ['MACD WR',
+      'ADX Direction',
+      'ADX Pullback',
+      'ADX Breakout',
+      'Candle Pattern',
+      'Other',]
   }
 
   createForm() {
     this.orderForm = this.fb.group({
       share: ['', Validators.required],
-      tradingDate: ['', Validators.required]
+      tradingDate: ['', Validators.required],
+      direction: ['Long', Validators.required],
+      price: [null, Validators.required],
+      size: [null, Validators.required],
+      stop: null,
+      reason: null,
+      note: null,
     });
   }
 
-  autocompleListFormatter = (data: any) : SafeHtml => {
+  autocompleListFormatter = (data: any): SafeHtml => {
     const html = `<span>${data.symbol} - ${data.name}</span>`;
     return this._sanitizer.bypassSecurityTrustHtml(html);
   }
@@ -52,9 +66,9 @@ export class OrderEditComponent implements OnInit {
       this.latestTicker = await this._tickerService.getLatestByZone(event.id, this.tradeSetting.currentZone.id);
 
       if (this.latestTicker) {
-        this.orderForm.patchValue({tradingDate: this.latestTicker.tradingDate});
+        this.orderForm.patchValue({ tradingDate: this.latestTicker.tradingDate });
       } else {
-        this.orderForm.patchValue({tradingDate: null});
+        this.orderForm.patchValue({ tradingDate: null });
       }
 
       this.nextTicker = await this._tickerService.getLatestByZone(event.id, this.tradeSetting.currentZone.id);
@@ -65,7 +79,7 @@ export class OrderEditComponent implements OnInit {
 
   async onShareKey(event) {
     if (typeof this.orderForm.value.share === 'string') {
-      this.orderForm.patchValue({tradingDate: null});
+      this.orderForm.patchValue({ tradingDate: null });
       this.latestTicker = null;
       this.nextTicker = null;
       this.openPeeked = false;

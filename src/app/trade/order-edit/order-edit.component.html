@@ -1,127 +1,116 @@
 <div class="stock-detail-panel tab-wrapper">
-    <ngb-tabset type="pills" #tasbset="ngbTabset">
-      <ngb-tab id="orderForm" title="Order">
-        <ng-template ngbTabContent>
-  
-          <div class="panel-body">
-            <div>
-              <h4>New Order</h4>
-              <p>Form value: {{ orderForm.value | json }}</p>
-                    <p>Form status: {{ orderForm.status | json }}</p>
-            </div>
-            <div class="detail-sub-section">
-              <form class="form-vertical" name="orderForm" (ngSubmit)="onSubmit(orderForm)" [formGroup]="orderForm" novalidate>
-                <fieldset>
-                  <div class="form-group" *ngIf="mode==='edit'">
-                    <label>ID: {{_currentOrder.id}}</label>
-                  </div>
-                  <!-- <div class="form-group">
-                      <label for="account">Account</label>
-                      <i class="fa fa-asterisk indicator-required"></i>
-                      <select class="form-control" id="account" formControlName="account">
-                              <option *ngFor="let a of accounts" [ngValue]="a">{{a.name}}</option> 
-                      </select>
-                  </div> -->
-                  <div class="form-group">
-                      <label for="accountName" class="control-label">Share</label>
-                      <i class="fa fa-asterisk indicator-required"></i>
-                      <input  ngui-auto-complete
-                      formControlName="share"
-                      [source]="shares"
-                      [list-formatter]="autocompleListFormatter"
-                      value-property-name="id"
-                      display-property-name="symbol"
-                      placeholder="Select Share"
-                      accept-user-input="false"
-                      (valueChanged)="onShareChanged($event)"
-                      (keyup)="onShareKey($event)"
-                      class="form-control">
-                  </div>
+  <ngb-tabset type="pills" #tasbset="ngbTabset">
+    <ngb-tab id="orderForm" title="Order">
+      <ng-template ngbTabContent>
 
-                  <div class="form-group">
-                    <label for="tradingDate" class="control-label">Trading Date</label>
-                    <i class="fa fa-asterisk indicator-required"></i>
-                    <div>
-                      <input type="text" class="form-control" id="tradingDate" name="tradingDate" placeholder="Trading Date" formControlName="tradingDate">
-                    </div>
-                    <label class="control-error" *ngIf="orderForm.controls['tradingDate'].invalid && (orderForm.controls['tradingDate'].dirty || orderForm.controls['tradingDate'].touched)">Trading date is required.</label>
+        <div class="panel-body">
+          <div>
+            <h4>New Order</h4>
+            <p>Form value: {{ orderForm.value | json }}</p>
+            <p>Form status: {{ orderForm.status | json }}</p>
+          </div>
+          <div class="detail-sub-section">
+            <form class="form-vertical" name="orderForm" (ngSubmit)="onSubmit(orderForm)" [formGroup]="orderForm" novalidate>
+              <fieldset>
+                <div class="form-group" *ngIf="mode==='edit'">
+                  <label>ID: {{_currentOrder.id}}</label>
+                </div>
+                <div class="form-group">
+                  <label for="accountName" class="control-label">Share</label>
+                  <i class="fa fa-asterisk indicator-required"></i>
+                  <input ngui-auto-complete formControlName="share" [source]="shares" [list-formatter]="autocompleListFormatter" value-property-name="id"
+                    display-property-name="symbol" placeholder="Select Share" accept-user-input="false" (valueChanged)="onShareChanged($event)"
+                    (keyup)="onShareKey($event)" class="form-control">
+                </div>
+
+                <div class="form-group">
+                  <label for="tradingDate" class="control-label">Trading Date</label>
+                  <i class="fa fa-asterisk indicator-required"></i>
+                  <div>
+                    <input type="text" class="form-control" id="tradingDate" name="tradingDate" placeholder="Trading Date" formControlName="tradingDate">
                   </div>
-                  <div class="form-group" *ngIf="latestTicker">
-                      <label class="control-label" style="margin-left:30px">Latest Price: {{latestTicker.close}}</label><label style="margin-left:30px">Latest TradingDate: {{latestTicker.tradingDate}}</label>
-                  </div>
-                  <div class="form-group" *ngIf="nextTicker">
-                      <label class="control-label" style="margin-left:30px">
+                  <label class="control-error" *ngIf="orderForm.controls['tradingDate'].invalid && (orderForm.controls['tradingDate'].dirty || orderForm.controls['tradingDate'].touched)">Trading date is required.</label>
+                </div>
+                <div class="form-group" *ngIf="latestTicker">
+                  <label class="control-label" style="margin-left:30px">Latest Price: {{latestTicker.close}}</label>
+                  <label style="margin-left:30px">Latest TradingDate: {{latestTicker.tradingDate}}</label>
+                </div>
+                <div class="form-group" *ngIf="nextTicker">
+                  <label class="control-label" style="margin-left:30px">
                         <span *ngIf="!openPeeked"><button type="button" class="btn btn-primary" (click)="onPeekOpen()">Peek Next Open
                           </button></span>
                         <span *ngIf="openPeeked">Next open: {{nextTicker.open}} </span>
                       </label>
-                      <label style="margin-left:30px">
+                  <label style="margin-left:30px">
                           <span *ngIf="!closePeeked"><button type="button" class="btn btn-primary" (click)="onPeekClose()">Peek Next Close
                             </button></span>
                         <span *ngIf="closePeeked">Next Close: {{nextTicker.close}}</span> 
                       </label>
-                  </div>
-                  <!--
-                  <div class="form-group">
-                    <label for="ruleCategory">Zone</label>
-                    <i class="fa fa-asterisk indicator-required"></i>
-                    <select class="form-control" id="ruleCategory" formControlName="zone"
-                            >
-                        <option *ngFor="let z of zones" [ngValue]="z">{{z.name}}</option> 
-                    </select>
-                </div>
-                  <div class="form-group">
-                    <label for="ruleCategory">Broker</label>
-                    <i class="fa fa-asterisk indicator-required"></i>
-                    <select class="form-control" id="ruleCategory" formControlName="broker"
-                            >
-                            <option *ngFor="let b of brokers" [ngValue]="b">{{b.name}}</option> 
-                    </select>
                 </div>
                 <div class="form-group">
-                  <label for="description" class="control-label">Description</label>
+                  <label class="control-label">Direction</label>
                   <div>
-                    <textarea rows="2" class="form-control" id="description" placeholder="Description" formControlName="description"></textarea>
+                    <label class="radio-inline"><input type="radio" value="Long" [checked]="orderForm.value['direction'] === 'Long'"
+                                                             formControlName="direction">Long</label>
+                    <label class="radio-inline"><input type="radio" value="Short" [checked]="orderForm.value['direction'] === 'Short'"
+                                                              formControlName="direction">Short</label>
                   </div>
                 </div>
-                  <div class="form-group">
-                    <label for="minFee" class="control-label">Fund Amount</label>
-                    <i class="fa fa-asterisk indicator-required"></i>
-                    <div>
-                      <input type="number" class="form-control" id="fundAmount" name="fundAmount" placeholder="Fund Amount" formControlName="fundAmount">
-                    </div>
-                    <label class="control-error" *ngIf="orderForm.controls['fundAmount'].invalid && (orderForm.controls['fundAmount'].dirty || orderForm.controls['fundAmount'].touched)">Fund Amount is required.</label>
+                <div class="form-group">
+                  <label for="price" class="control-label">Price</label>
+                  <i class="fa fa-asterisk indicator-required"></i>
+                  <div>
+                    <input type="number" class="form-control" id="price" name="price" placeholder="price" formControlName="price" step="0.0001"
+                    />
                   </div>
-                  <div class="form-group">
-                    <div class="checkbox">
-                          <input type="checkbox" class="form-control" id="isTrackingAccount" formControlName="isTrackingAccount">Is Tracking Account
-                    </div>
+                  <label class="control-error" *ngIf="orderForm.controls['price'].invalid && (orderForm.controls['price'].dirty || orderForm.controls['price'].touched)">Price is required.</label>
+                </div>
+                <div class="form-group">
+                  <label for="size" class="control-label">Size</label>
+                  <i class="fa fa-asterisk indicator-required"></i>
+                  <div>
+                    <input type="number" class="form-control" id="size" name="size" placeholder="size" formControlName="size" />
                   </div>
-                  <div class="form-group">
-                    <label class="control-label">Status</label>
-                    <div>
-                        <label class="radio-inline"><input type="radio" value="Active" [checked]="orderForm.value['status'] === 'Active'"
-                                                           formControlName="status">Active</label>
-  
-                        <label class="radio-inline"><input type="radio" value="Pending" [checked]="orderForm.value['status'] === 'Pending'"
-                                                           formControlName="status">Pending</label>
-                        <label class="radio-inline"><input type="radio" value="Close" [checked]="orderForm.value['status'] === 'Close'"
-                                                            formControlName="status">Close</label>
-                    </div>
-                </div>-->
-                  <div class="form-group">
-                    <div>
-                      <button type="submit" class="btn btn-primary" [disabled]="orderForm.invalid">Submit
+                  <label class="control-error" *ngIf="orderForm.controls['size'].invalid && (orderForm.controls['size'].dirty || orderForm.controls['size'].touched)">Size is required.</label>
+                </div>
+                <div class="form-group">
+                  <label for="stop" class="control-label">Stop</label>
+                  <div>
+                    <input type="number" class="form-control" id="stop" name="stop" placeholder="stop" formControlName="stop" step="0.0001" />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="limit" class="control-label">Limit</label>
+                  <div>
+                    <input type="number" class="form-control" id="limit" name="limit" placeholder="limit" formControlName="limit" step="0.0001"
+                    />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="reason">Reason</label>
+                  <select class="form-control" id="reason" formControlName="reason">
+                          <option *ngFor="let r of reasons" [ngValue]="r">{{r}}</option> 
+                      </select>
+                </div>
+                <div class="form-group">
+                  <label for="note" class="control-label">Note</label>
+                  <div>
+                    <textarea rows="2" class="form-control" id="note" placeholder="Note" formControlName="note"></textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div>
+                    <button type="submit" class="btn btn-primary" [disabled]="orderForm.invalid">Submit
                                     </button>
-                      <button type="button" class="btn btn-default" (click)="cancelForm()">Cancel
+                    <button type="button" class="btn btn-default" (click)="cancelForm()">Cancel
                                     </button>
-                    </div>
-                  </div> 
-                </fieldset>
-              </form>
-            </div>
+                  </div>
+                </div>
+              </fieldset>
+            </form>
           </div>
-        </ng-template>
-      </ngb-tab>
-    </ngb-tabset>
-  </div>
+        </div>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+</div>
