@@ -165,4 +165,15 @@ export class TradeService extends BaseService {
 
     return ts;
   }
+
+  public async createTradeOrder(order) {
+    let newOrder = null;
+    const opt = await super.getOptions();
+
+    await this.http.put(this.baseUrl + '/tradeorder', JSON.stringify(order), opt).toPromise().then((data) => {
+      const resObject = data.json();
+      newOrder = resObject;
+    });
+    return newOrder;
+  }
 }
