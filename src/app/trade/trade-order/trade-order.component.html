@@ -1,0 +1,128 @@
+<div class="mid-tab-panel">
+  <div class="table-container col-lg-12">
+    <div class="row pull-right" style="padding-right: 20px" *ngIf="orders">
+      <h4>Total: {{orders.length}}</h4>
+    </div>
+    <div class="row" style="clear:both">
+      <table class="table table-bordered table-striped ">
+        <thead>
+          <tr>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('id')">
+                                    ID
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'id' && sortReverse)" ></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'id' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('name')">
+                                    Share
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'name' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'name' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('latestTradingDate')">
+                                    T.Date
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'latestTradingDate' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'latestTradingDate' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('direction')">
+                                    Direction
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'direction' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'direction' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('orderPrice')">
+                                    O.Price
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'orderPrice' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'orderPrice' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('size')">
+                                    Size
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'size' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'size' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('orderValue')">
+                                    O.Value
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'orderValue' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'orderValue' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('reserve')">
+                                    Reserve
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'reserve' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'reserve' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('fee')">
+                                    Fee
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'fee' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'fee' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('stop')">
+                                    Stop
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'stop' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'stop' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('limit')">
+                                    Limit
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'limit' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'limit' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('updateDate')">
+                                    Create
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'updateDate' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'updateDate' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of orders | orderBy : sortType : sortReverse | paginate: { itemsPerPage: 10, currentPage: currentPage }">
+
+            <td>{{order.id}}</td>
+            <td>{{order.share.symbol}}</td>
+            <td>{{order.latestTradingDate}}</td>
+            <td>{{order.direction}}</td>
+            <td>{{order.orderPrice | currency:'USD':true:'1.2-2'}}</td>
+            <td>{{order.size}}</td>
+            <td>{{order.orderValue | currency:'USD':true:'1.2-2'}}</td>
+            <td>{{order.reserve | currency:'USD':true:'1.2-2'}}</td>
+            <td>{{order.fee | currency:'USD':true:'1.2-2'}}</td>
+            <td>{{order.stop | currency:'USD':true:'1.2-2'}}</td>
+            <td>{{order.limit | currency:'USD':true:'1.2-2'}}</td>
+            <td>{{order.updateDate | date : 'dd-MM-yyyy HH:mm'}}</td>
+            <td style="width:80px">
+              <i class="fa fa-pencil-square-o icon-edit" (click)= "editOrder(order.id)"></i>
+              <i class="fa fa-trash-o icon-delete" (click)= "deleteOrder(order.id)"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+      <div class="col-lg-12">
+      <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+      </div>
+  </div>
+  
+</div>

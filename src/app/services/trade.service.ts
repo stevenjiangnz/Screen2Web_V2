@@ -176,4 +176,16 @@ export class TradeService extends BaseService {
     });
     return newOrder;
   }
+
+  public async getTradeOrderByZone(accountId) {
+    let orderList = null;
+    const opt = await super.getOptions();
+
+    await this.http.get(this.baseUrl + `/tradeorder/getbyaccountstatus?accountid=${accountId}&status=open`, 
+    opt).toPromise().then((data) => {
+      const resObject = data.json();
+      orderList = resObject;
+    });
+    return orderList;
+  }
 }

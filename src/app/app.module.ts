@@ -53,6 +53,7 @@ import { ZoneSelectorComponent } from './component/zone-selector/zone-selector.c
 import { TradeSettingComponent } from './trade/trade-setting/trade-setting.component';
 import { TradeSummaryComponent } from './trade/trade-summary/trade-summary.component';
 import { OrderEditComponent } from './trade/order-edit/order-edit.component';
+import { TradeOrderComponent } from './trade/trade-order/trade-order.component';
 
 export declare var require: any;
 declare var Highcharts: any;
@@ -106,6 +107,7 @@ function setChartOptions() {
     TradeSettingComponent,
     TradeSummaryComponent,
     OrderEditComponent,
+    TradeOrderComponent,
   ],
   imports: [
     RouterModule,
