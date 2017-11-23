@@ -1,6 +1,8 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 import * as _ from 'underscore';
+import { ISubscription } from 'rxjs/Subscription';
+import { MessageService } from '../../services/message.service';
 import { TradeService } from '../../services/trade.service';
 import { ShareService } from '../../services/share.service';
 import { DialogConfirmComponent } from '../../component/dialog-confirm/dialog-confirm.component';
@@ -12,7 +14,8 @@ import { ObjHelper } from '../../utils/obj-helper';
   templateUrl: './trade-order.component.html',
   styleUrls: ['./trade-order.component.scss']
 })
-export class TradeOrderComponent implements OnInit {
+export class TradeOrderComponent implements OnInit, OnDestroy {
+  private alive = true;
   private orders;
   private shares;
   private sortType = 'id';
@@ -22,21 +25,37 @@ export class TradeOrderComponent implements OnInit {
   private tradeSetting;
 
   constructor(private _tradeService: TradeService, private _shareService: ShareService,
-     private _toasterService: ToasterService, public dialog: MdDialog) { }
+    private _toasterService: ToasterService, public dialog: MdDialog,
+    private _messageService: MessageService) {
+
+    this._messageService.tradingOrder$
+      .takeWhile(() => this.alive)
+      .subscribe(state => {
+        if (state.action === 'Create') {
+          const newOrder = state.data;
+          newOrder.share = _.findWhere(this.shares, { id: newOrder.shareId });
+
+          this.orders.push(newOrder);
+        }
+      });
+
+  }
 
   async ngOnInit() {
     this.tradeSetting = await this._tradeService.getTradeSetting();
     this.shares = await this._shareService.getShareList();
 
     if (this.tradeSetting && this.tradeSetting.currentAccount) {
-      this.orders = await this._tradeService.getTradeOrderByZone(this.tradeSetting.currentAccount.id);
-
-      _.each(this.orders, (o) => {
-        (o as any).share = _.findWhere(this.shares, {id: (o as any).shareId});
-      });
-
-      console.log(this.orders);
+      this.loadOrderList();
     }
+  }
+
+  private async loadOrderList() {
+    this.orders = await this._tradeService.getTradeOrderByZone(this.tradeSetting.currentAccount.id);
+
+    _.each(this.orders, (o) => {
+      (o as any).share = _.findWhere(this.shares, { id: (o as any).shareId });
+    });
   }
 
   onClickOrder(header) {
@@ -53,7 +72,7 @@ export class TradeOrderComponent implements OnInit {
   }
 
   editOrder(orderId) {
-    this.selectedOrder = _.findWhere(this.orders, {id: orderId});
+    this.selectedOrder = _.findWhere(this.orders, { id: orderId });
   }
 
   async deleteOrder(orderId) {
@@ -79,4 +98,7 @@ export class TradeOrderComponent implements OnInit {
     ObjHelper.copyObject(updatedOrder, this.selectedOrder);
   }
 
+  ngOnDestroy() {
+    this.alive = false;
+  }
 }

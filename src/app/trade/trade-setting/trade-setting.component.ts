@@ -72,7 +72,7 @@ export class TradeSettingComponent implements OnInit {
     this.currentAccount = value.account;
     this.currentZone = value.zone;
 
-    this._messageService.publicTradeSettingChange(tradeSetting);
+    this._messageService.publishTradeSettingChange(tradeSetting);
   }
 
   initForm() {

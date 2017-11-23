@@ -7,6 +7,7 @@ import { ToasterService } from 'angular2-toaster';
 import { TradeService } from '../../services/trade.service';
 import { ShareService } from '../../services/share.service';
 import { TickerService } from '../../services/ticker.service';
+import { MessageService } from '../../services/message.service';
 
 @Component({
   selector: 'app-order-edit',
@@ -17,6 +18,7 @@ export class OrderEditComponent implements OnInit {
   orderForm: FormGroup;
   mode = 'create';
 
+  private alive = true;
   private shares;
   private tradeSetting;
   private latestTicker;
@@ -28,7 +30,8 @@ export class OrderEditComponent implements OnInit {
 
   // tslint:disable-next-line:max-line-length
   constructor(private fb: FormBuilder, private _sanitizer: DomSanitizer, private _toasterService: ToasterService,
-    private _tradeService: TradeService, private _shareService: ShareService, private _tickerService: TickerService) {
+    private _tradeService: TradeService, private _shareService: ShareService, private _tickerService: TickerService,
+    private _messageService: MessageService) {
 
     this.createForm();
   }
@@ -85,14 +88,17 @@ export class OrderEditComponent implements OnInit {
       if (this.mode === 'create') {
         const result = await this._tradeService.createTradeOrder(orderObj);
 
-        console.log('order created', result);
-
         if (result && result.id) {
           this._toasterService.pop('success', 'Order create success', '');
           this.orderForm.reset();
           this.initForm();
           this.resetForm();
         }
+
+        this._messageService.publishTradingOrderChange({
+          action: 'Create',
+          data: result,
+        })
       } else {
         // value.id = this._currentBroker.id;
 
@@ -135,7 +141,6 @@ export class OrderEditComponent implements OnInit {
   }
 
   private getOrderObject(value) {
-    console.log(this.tradeSetting);
     return {
       accountId: this.tradeSetting.currentAccount.id,
       direction: value.direction,

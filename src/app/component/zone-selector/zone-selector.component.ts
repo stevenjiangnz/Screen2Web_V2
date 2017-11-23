@@ -47,7 +47,7 @@ export class ZoneSelectorComponent implements OnInit {
       // update localStorage
       LocalStoreHelper.set(StorageKey.TRADE_SETTING, newTradeSetting);
       this.checkSetting();
-      this._messageService.publicTradingDateChange(newTradeSetting);
+      this._messageService.publishTradingDateChange(newTradeSetting);
     }
   }
 

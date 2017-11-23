@@ -336,3 +336,7 @@ a.nav-link {
 .ngui-auto-complete ul {
   color: $hover-background-color;
 }
+
+.content-link, .content-link:hover, .content-link:visited {
+  color: darken($primaryColor, 20%);
+}

@@ -9,11 +9,13 @@ export class MessageService {
   private currentTicker = new Subject<StateEvent>();
   private tradeSetting = new Subject<any>();
   private tradingDate = new Subject<any>();
+  private tradingOrder = new Subject<any>();
 
   currentState$ = this.currentState.asObservable();
   currentTicker$ = this.currentTicker.asObservable();
   tradeSetting$ = this.tradeSetting.asObservable();
   tradingDate$ = this.tradingDate.asObservable();
+  tradingOrder$ = this.tradingOrder.asObservable();
 
   constructor() { }
 
@@ -25,11 +27,15 @@ export class MessageService {
     this.currentTicker.next(data);
   }
 
-  publicTradeSettingChange(data: any) {
+  publishTradeSettingChange(data: any) {
     this.tradeSetting.next(data);
   }
 
-  publicTradingDateChange(data: any) {
+  publishTradingDateChange(data: any) {
     this.tradingDate.next(data);
+  }
+
+  publishTradingOrderChange(data: any) {
+    this.tradingOrder.next(data);
   }
 }

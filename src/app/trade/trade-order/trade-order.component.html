@@ -30,7 +30,7 @@
             </th>
             <th>
               <span class="sortable-header" (click)="onClickOrder('direction')">
-                                    Direction
+                                    Dir
                   <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'direction' && sortReverse)"></span>
                   <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'direction' && !sortReverse)"></span>
               </span>
@@ -98,7 +98,7 @@
           <tr *ngFor="let order of orders | orderBy : sortType : sortReverse | paginate: { itemsPerPage: 10, currentPage: currentPage }">
 
             <td>{{order.id}}</td>
-            <td>{{order.share.symbol}}</td>
+            <td><a class="content-link" [routerLink]="['/stock']" target="stock" >{{order.share.symbol}}</a></td>
             <td>{{order.latestTradingDate}}</td>
             <td>{{order.direction}}</td>
             <td>{{order.orderPrice | currency:'USD':true:'1.2-2'}}</td>
