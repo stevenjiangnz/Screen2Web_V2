@@ -188,4 +188,10 @@ export class TradeService extends BaseService {
     });
     return orderList;
   }
+
+  public async deleteTradeOrder(orderId) {
+    const opt = await super.getOptions();
+
+    await this.http.delete(this.baseUrl + '/tradeorder?id=' + orderId, opt).toPromise();
+  }
 }

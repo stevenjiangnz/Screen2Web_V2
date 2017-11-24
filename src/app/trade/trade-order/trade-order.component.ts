@@ -78,14 +78,14 @@ export class TradeOrderComponent implements OnInit, OnDestroy {
   async deleteOrder(orderId) {
     const dialogRef = this.dialog.open(DialogConfirmComponent, {
       width: '450px',
-      data: { hint: `Are sure you want to remove rule ${orderId}?` }
+      data: { hint: `Are sure you want to remove Order ${orderId}?` }
     });
 
     dialogRef.afterClosed().subscribe(async (result) => {
       if (result && result === 'Yes') {
-        // await this._tradeService.deleteOrder(orderId);
-        // this.orders = _.without(this.orders, _.findWhere(this.orders, { id: orderId }));
-        // this._toasterService.pop('success', 'Order deleted.', '');
+        await this._tradeService.deleteTradeOrder(orderId);
+        this.orders = _.without(this.orders, _.findWhere(this.orders, { id: orderId }));
+        this._toasterService.pop('success', 'Order deleted.', '');
       }
     });
   }
