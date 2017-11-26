@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 import * as _ from 'underscore';
 import { ISubscription } from 'rxjs/Subscription';
@@ -23,6 +23,8 @@ export class TradeOrderComponent implements OnInit, OnDestroy {
   private currentPage = 1;
   private sortReverse = false;
   private tradeSetting;
+
+  @Output() orderSelected = new EventEmitter<any>();
 
   constructor(private _tradeService: TradeService, private _shareService: ShareService,
     private _toasterService: ToasterService, public dialog: MdDialog,
@@ -73,6 +75,7 @@ export class TradeOrderComponent implements OnInit, OnDestroy {
 
   editOrder(orderId) {
     this.selectedOrder = _.findWhere(this.orders, { id: orderId });
+    this.orderSelected.emit(this.selectedOrder);
   }
 
   async deleteOrder(orderId) {

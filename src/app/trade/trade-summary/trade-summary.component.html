@@ -19,7 +19,7 @@
 
         <ngb-tab id="orders" title="Order">
           <ng-template ngbTabContent>
-            <app-trade-order></app-trade-order>
+            <app-trade-order (orderSelected)="onOrderSelected($event)"></app-trade-order>
           </ng-template>
         </ngb-tab>
         <ngb-tab id="positions" title="Positions">
@@ -44,7 +44,7 @@
   </div>
 
   <div class="col-sm-4 right-panel">
-    <app-order-edit></app-order-edit>
+    <app-order-edit [currentOrder]= "selectedOrder"></app-order-edit>
     <!-- <app-broker-edit [currentBroker]="selectedBroker" (brokerCreated)="onBrokerCreated($event)" (brokerUpdated)="onBrokerUpdated($event)"></app-broker-edit> -->
   </div>
 </div>

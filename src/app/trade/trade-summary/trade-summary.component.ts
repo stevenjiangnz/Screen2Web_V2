@@ -6,10 +6,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./trade-summary.component.scss']
 })
 export class TradeSummaryComponent implements OnInit {
-
+  private selectedOrder  = null;
   constructor() { }
 
   ngOnInit() {
   }
 
+  onOrderSelected(event) {
+    this.selectedOrder = event;
+  }
 }

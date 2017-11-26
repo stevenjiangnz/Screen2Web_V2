@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { INgxMyDpOptions, IMyDateModel } from 'ngx-mydatepicker';
@@ -27,6 +27,20 @@ export class OrderEditComponent implements OnInit {
   private closePeeked = false;
   private reasons;
   private orderType;
+  private _currentOrder;
+
+  @Input() set currentOrder(value: any) {
+    this._currentOrder = value;
+
+    if (this._currentOrder) {
+      this.mode = 'edit';
+    } else {
+      this.mode = 'create';
+    }
+
+    console.log('current order, ', this._currentOrder);
+
+  }
 
   // tslint:disable-next-line:max-line-length
   constructor(private fb: FormBuilder, private _sanitizer: DomSanitizer, private _toasterService: ToasterService,
