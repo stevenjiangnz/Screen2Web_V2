@@ -18,8 +18,8 @@
                 <div class="form-group">
                   <label for="accountName" class="control-label">Share</label>
                   <i class="fa fa-asterisk indicator-required"></i>
-                  <input ngui-auto-complete formControlName="share" [source]="shares" [list-formatter]="autocompleListFormatter" value-property-name="id"
-                    display-property-name="symbol" placeholder="Select Share" accept-user-input="false" (valueChanged)="onShareChanged($event)"
+                  <input ngui-auto-complete formControlName="share" [source]="shares" [list-formatter]="autocompleListFormatter" value-property-name="id" [(ngModel)] = "myShare"
+                    display-property-name="symbol" accept-user-input="false" (valueChanged)="onShareChanged($event)"
                     (keyup)="onShareKey($event)" class="form-control">
                 </div>
 
@@ -27,7 +27,7 @@
                   <label for="tradingDate" class="control-label">Trading Date</label>
                   <i class="fa fa-asterisk indicator-required"></i>
                   <div>
-                    <input type="text" class="form-control" id="tradingDate" name="tradingDate" placeholder="Trading Date" formControlName="tradingDate">
+                    <input type="text" class="form-control" id="tradingDate" name="tradingDate" formControlName="tradingDate">
                   </div>
                   <label class="control-error" *ngIf="orderForm.controls['tradingDate'].invalid && (orderForm.controls['tradingDate'].dirty || orderForm.controls['tradingDate'].touched)">Trading date is required.</label>
                 </div>
@@ -60,7 +60,7 @@
                   <label for="price" class="control-label">Price</label>
                   <i class="fa fa-asterisk indicator-required"></i>
                   <div>
-                    <input type="number" class="form-control" id="price" name="price" placeholder="price" formControlName="price" step="0.0001" (change)="onPriceChange($event)"
+                    <input type="number" class="form-control" id="price" name="price" formControlName="price" step="0.0001" (change)="onPriceChange($event)"
                     />
                   </div>
                   <label class="control-error" *ngIf="orderForm.controls['price'].invalid && (orderForm.controls['price'].dirty || orderForm.controls['price'].touched)">Price is required.</label>
@@ -69,7 +69,7 @@
                   <label for="size" class="control-label">Size</label>
                   <i class="fa fa-asterisk indicator-required"></i>
                   <div>
-                    <input type="number" class="form-control" id="size" name="size" placeholder="size" formControlName="size" />
+                    <input type="number" class="form-control" id="size" name="size" formControlName="size" />
                   </div>
                   <label class="control-error" *ngIf="orderForm.controls['size'].invalid && (orderForm.controls['size'].dirty || orderForm.controls['size'].touched)">Size is required.</label>
                 </div>
@@ -81,13 +81,13 @@
                 <div class="form-group">
                   <label for="stop" class="control-label">Stop</label>
                   <div>
-                    <input type="number" class="form-control" id="stop" name="stop" placeholder="stop" formControlName="stop" step="0.0001" />
+                    <input type="number" class="form-control" id="stop" name="stop" formControlName="stop" step="0.0001" />
                   </div>
                 </div>
                 <div class="form-group">
                   <label for="limit" class="control-label">Limit</label>
                   <div>
-                    <input type="number" class="form-control" id="limit" name="limit" placeholder="limit" formControlName="limit" step="0.0001"
+                    <input type="number" class="form-control" id="limit" name="limit" formControlName="limit" step="0.0001"
                     />
                   </div>
                 </div>
@@ -100,8 +100,23 @@
                 <div class="form-group">
                   <label for="note" class="control-label">Note</label>
                   <div>
-                    <textarea rows="2" class="form-control" id="note" placeholder="Note" formControlName="note"></textarea>
+                    <textarea rows="2" class="form-control" id="note" formControlName="note"></textarea>
                   </div>
+                </div>
+                <div class="form-group" *ngIf="mode==='edit'">
+                  <label class="control-label">Status</label>
+                  <div>
+                      <label class="radio-inline"><input type="radio" value="Open" [checked]="orderForm.value['status'] === 'Open'"
+                                                         formControlName="status">Open</label>
+
+                      <label class="radio-inline"><input type="radio" value="Withdrawn" [checked]="orderForm.value['status'] === 'Withdrawn'"
+                                                         formControlName="status">Withdrawn</label>
+                      <label class="radio-inline"><input type="radio" value="Fulfilled" [checked]="orderForm.value['status'] === 'Fulfilled'"
+                                                          formControlName="status" [attr.disabled]="true">Fulfilled</label>
+                  </div>
+                </div>
+                <div class="form-group" *ngIf="mode==='edit'">
+                  <label>Processed til: {{_currentOrder.processedTradingDate}}</label>
                 </div>
                 <div class="form-group">
                   <div>

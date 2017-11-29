@@ -33,11 +33,14 @@ export class TradeOrderComponent implements OnInit, OnDestroy {
     this._messageService.tradingOrder$
       .takeWhile(() => this.alive)
       .subscribe(state => {
-        if (state.action === 'Create') {
+        if (state.action === 'create') {
           const newOrder = state.data;
           newOrder.share = _.findWhere(this.shares, { id: newOrder.shareId });
 
           this.orders.push(newOrder);
+        } else if (state.action === 'edit') {
+          state.data.share = this.selectedOrder.share; // so donot have to populate share again
+          ObjHelper.copyObject(state.data, this.selectedOrder);
         }
       });
 

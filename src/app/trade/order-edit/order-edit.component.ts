@@ -28,18 +28,21 @@ export class OrderEditComponent implements OnInit {
   private reasons;
   private orderType;
   private _currentOrder;
+  private myShare;
 
   @Input() set currentOrder(value: any) {
     this._currentOrder = value;
 
     if (this._currentOrder) {
       this.mode = 'edit';
+      this.myShare = this._currentOrder.share;
+      this.orderType = this._currentOrder.orderType;
     } else {
       this.mode = 'create';
     }
 
     console.log('current order, ', this._currentOrder);
-
+    this.initForm();
   }
 
   // tslint:disable-next-line:max-line-length
@@ -73,6 +76,7 @@ export class OrderEditComponent implements OnInit {
       limit: null,
       reason: null,
       note: null,
+      status: '',
     });
 
     // this.orderForm.valueChanges.subscribe(val => {
@@ -92,7 +96,23 @@ export class OrderEditComponent implements OnInit {
         limit: null,
         reason: null,
         note: null,
+        status: '',
       });
+    } else {
+      this.orderForm.setValue({
+        share: this._currentOrder.share,
+        tradingDate: this._currentOrder.tradingOrderDate,
+        direction: this._currentOrder.direction,
+        price: this._currentOrder.orderPrice,
+        size: this._currentOrder.size,
+        stop: this._currentOrder.stop,
+        limit: this._currentOrder.limit,
+        reason: this._currentOrder.reason,
+        note: this._currentOrder.note,
+        status: this._currentOrder.status
+      });
+
+      this.onShareChanged(this._currentOrder.share);
     }
   }
 
@@ -107,21 +127,25 @@ export class OrderEditComponent implements OnInit {
           this.orderForm.reset();
           this.initForm();
           this.resetForm();
+
+          this._messageService.publishTradingOrderChange({
+            action: 'create',
+            data: result,
+          });
         }
-
-        this._messageService.publishTradingOrderChange({
-          action: 'Create',
-          data: result,
-        })
       } else {
-        // value.id = this._currentBroker.id;
+        (orderObj as any).id = this._currentOrder.id;
 
-        // const result = await this._tradeService.updateBroker(value);
+        const result = await this._tradeService.updateTradeOrder(orderObj);
 
-        // if (result && result.id) {
-        //   this._toasterService.pop('success', 'Broker update success', '');
-        //   this.brokerUpdated.emit(result);
-        // }
+        if (result && result.id) {
+          this._toasterService.pop('success', 'Order update success', '');
+
+          this._messageService.publishTradingOrderChange({
+            action: 'edit',
+            data: result,
+          });
+        }
       }
     }
   }
@@ -131,17 +155,19 @@ export class OrderEditComponent implements OnInit {
     return this._sanitizer.bypassSecurityTrustHtml(html);
   }
 
-  async onShareChanged(event) {
+  async onShareChanged(share) {
     if (this.tradeSetting && this.tradeSetting.currentZone && this.tradeSetting.currentZone.id > 0) {
-      this.latestTicker = await this._tickerService.getLatestByZone(event.id, this.tradeSetting.currentZone.id);
+      this.latestTicker = await this._tickerService.getLatestByZone(share.id, this.tradeSetting.currentZone.id);
 
-      if (this.latestTicker) {
-        this.orderForm.patchValue({ tradingDate: this.latestTicker.tradingDate });
-      } else {
-        this.orderForm.patchValue({ tradingDate: null });
+      if (this.mode === 'create'){
+        if (this.latestTicker) {
+          this.orderForm.patchValue({ tradingDate: this.latestTicker.tradingDate });
+        } else {
+          this.orderForm.patchValue({ tradingDate: null });
+        }
       }
 
-      this.nextTicker = await this._tickerService.getNextByZone(event.id, this.tradeSetting.currentZone.id);
+      this.nextTicker = await this._tickerService.getNextByZone(share.id, this.tradeSetting.currentZone.id);
       this.openPeeked = false;
       this.closePeeked = false;
     }
@@ -154,14 +180,14 @@ export class OrderEditComponent implements OnInit {
     }
   }
 
-  private getOrderObject(value) {
-    return {
+  private getOrderObject(value) { 
+    const obj = {
       accountId: this.tradeSetting.currentAccount.id,
       direction: value.direction,
       orderType: this.orderType,
       shareId: value.share.id,
-      latestPrice: this.latestTicker.close,
-      latestTradingDate: this.latestTicker.tradingDate,
+      latestPrice: this.latestTicker ? this.latestTicker.close : null,
+      latestTradingDate: this.latestTicker ? this.latestTicker.tradingDate : null,
       tradingOrderDate: value.tradingDate,
       orderPrice: value.price,
       size: value.size,
@@ -170,6 +196,16 @@ export class OrderEditComponent implements OnInit {
       reason: value.reason,
       note: value.note,
     };
+
+    if (this.mode === 'edit') {
+      (obj as any).id = this._currentOrder.id;
+      (obj as any).status = this._currentOrder.status;
+      (obj as any).source = this._currentOrder.source;
+      (obj as any).latestPrice = this._currentOrder.latestPrice;
+      (obj as any).latestTradingDate = this._currentOrder.latestTradingDate;
+    }
+
+    return obj;
   }
   private resetForm() {
     this.latestTicker = null;
@@ -243,7 +279,6 @@ export class OrderEditComponent implements OnInit {
         isValid = false;
         this._toasterService.pop('error', 'Validation error', 'When Short, the Limit need to be lower than Order Price.');
       }
-
     }
 
     return isValid;

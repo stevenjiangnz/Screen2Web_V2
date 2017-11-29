@@ -194,4 +194,15 @@ export class TradeService extends BaseService {
 
     await this.http.delete(this.baseUrl + '/tradeorder?id=' + orderId, opt).toPromise();
   }
+
+  public async updateTradeOrder(order) {
+    let updatedOrder = null;
+    const opt = await super.getOptions();
+
+    await this.http.post(this.baseUrl + '/tradeorder', JSON.stringify(order), opt).toPromise().then((data) => {
+      const resObject = data.json();
+      updatedOrder = resObject;
+    });
+    return updatedOrder;
+  }
 }
