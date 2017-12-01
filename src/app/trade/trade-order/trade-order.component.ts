@@ -39,8 +39,13 @@ export class TradeOrderComponent implements OnInit, OnDestroy {
 
           this.orders.push(newOrder);
         } else if (state.action === 'edit') {
-          state.data.share = this.selectedOrder.share; // so donot have to populate share again
-          ObjHelper.copyObject(state.data, this.selectedOrder);
+          if (state.data.status === 'Open') {
+            state.data.share = this.selectedOrder.share; // so donot have to populate share again
+            ObjHelper.copyObject(state.data, this.selectedOrder);
+          } else {
+            this.orders = _.without(this.orders, _.findWhere(this.orders, { id: state.data.id }));
+          }
+
         }
       });
 
@@ -73,7 +78,9 @@ export class TradeOrderComponent implements OnInit, OnDestroy {
   }
 
   createOrder() {
+    console.log('create order .. ');
     this.selectedOrder = null;
+    this.orderSelected.emit(this.selectedOrder);
   }
 
   editOrder(orderId) {

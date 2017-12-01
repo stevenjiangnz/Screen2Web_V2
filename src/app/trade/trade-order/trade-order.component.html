@@ -1,4 +1,13 @@
 <div class="mid-tab-panel">
+    <div class="row">
+        <div class="col-lg-5">
+        </div>
+        <div class="col-lg-7 pull-right">
+          <div class="btn btn-primary pull-right" (click)="createOrder()">
+            Create
+          </div>
+        </div>
+      </div>
   <div class="table-container col-lg-12">
     <div class="row pull-right" style="padding-right: 20px" *ngIf="orders">
       <h4>Total: {{orders.length}}</h4>

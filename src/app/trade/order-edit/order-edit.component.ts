@@ -39,9 +39,9 @@ export class OrderEditComponent implements OnInit {
       this.orderType = this._currentOrder.orderType;
     } else {
       this.mode = 'create';
+      this.orderType = '';
     }
 
-    console.log('current order, ', this._currentOrder);
     this.initForm();
   }
 
@@ -78,10 +78,6 @@ export class OrderEditComponent implements OnInit {
       note: null,
       status: '',
     });
-
-    // this.orderForm.valueChanges.subscribe(val => {
-    //   console.log('value changed  ssss');
-    // });
   }
 
   initForm() {
@@ -159,7 +155,7 @@ export class OrderEditComponent implements OnInit {
     if (this.tradeSetting && this.tradeSetting.currentZone && this.tradeSetting.currentZone.id > 0) {
       this.latestTicker = await this._tickerService.getLatestByZone(share.id, this.tradeSetting.currentZone.id);
 
-      if (this.mode === 'create'){
+      if (this.mode === 'create') {
         if (this.latestTicker) {
           this.orderForm.patchValue({ tradingDate: this.latestTicker.tradingDate });
         } else {
@@ -180,7 +176,7 @@ export class OrderEditComponent implements OnInit {
     }
   }
 
-  private getOrderObject(value) { 
+  private getOrderObject(value) {
     const obj = {
       accountId: this.tradeSetting.currentAccount.id,
       direction: value.direction,
@@ -193,13 +189,13 @@ export class OrderEditComponent implements OnInit {
       size: value.size,
       stop: value.stop,
       limit: value.limit,
+      status: value.status,
       reason: value.reason,
       note: value.note,
     };
 
     if (this.mode === 'edit') {
       (obj as any).id = this._currentOrder.id;
-      (obj as any).status = this._currentOrder.status;
       (obj as any).source = this._currentOrder.source;
       (obj as any).latestPrice = this._currentOrder.latestPrice;
       (obj as any).latestTradingDate = this._currentOrder.latestTradingDate;
@@ -288,5 +284,13 @@ export class OrderEditComponent implements OnInit {
     this.orderForm.reset();
     this.resetForm();
     this.initForm();
+  }
+
+  isStatusDisabled() {
+    if (this._currentOrder.status !== 'Open') {
+      return '';
+    } else {
+      return '';
+    }
   }
 }

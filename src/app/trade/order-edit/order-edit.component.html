@@ -5,9 +5,9 @@
 
         <div class="panel-body">
           <div>
-            <h4>New Order</h4>
-            <p>Form value: {{ orderForm.value | json }}</p>
-            <p>Form status: {{ orderForm.status | json }}</p>
+            <!-- <h4>New Order</h4> -->
+            <!-- <p>Form value: {{ orderForm.value | json }}</p>
+            <p>Form status: {{ orderForm.status | json }}</p> -->
           </div>
           <div class="detail-sub-section">
             <form class="form-vertical" name="orderForm" (ngSubmit)="onSubmit(orderForm)" [formGroup]="orderForm" novalidate>
@@ -106,10 +106,10 @@
                 <div class="form-group" *ngIf="mode==='edit'">
                   <label class="control-label">Status</label>
                   <div>
-                      <label class="radio-inline"><input type="radio" value="Open" [checked]="orderForm.value['status'] === 'Open'"
+                      <label class="radio-inline"><input type="radio" value="Open" [checked]="orderForm.value['status'] === 'Open'" [attr.disabled]="orderForm.value['status'] === 'Open' ? null : true"
                                                          formControlName="status">Open</label>
 
-                      <label class="radio-inline"><input type="radio" value="Withdrawn" [checked]="orderForm.value['status'] === 'Withdrawn'"
+                      <label class="radio-inline"><input type="radio" value="Withdrawn" [checked]="orderForm.value['status'] === 'Withdrawn'" [attr.disabled]="orderForm.value['status'] === 'Open' ? null : true"
                                                          formControlName="status">Withdrawn</label>
                       <label class="radio-inline"><input type="radio" value="Fulfilled" [checked]="orderForm.value['status'] === 'Fulfilled'"
                                                           formControlName="status" [attr.disabled]="true">Fulfilled</label>
