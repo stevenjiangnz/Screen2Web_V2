@@ -1,0 +1,168 @@
+<div class="mid-tab-panel">
+    <div class="row">
+        <div class="col-lg-5">
+        </div>
+        <div class="col-lg-7 pull-right">
+          <!-- <div class="btn btn-primary pull-right" (click)="createHistory()">
+            Create
+          </div> -->
+          <div class="pull-right">
+          <select class="form-control" id="size" [ngModel]="loadSize" (ngModelChange)="onSizeChange($event)" style="width: 100px">
+              <option value="100">100</option> 
+              <option value="200">200</option> 
+              <option value="-1">All</option>
+          </select>
+        </div>
+        </div>
+      </div>
+  <div class="table-container col-lg-12">
+    <div class="row pull-right" style="padding-right: 20px" *ngIf="historys">
+      <h4>Total: {{historys.length}}</h4>
+    </div>
+    <div class="row" style="clear:both; overflow:auto">
+      <table class="table table-striped ">
+        <thead>
+          <tr>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('id')">
+                                    ID
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'id' && sortReverse)" ></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'id' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('fundAmount')">
+                                    Fund
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'fundAmount' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'fundAmount' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('totalBalance')">
+                                    Balance
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'totalBalance' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'totalBalance' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('availableFund')">
+                                    Availabe Fund
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'availableFund' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'availableFund' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('margin')">
+                                    Margin
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'historyPrice' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'historyPrice' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('positionValue')">
+                                    Position
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'positionValue' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'positionValue' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('reserve')">
+                                    Reserve
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'reserve' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'reserve' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('feeSum')">
+                                    Fee
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'feeSum' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'feeSum' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('action')">
+                                    Action
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'action' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'action' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('tradingDate')">
+                                    Trading Date
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'tradingDate' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'tradingDate' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('refId')">
+                                    Ref ID
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'refId' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'refId' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('updateDT')">
+                                    Updated
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'updateDT' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'updateDT' && !sortReverse)"></span>
+              </span>
+            </th>
+            <!-- <th>
+              <span class="sortable-header" (click)="onClickHistory('fee')">
+                                    Fee
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'fee' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'fee' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickHistory('stop')">
+                                    Stop
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'stop' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'stop' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickHistory('limit')">
+                                    Limit
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'limit' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'limit' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickHistory('updateDate')">
+                                    Create
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'updateDate' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'updateDate' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th></th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let history of historys | orderBy : sortType : sortReverse | paginate: { itemsPerPage: 10, currentPage: currentPage }">
+
+            <td>{{history.id}}</td>
+            <td>{{history.fundAmount | currency:'USD':true:'1.2-2'}}</td>
+            <td>{{history.totalBalance | currency:'USD':true:'1.2-2'}}</td>
+            <td>{{history.availableFund | currency:'USD':true:'1.2-2'}}</td>
+            <td>{{history.margin | currency:'USD':true:'1.2-2'}}</td>
+            <td>{{history.positionValue | currency:'USD':true:'1.2-2'}}</td>
+            <td>{{history.reserve | currency:'USD':true:'1.2-2'}}</td>
+            <td>{{history.feeSum | currency:'USD':true:'1.2-2'}}</td>
+            <td>{{history.action}}</td>
+            <td>{{history.tradingDate}}</td>
+            <td>{{history.refId}}</td>
+            <td>{{history.updateDT | date: 'dd/MM/yyyy, HH:mm:ss'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+      <div class="col-lg-12">
+      <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+      </div>
+  </div> 
+  
+</div>

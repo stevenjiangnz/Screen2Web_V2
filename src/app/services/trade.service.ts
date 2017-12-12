@@ -205,4 +205,17 @@ export class TradeService extends BaseService {
     });
     return updatedOrder;
   }
+
+
+  public async getAccountJourney(accountId, size) {
+    let journeyList = null;
+    const opt = await super.getOptions();
+
+    await this.http.get(this.baseUrl + `/tradeaccount/accountbalancejourney?accountid=${accountId}&size=${size}`, 
+    opt).toPromise().then((data) => {
+      const resObject = data.json();
+      journeyList = resObject;
+    });
+    return journeyList;
+  }
 }

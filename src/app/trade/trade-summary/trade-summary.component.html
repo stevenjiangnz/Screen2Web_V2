@@ -34,7 +34,7 @@
         </ngb-tab>
         <ngb-tab id="history" title="History">
             <ng-template ngbTabContent>
-              History
+              <app-trade-history></app-trade-history>
             </ng-template>
         </ngb-tab>
 
@@ -45,6 +45,5 @@
 
   <div class="col-sm-4 right-panel">
     <app-order-edit [currentOrder]= "selectedOrder"></app-order-edit>
-    <!-- <app-broker-edit [currentBroker]="selectedBroker" (brokerCreated)="onBrokerCreated($event)" (brokerUpdated)="onBrokerUpdated($event)"></app-broker-edit> -->
   </div>
 </div>
