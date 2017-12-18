@@ -218,4 +218,16 @@ export class TradeService extends BaseService {
     });
     return journeyList;
   }
+
+  public async getAccountTransaction(accountId, size) {
+    let journeyList = null;
+    const opt = await super.getOptions();
+
+    await this.http.get(this.baseUrl + `/tradeaccount/accounttransaction?accountid=${accountId}&size=${size}`, 
+    opt).toPromise().then((data) => {
+      const resObject = data.json();
+      journeyList = resObject;
+    });
+    return journeyList;
+  }
 }

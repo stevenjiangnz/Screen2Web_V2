@@ -1,0 +1,96 @@
+<div class="mid-tab-panel">
+  <div class="row">
+    <div class="col-lg-5">
+    </div>
+    <div class="col-lg-7 pull-right">
+      <div class="pull-right">
+        <select class="form-control" id="size" [ngModel]="loadSize" (ngModelChange)="onSizeChange($event)" style="width: 100px">
+              <option value="100">100</option> 
+              <option value="200">200</option> 
+              <option value="-1">All</option>
+          </select>
+      </div>
+    </div>
+  </div>
+  <div class="table-container col-lg-12">
+    <div class="row pull-right" style="padding-right: 20px" *ngIf="transactions">
+      <h4>Total: {{transactions.length}}</h4>
+    </div>
+    <div class="row" style="clear:both; overflow:auto">
+      <table class="table table-striped ">
+        <thead>
+          <tr>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('id')">
+                                    ID
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'id' && sortReverse)" ></span>
+              <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'id' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('name')">
+                                    Share
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'name' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'name' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('message')">
+                                    Message
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'message' && sortReverse)"></span>
+              <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'message' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('tradingDate')">
+                                    Trading Date
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'tradingDate' && sortReverse)"></span>
+              <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'tradingDate' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('fee')">
+                                    Fee
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'fee' && sortReverse)"></span>
+              <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'fee' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('totalValue')">
+                                    Total Value
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'totalValue' && sortReverse)"></span>
+              <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'totalValue' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('createDate')">
+                                    Created
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'createDate' && sortReverse)"></span>
+              <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'createDate' && !sortReverse)"></span>
+              </span>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let transaction of transactions | orderBy : sortType : sortReverse | paginate: { itemsPerPage: 10, currentPage: currentPage }">
+
+            <td>{{transaction.id}}</td>
+            <td><a class="content-link" [routerLink]="['/stock']" target="stock" >{{transaction.share.symbol}}</a></td>
+            <td>{{transaction.message}}</td>
+            <td>{{transaction.tradingDate}}</td>
+            <td>{{transaction.fee | currency:'USD':true:'1.2-2'}}</td>
+            <td>{{transaction.totalValue | currency:'USD':true:'1.2-2'}}</td>
+            <td>{{transaction.createDate | date: 'dd/MM/yyyy, HH:mm:ss'}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+    </div>
+  </div>
+
+</div>

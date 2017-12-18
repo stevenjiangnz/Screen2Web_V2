@@ -12,15 +12,15 @@ import { StorageKey } from '../../global/enums';
 import { LocalStoreHelper } from '../../utils/local-store-helper';
 
 @Component({
-  selector: 'app-trade-history',
-  templateUrl: './trade-history.component.html',
-  styleUrls: ['./trade-history.component.scss']
+  selector: 'app-trade-transaction',
+  templateUrl: './trade-transaction.component.html',
+  styleUrls: ['./trade-transaction.component.scss']
 })
-export class TradeHistoryComponent implements OnInit, OnDestroy {
-  private historys;
+export class TradeTransactionComponent implements OnInit, OnDestroy {
+  private transactions;
   private shares;
   private sortType = 'id';
-  private selectedHistory;
+  private selectedTransaction;
   private currentPage = 1;
   private sortReverse = true;
   private tradeSetting;
@@ -41,24 +41,16 @@ export class TradeHistoryComponent implements OnInit, OnDestroy {
     this.shares = await this._shareService.getShareList();
 
     if (this.tradeSetting && this.tradeSetting.currentAccount) {
-      this.loadHistoryList();
+      this.loadTransactionList();
     }
   }
 
-  private async loadHistoryList() {
-    this.historys = await this._tradeService.getAccountJourney(this.tradeSetting.currentAccount.id, this.loadSize);
+  private async loadTransactionList() {
+    this.transactions = await this._tradeService.getAccountTransaction(this.tradeSetting.currentAccount.id, this.loadSize);
 
-    _.each(this.historys, (o) => {
+    _.each(this.transactions, (o) => {
       (o as any).share = _.findWhere(this.shares, { id: (o as any).shareId });
-
-      if ((o as any).orderId) {
-        (o as any).refId = 'O.' + (o as any).orderId;
-      }
-      if ((o as any).transactionId) {
-        (o as any).refId = 'T.' + (o as any).transactionId;
-      }
     });
-
   }
 
   onClickOrder(header) {
@@ -74,8 +66,9 @@ export class TradeHistoryComponent implements OnInit, OnDestroy {
     this.loadSize = data;
     LocalStoreHelper.set(StorageKey.JOURNEY_LOAD_SIZE, data);
 
-    this.loadHistoryList();
+    this.loadTransactionList();
   }
+
   ngOnDestroy() {
   }
 }
