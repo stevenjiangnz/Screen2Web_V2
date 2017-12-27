@@ -230,4 +230,18 @@ export class TradeService extends BaseService {
     });
     return journeyList;
   }
+
+  public async getAccountPosition(accountId) {
+    let journeyList = null;
+    const opt = await super.getOptions();
+
+    await this.http.get(this.baseUrl + `/tradeaccount/accountoutstandingposition?accountid=${accountId}`,
+    opt).toPromise().then((data) => {
+      const resObject = data.json();
+      journeyList = resObject;
+    });
+    return journeyList;
+  }
+
+  
 }

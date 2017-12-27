@@ -1,0 +1,146 @@
+<div class="mid-tab-panel">
+  <div class="table-container col-lg-12">
+    <div class="row pull-right" style="padding-right: 20px" *ngIf="positions">
+      <h4>Total: {{positions.length}}</h4>
+    </div>
+    <div class="row" style="clear:both; overflow:auto">
+      <table class="table table-striped ">
+        <thead>
+          <tr>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('id')">
+                                    ID
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'id' && sortReverse)" ></span>
+              <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'id' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('name')">
+                                    Share
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'name' && sortReverse)"></span>
+                  <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'name' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('entryPrice')">
+                                    Entry
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'entryPrice' && sortReverse)"></span>
+              <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'entryPrice' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('size')">
+                                    Size
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'size' && sortReverse)"></span>
+              <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'size' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('entryCost')">
+                                    Cost
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'entryCost' && sortReverse)"></span>
+              <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'entryCost' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('currentPrice')">
+                                    Price
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'currentPrice' && sortReverse)"></span>
+              <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'currentPrice' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('currentValue')">
+                                    Value
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'currentValue' && sortReverse)"></span>
+              <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'currentValue' && !sortReverse)"></span>
+              </span>
+            </th>     
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('currentTradingDate')">
+                CTrade Date
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'currentTradingDate' && sortReverse)"></span>
+              <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'currentTradingDate' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('margin')">
+                                    Margin
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'margin' && sortReverse)"></span>
+              <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'margin' && !sortReverse)"></span>
+              </span>
+            </th>  
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('diff')">
+                                    Diff
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'diff' && sortReverse)"></span>
+              <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'diff' && !sortReverse)"></span>
+              </span>
+            </th>  
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('diff_V')">
+                                    Diff_V
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'diff_V' && sortReverse)"></span>
+              <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'diff_V' && !sortReverse)"></span>
+              </span>
+            </th>  
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('stop')">
+                                    Stop
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'stop' && sortReverse)"></span>
+              <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'stop' && !sortReverse)"></span>
+              </span>
+            </th>  
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('limit')">
+                                    Limit
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'limit' && sortReverse)"></span>
+              <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'limit' && !sortReverse)"></span>
+              </span>
+            </th>  
+            <th>
+              <span class="sortable-header" (click)="onClickOrder('updateDT')">
+                                    Updated
+                  <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'updateDT' && sortReverse)"></span>
+              <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'updateDT' && !sortReverse)"></span>
+              </span>
+            </th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let position of positions | orderBy : sortType : sortReverse | paginate: { itemsPerPage: 10, currentPage: currentPage }">
+
+            <td>{{position.id}}</td>
+            <td><a class="content-link" [routerLink]="['/stock']" target="stock" >{{position.share.symbol}}</a></td>
+            <td>{{position.entryPrice | currency:'USD':true:'1.2-2'}}</td>
+            <td>{{position.size}}</td>
+            <td>{{position.entryCost | currency:'USD':true:'1.2-2'}}</td>
+            <td>{{position.currentPrice | currency:'USD':true:'1.2-2'}}</td>
+            <td>{{position.currentValue | currency:'USD':true:'1.2-2'}}</td>
+            <td>{{position.currentTradingDate}}</td>
+            <td>{{position.margin | currency:'USD':true:'1.2-2'}}</td>
+            <td [ngClass]="{'positive': position.diff > 0, 'negative': position.diff < 0}">{{position.diff | number:'1.2-2'}}%</td>
+            <td [ngClass]="{'positive': position.diff_V > 0, 'negative': position.diff_V < 0}">{{position.diff_V | currency:'USD':true:'1.2-2'}}</td>
+            <td>{{position.stop | currency:'USD':true:'1.2-2'}}</td>
+            <td>{{position.limit | currency:'USD':true:'1.2-2'}}</td>
+            <td>{{position.updateDT | date: 'dd/MM/yyyy, HH:mm:ss'}}</td>
+            <td>
+              <i class="fa fa-pencil-square-o icon-edit"
+                 (click)="editPosition(position)"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+    </div>
+  </div>
+<div class="position-edit-wrap">
+  <app-position-edit></app-position-edit>
+</div>
+</div>

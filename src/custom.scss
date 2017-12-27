@@ -340,3 +340,10 @@ a.nav-link {
 .content-link, .content-link:hover, .content-link:visited {
   color: darken($primaryColor, 20%);
 }
+
+.positive {
+  color: #00CCCC;
+}
+.negative {
+  color: #ffa8a8;
+}
