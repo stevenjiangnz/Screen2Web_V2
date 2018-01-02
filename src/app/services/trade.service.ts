@@ -243,5 +243,14 @@ export class TradeService extends BaseService {
     return journeyList;
   }
 
-  
+  public async updatePosition(position) {
+    let updatedPosition = null;
+    const opt = await super.getOptions();
+
+    await this.http.post(this.baseUrl + '/tradeorder/updateposition', JSON.stringify(position), opt).toPromise().then((data) => {
+      const resObject = data.json();
+      updatedPosition = resObject;
+    });
+    return updatedPosition;
+  }
 }

@@ -78,7 +78,6 @@ export class TradeOrderComponent implements OnInit, OnDestroy {
   }
 
   createOrder() {
-    console.log('create order .. ');
     this.selectedOrder = null;
     this.orderSelected.emit(this.selectedOrder);
   }

@@ -71,9 +71,11 @@ export class TradePositionComponent implements OnInit, OnDestroy {
 
   editPosition(position) {
     this.selectedPosition = position;
-    console.log('selected position', this.selectedPosition);
   }
-  
+
+  onPositionUpdated(updatedPosition) {
+    this.loadPositionList();
+  }
   ngOnDestroy() {
   }
 }

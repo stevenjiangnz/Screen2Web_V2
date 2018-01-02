@@ -7,6 +7,7 @@
       <table class="table table-striped ">
         <thead>
           <tr>
+            <th></th>
             <th>
               <span class="sortable-header" (click)="onClickOrder('id')">
                                     ID
@@ -105,12 +106,15 @@
               <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'updateDT' && !sortReverse)"></span>
               </span>
             </th>
-            <th></th>
+
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let position of positions | orderBy : sortType : sortReverse | paginate: { itemsPerPage: 10, currentPage: currentPage }">
-
+              <td>
+                  <i class="fa fa-pencil-square-o icon-edit"
+                     (click)="editPosition(position)"></i>
+                </td>
             <td>{{position.id}}</td>
             <td><a class="content-link" [routerLink]="['/stock']" target="stock" >{{position.share.symbol}}</a></td>
             <td>{{position.entryPrice | currency:'USD':true:'1.2-2'}}</td>
@@ -125,10 +129,7 @@
             <td>{{position.stop | currency:'USD':true:'1.2-2'}}</td>
             <td>{{position.limit | currency:'USD':true:'1.2-2'}}</td>
             <td>{{position.updateDT | date: 'dd/MM/yyyy, HH:mm:ss'}}</td>
-            <td>
-              <i class="fa fa-pencil-square-o icon-edit"
-                 (click)="editPosition(position)"></i>
-            </td>
+
           </tr>
         </tbody>
       </table>
@@ -141,6 +142,6 @@
     </div>
   </div>
 <div class="position-edit-wrap">
-  <app-position-edit></app-position-edit>
+  <app-position-edit [currentPosition]="selectedPosition" (positionUpdated)="onPositionUpdated($event)"></app-position-edit>
 </div>
 </div>
