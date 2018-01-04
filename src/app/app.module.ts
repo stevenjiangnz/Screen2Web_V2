@@ -58,6 +58,7 @@ import { TradeHistoryComponent } from './trade/trade-history/trade-history.compo
 import { TradeTransactionComponent } from './trade/trade-transaction/trade-transaction.component';
 import { TradePositionComponent } from './trade/trade-position/trade-position.component';
 import { PositionEditComponent } from './trade/trade-position/position-edit/position-edit.component';
+import { TradeProfileComponent } from './trade/trade-profile/trade-profile.component';
 
 export declare var require: any;
 declare var Highcharts: any;
@@ -116,6 +117,7 @@ function setChartOptions() {
     TradeTransactionComponent,
     TradePositionComponent,
     PositionEditComponent,
+    TradeProfileComponent,
   ],
   imports: [
     RouterModule,

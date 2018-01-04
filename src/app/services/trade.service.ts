@@ -253,4 +253,16 @@ export class TradeService extends BaseService {
     });
     return updatedPosition;
   }
+
+  public async getAccountSummary(accountId) {
+    let accountSummary = null;
+    const opt = await super.getOptions();
+
+    await this.http.get(this.baseUrl + `/tradeaccount/accountsummary?accountid=${accountId}`,
+    opt).toPromise().then((data) => {
+      const resObject = data.json();
+      accountSummary = resObject;
+    });
+    return accountSummary;
+  }
 }
