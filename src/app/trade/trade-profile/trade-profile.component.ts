@@ -47,11 +47,6 @@ export class TradeProfileComponent implements OnInit, OnDestroy {
 
   private async loadAccountSummary() {
     this.accountSummary = await this._tradeService.getAccountSummary(this.tradeSetting.currentAccount.id);
-
-    console.log(this.accountSummary);
-    // _.each(this.profiles, (o) => {
-    //   (o as any).share = _.findWhere(this.shares, { id: (o as any).shareId });
-    // });
   }
 
   onClickOrder(header) {

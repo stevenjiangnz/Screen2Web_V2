@@ -47,4 +47,14 @@ export class AnalysisService extends BaseService {
       await this.http.delete(this.baseUrl + '/rule?id=' + ruleId, opt).toPromise();
     }
 
+    public async getWatchList(zoneId) {
+      let watchList = null;
+      const opt = await super.getOptions();
+
+      await this.http.get(this.baseUrl + '/watch/getbyzone?zoneid=' + zoneId, opt).toPromise().then((data) => {
+        const resObject = data.json();
+        watchList = resObject;
+      });
+      return watchList;
+    }
 }
