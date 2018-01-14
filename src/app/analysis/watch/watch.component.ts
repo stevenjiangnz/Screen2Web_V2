@@ -42,18 +42,18 @@ export class WatchComponent implements OnInit, AfterViewInit {
 
   async deleteWatch(watchId) {
 
-    // const dialogRef = this.dialog.open(DialogConfirmComponent, {
-    //   width: '450px',
-    //   data: { hint: `Are sure you want to remove watch ${watchId}?`}
-    // });
+    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      width: '450px',
+      data: { hint: `Are sure you want to remove watch ${watchId}?`}
+    });
 
-    // dialogRef.afterClosed().subscribe(async (result) => {
-    //   if (result && result === 'Yes') {
-    //     await this._analysisService.deleteWatch(watchId);
-    //     this.watchs = _.without(this.watchs, _.findWhere(this.watchs, {id: watchId}));
-    //     this._toasterService.pop('success', 'Watch deleted.', '');
-    //   }
-    // });
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result && result === 'Yes') {
+        await this._analysisService.deleteWatch(watchId);
+        this.watchs = _.without(this.watchs, _.findWhere(this.watchs, {id: watchId}));
+        this._toasterService.pop('success', 'Watch deleted.', '');
+      }
+    });
   }
 
   editWatch(watchId) {

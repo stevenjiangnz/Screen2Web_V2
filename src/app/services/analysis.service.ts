@@ -57,4 +57,34 @@ export class AnalysisService extends BaseService {
       });
       return watchList;
     }
+
+    public async createWatch(watch) {
+      let newWatch = null;
+      const opt = await super.getOptions();
+
+      console.log('put watch', watch);
+      await this.http.put(this.baseUrl + '/watch', JSON.stringify(watch), opt).toPromise().then((data) => {
+        const resObject = data.json();
+        newWatch = resObject;
+      });
+      return newWatch;
+    }
+
+    public async updateWatch(watch) {
+      let newWatch = null;
+      const opt = await super.getOptions();
+
+      await this.http.post(this.baseUrl + '/watch', JSON.stringify(watch), opt).toPromise().then((data) => {
+        const resObject = data.json();
+        newWatch = resObject;
+      });
+      return newWatch;
+    }
+
+    public async deleteWatch(watchId) {
+      const opt = await super.getOptions();
+
+      await this.http.delete(this.baseUrl + '/watch?id=' + watchId, opt).toPromise();
+    }
+
 }

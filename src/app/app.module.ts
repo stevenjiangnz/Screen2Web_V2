@@ -60,6 +60,7 @@ import { TradePositionComponent } from './trade/trade-position/trade-position.co
 import { PositionEditComponent } from './trade/trade-position/position-edit/position-edit.component';
 import { TradeProfileComponent } from './trade/trade-profile/trade-profile.component';
 import { WatchComponent } from './analysis/watch/watch.component';
+import { WatchEditComponent } from './analysis/watch/watch-edit/watch-edit.component';
 
 export declare var require: any;
 declare var Highcharts: any;
@@ -120,6 +121,7 @@ function setChartOptions() {
     PositionEditComponent,
     TradeProfileComponent,
     WatchComponent,
+    WatchEditComponent,
   ],
   imports: [
     RouterModule,

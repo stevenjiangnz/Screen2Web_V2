@@ -1,0 +1,76 @@
+<div class="stock-detail-panel tab-wrapper">
+  <ngb-tabset type="pills" #tasbset="ngbTabset">
+    <ngb-tab id="edit" title="Edit">
+      <ng-template ngbTabContent>
+
+        <div class="panel-body">
+          <div>
+            <h4>Watch Details</h4>
+            <!-- <span mdTooltip="Tooltip! \n 232323">I have a tooltip</span> -->
+            <!-- <p>Form value: {{ watchForm.value | json }}</p>
+                  <p>Form status: {{ watchForm.status | json }}</p> -->
+          </div>
+          <div class="detail-sub-section">
+            <form class="form-vertical" name="watchForm" (ngSubmit)="onSubmit(watchForm)" [formGroup]="watchForm" novalidate>
+              <fieldset>
+                <div class="form-group" *ngIf="mode==='edit'">
+                  <label>ID: {{_currentWatch.id}}</label>
+                </div>
+                <div class="form-group">
+                  <label for="watchName" class="control-label">Name</label>
+                  <i class="fa fa-asterisk indicator-required"></i>
+                  <div>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Name" formControlName="name">
+                  </div>
+                  <label class="control-error" *ngIf="watchForm.controls['name'].invalid && (watchForm.controls['name'].dirty || watchForm.controls['name'].touched)">Name is required.</label>
+                </div>
+                <div class="form-group">
+                  <label for="watchDescription" class="control-label">Description</label>
+                  <div>
+                    <textarea rows="2" class="form-control" id="watchDescription" placeholder="Description" formControlName="description"></textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="watchName" class="control-label">DisplayOrder</label>
+                  <div>
+                    <input type="number" class="form-control" id="displayOrder" name="displayOrder" placeholder="1" formControlName="displayOrder">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="checkbox-inline">
+                    <label>
+                                      <input type="checkbox" formControlName="isSystem">Is System Watch
+                                  </label>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="control-label">Status</label>
+                  <div>
+                    <label class="radio-inline"><input type="radio" value="Active" [checked]="watchForm.value['status'] === 'Active'"
+                                                                     formControlName="status">Active</label>
+                    <label class="radio-inline"><input type="radio" value="Pending" [checked]="watchForm.value['status'] === 'Pending'"
+                                                                     formControlName="status">Pending</label>
+
+                    <label class="radio-inline"><input type="radio" value="Close" [checked]="watchForm.value['status'] === 'Close'"
+                                                                      formControlName="status">Close</label>
+
+
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div>
+                    <button type="submit" class="btn btn-primary" [disabled]="watchForm.invalid">Submit
+                                  </button>
+                    <button type="button" class="btn btn-default" (click)="cancelForm()">Cancel
+                                  </button>
+                  </div>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+</div>
