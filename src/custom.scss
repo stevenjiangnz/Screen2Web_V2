@@ -319,6 +319,12 @@ a.nav-link {
   color: $primaryColor;
 }
 
+a.id-link {
+  // background-color: $highlight-background-color;
+  color: $primaryColor;
+  text-decoration: underline;
+}
+
 .tab-wrapper {
   .nav-pills .nav-item.show .nav-link,
   .nav-pills .nav-link.active {

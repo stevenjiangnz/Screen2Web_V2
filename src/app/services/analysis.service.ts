@@ -87,4 +87,14 @@ export class AnalysisService extends BaseService {
       await this.http.delete(this.baseUrl + '/watch?id=' + watchId, opt).toPromise();
     }
 
+    public async getWatchDetailList(id) {
+      let watchDetailList = null;
+      const opt = await super.getOptions();
+
+      await this.http.get(this.baseUrl + '/watch/watchdetail/' + id, opt).toPromise().then((data) => {
+        const resObject = data.json();
+        watchDetailList = resObject;
+      });
+      return watchDetailList;
+    }
 }

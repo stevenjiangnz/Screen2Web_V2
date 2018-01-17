@@ -22,14 +22,12 @@ export class WatchComponent implements OnInit, AfterViewInit {
   private sortReverse = false;
   private tradeSetting;
 
-  constructor(private _analysisService: AnalysisService, private _toasterService: ToasterService,  private _tradeService:
-    TradeService, public dialog: MdDialog) { }
+  constructor(private _analysisService: AnalysisService, private _toasterService: ToasterService,  
+    private _tradeService: TradeService, public dialog: MdDialog) { }
 
   async ngOnInit() {
     this.tradeSetting = await this._tradeService.getTradeSetting();
     this.watchs = await this._analysisService.getWatchList(this.tradeSetting.currentZone.id);
-
-    console.log(this.watchs);
   }
 
   ngAfterViewInit() {
