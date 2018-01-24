@@ -97,4 +97,12 @@ export class AnalysisService extends BaseService {
       });
       return watchDetailList;
     }
+
+    public async addShareToWatch(watchID, shareId) {
+      const opt = await super.getOptions();
+
+      await this.http.post(this.baseUrl + '/watch/addshare?watchid=' + watchID + '&sharelist=' + shareId, 
+      null, opt).toPromise().then((data) => {
+      });
+    }
 }

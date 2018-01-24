@@ -36,19 +36,24 @@ export class WatchDetailComponent implements OnInit, AfterViewInit {
     this.tradeSetting = await this._tradeService.getTradeSetting();
     this.watchs = await this._analysisService.getWatchList(this.tradeSetting.currentZone.id);
     this.currentWatch =  _.findWhere(this.watchs, {id: Number(this.watchId)});
-    this.watchDetails = await this._analysisService.getWatchDetailList(this.watchId);
-
-    this.watchDetails.forEach(async (wd) => {
-      wd.share = await this._shareService.getShareByID(wd.shareId);
-      if (wd.share) {
-        wd.symbol = wd.share.symbol;
-        wd.name = wd.share.name;
-        wd.sector = wd.share.sector;
-      }
-    });
+    await this.loadWatchDetails(this.watchId);
+    this.editWatchDetail(this.watchId);
   }
 
   ngAfterViewInit() {
+  }
+
+  private async loadWatchDetails(watchId) {
+    this.watchDetails = await this._analysisService.getWatchDetailList(watchId);
+
+    this.watchDetails.forEach(async (wd) => {
+      wd.share = await this._shareService.getShareByID(wd.shareId);
+        if (wd.share) {
+          wd.symbol = wd.share.symbol;
+          wd.name = wd.share.name;
+          wd.sector = wd.share.sector;
+        }
+      });
   }
 
   onClickOrder(header) {
@@ -73,18 +78,10 @@ export class WatchDetailComponent implements OnInit, AfterViewInit {
   }
 
   editWatchDetail(watchDetailId) {
-    this.selectedWatchDetail = _.findWhere(this.watchDetails, {id: watchDetailId});
+    this.selectedWatchDetail = this.currentWatch;
   }
 
-  createWatchDetail() {
-    this.selectedWatchDetail = null;
-  }
-
-  onWatchDetailCreated(newWatchDetail) {
-    this.watchDetails.push(newWatchDetail);
-  }
-
-  onWatchDetailUpdated(updatedWatchDetail) {
-    ObjHelper.copyObject(updatedWatchDetail, this.selectedWatchDetail);
+  async onWatchDetailUpdated(updatedWatchDetail) {
+    this.loadWatchDetails(this.watchId);
   }
 }
