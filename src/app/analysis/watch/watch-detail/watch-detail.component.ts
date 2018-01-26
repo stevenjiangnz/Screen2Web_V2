@@ -61,20 +61,10 @@ export class WatchDetailComponent implements OnInit, AfterViewInit {
     this.sortReverse = !this.sortReverse;
   }
 
-  async deleteWatchDetail(watchDetailId) {
-
-    const dialogRef = this.dialog.open(DialogConfirmComponent, {
-      width: '450px',
-      data: { hint: `Are sure you want to remove watchDetail ${watchDetailId}?`}
-    });
-
-    dialogRef.afterClosed().subscribe(async (result) => {
-      // if (result && result === 'Yes') {
-      //   await this._analysisService.deleteWatchDetail(watchDetailId);
-      //   this.watchDetails = _.without(this.watchDetails, _.findWhere(this.watchDetails, {id: watchDetailId}));
-      //   this._toasterService.pop('success', 'WatchDetail deleted.', '');
-      // }
-    });
+  async deleteWatchDetail(shareID) {
+        await this._analysisService.removeShareFromWatch(this.watchId, shareID);
+        this.loadWatchDetails(this.watchId);
+        this._toasterService.pop('success', 'WatchDetail deleted.', '');
   }
 
   editWatchDetail(watchDetailId) {

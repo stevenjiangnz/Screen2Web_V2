@@ -101,7 +101,15 @@ export class AnalysisService extends BaseService {
     public async addShareToWatch(watchID, shareId) {
       const opt = await super.getOptions();
 
-      await this.http.post(this.baseUrl + '/watch/addshare?watchid=' + watchID + '&sharelist=' + shareId, 
+      await this.http.post(this.baseUrl + '/watch/addshare?watchid=' + watchID + '&sharelist=' + shareId,
+      null, opt).toPromise().then((data) => {
+      });
+    }
+
+    public async removeShareFromWatch(watchID, shareId) {
+      const opt = await super.getOptions();
+
+      await this.http.post(this.baseUrl + '/watch/removeshare?watchid=' + watchID + '&sharelist=' + shareId,
       null, opt).toPromise().then((data) => {
       });
     }
