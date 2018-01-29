@@ -113,4 +113,15 @@ export class AnalysisService extends BaseService {
       null, opt).toPromise().then((data) => {
       });
     }
+
+    public async getScanList(zoneId) {
+      let scanList = null;
+      const opt = await super.getOptions();
+
+      await this.http.get(this.baseUrl + '/dailyscan/getbyzone?zoneid=' + zoneId, opt).toPromise().then((data) => {
+        const resObject = data.json();
+        scanList = resObject;
+      });
+      return scanList;
+    }
 }
