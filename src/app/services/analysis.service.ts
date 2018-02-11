@@ -62,7 +62,6 @@ export class AnalysisService extends BaseService {
       let newWatch = null;
       const opt = await super.getOptions();
 
-      console.log('put watch', watch);
       await this.http.put(this.baseUrl + '/watch', JSON.stringify(watch), opt).toPromise().then((data) => {
         const resObject = data.json();
         newWatch = resObject;
@@ -123,5 +122,32 @@ export class AnalysisService extends BaseService {
         scanList = resObject;
       });
       return scanList;
+    }
+
+    public async createDailyScan(scan) {
+      let newScan = null;
+      const opt = await super.getOptions();
+
+      await this.http.put(this.baseUrl + '/dailyscan', JSON.stringify(scan), opt).toPromise().then((data) => {
+        const resObject = data.json();
+        newScan = resObject;
+      });
+      return newScan;
+    }
+    public async uodateDailyScan(scan) {
+      let newScan = null;
+      const opt = await super.getOptions();
+
+      await this.http.post(this.baseUrl + '/dailyscan', JSON.stringify(scan), opt).toPromise().then((data) => {
+        const resObject = data.json();
+        newScan = resObject;
+      });
+      return newScan;
+    }
+
+    public async deleteDailyScan(scanId) {
+      const opt = await super.getOptions();
+
+      await this.http.delete(this.baseUrl + '/dailyscan?id=' + scanId, opt).toPromise();
     }
 }

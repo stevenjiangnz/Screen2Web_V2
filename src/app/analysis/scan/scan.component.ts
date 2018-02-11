@@ -48,11 +48,11 @@ export class ScanComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(async (result) => {
-      // if (result && result === 'Yes') {
-      //   await this._analysisService.deleteScan(scanId);
-      //   this.scans = _.without(this.scans, _.findWhere(this.scans, {id: scanId}));
-      //   this._toasterService.pop('success', 'scan deleted.', '');
-      // }
+      if (result && result === 'Yes') {
+        await this._analysisService.deleteDailyScan(scanId);
+        this.scans = _.without(this.scans, _.findWhere(this.scans, {id: scanId}));
+        this._toasterService.pop('success', 'scan deleted.', '');
+      }
     });
   }
 
