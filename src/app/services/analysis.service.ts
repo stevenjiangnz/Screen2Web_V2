@@ -134,7 +134,7 @@ export class AnalysisService extends BaseService {
       });
       return newScan;
     }
-    public async uodateDailyScan(scan) {
+    public async updateDailyScan(scan) {
       let newScan = null;
       const opt = await super.getOptions();
 
@@ -149,5 +149,27 @@ export class AnalysisService extends BaseService {
       const opt = await super.getOptions();
 
       await this.http.delete(this.baseUrl + '/dailyscan?id=' + scanId, opt).toPromise();
+    }
+
+    public async getAlertList(zoneId) {
+      let alertList = null;
+      const opt = await super.getOptions();
+
+      await this.http.get(this.baseUrl + '/alert/getbyzone?zoneid=' + zoneId, opt).toPromise().then((data) => {
+        const resObject = data.json();
+        alertList = resObject;
+      });
+      return alertList;
+    }
+
+    public async createAlert(alert) {
+      let newAlert = null;
+      const opt = await super.getOptions();
+
+      await this.http.put(this.baseUrl + '/alert', JSON.stringify(alert), opt).toPromise().then((data) => {
+        const resObject = data.json();
+        newAlert = resObject;
+      });
+      return newAlert;
     }
 }

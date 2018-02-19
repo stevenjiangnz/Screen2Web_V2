@@ -80,7 +80,7 @@ export class ScanEditComponent implements OnInit {
       } else {
         serviceObj.id = this._currentScan.id;
 
-        const result = await this._analysisService.uodateDailyScan(serviceObj);
+        const result = await this._analysisService.updateDailyScan(serviceObj);
 
         if (result && result.id) {
           this._toasterService.pop('success', 'Scan update success', '');

@@ -65,6 +65,8 @@ import { WatchDetailComponent } from './analysis/watch/watch-detail/watch-detail
 import { WatchDetailEditComponent } from './analysis/watch/watch-detail/watch-detail-edit/watch-detail-edit.component';
 import { ScanComponent } from './analysis/scan/scan.component';
 import { ScanEditComponent } from './analysis/scan/scan-edit/scan-edit.component';
+import { AlertComponent } from './analysis/alert/alert.component';
+import { AlertEditComponent } from './analysis/alert/alert-edit/alert-edit.component';
 
 export declare var require: any;
 declare var Highcharts: any;
@@ -130,6 +132,8 @@ function setChartOptions() {
     WatchDetailEditComponent,
     ScanComponent,
     ScanEditComponent,
+    AlertComponent,
+    AlertEditComponent,
   ],
   imports: [
     RouterModule,
