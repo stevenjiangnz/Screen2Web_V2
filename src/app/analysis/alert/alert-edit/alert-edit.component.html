@@ -6,8 +6,8 @@
           <div class="panel-body">
               <div>
                   <h4>Alert Details</h4>
-                  <p>Form value: {{ alertForm.value | json }}</p>
-                  <p>Form status: {{ alertForm.status | json }}</p>
+                  <!-- <p>Form value: {{ alertForm.value | json }}</p>
+                  <p>Form status: {{ alertForm.status | json }}</p> -->
               </div>
               <div class="detail-sub-section">
                   <form class="form-vertical" name="alertForm" (ngSubmit)="onSubmit(alertForm)" [formGroup]="alertForm" novalidate>

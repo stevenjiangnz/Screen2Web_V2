@@ -172,4 +172,21 @@ export class AnalysisService extends BaseService {
       });
       return newAlert;
     }
+
+    public async deleteAlert(alertId) {
+      const opt = await super.getOptions();
+
+      await this.http.delete(this.baseUrl + '/alert?id=' + alertId, opt).toPromise();
+    }
+
+    public async updateAlert(alert) {
+      let newAlert = null;
+      const opt = await super.getOptions();
+
+      await this.http.post(this.baseUrl + '/alert', JSON.stringify(alert), opt).toPromise().then((data) => {
+        const resObject = data.json();
+        newAlert = resObject;
+      });
+      return newAlert;
+    }
 }

@@ -79,12 +79,22 @@ export class AlertEditComponent implements OnInit {
     } else {
       value.id = this._currentAlert.id;
 
-      // const result = await this._analysisService.updateAlert(value);
+      const serviceObj = Object.assign({}, this._currentAlert);
+      serviceObj.share = null;
+      serviceObj.shareId = alertObj.shareId;
+      serviceObj.message = alertObj.message;
+      serviceObj.formula = alertObj.formula;
+      serviceObj.isActive = alertObj.isActive;
+      serviceObj.zoneId = alertObj.zoneId;
 
-      // if (result && result.id) {
-      //   this._toasterService.pop('success', 'Alert update success', '');
-      //   this.alertUpdated.emit(result);
-      // }
+      const result = await this._analysisService.updateAlert(serviceObj);
+
+      result.share = _.findWhere(this.shares, {id: result.shareId});
+
+      if (result && result.id) {
+        this._toasterService.pop('success', 'Alert update success', '');
+        this.alertUpdated.emit(result);
+      }
     }
   }
 
@@ -110,13 +120,10 @@ export class AlertEditComponent implements OnInit {
       });
     } else {
       this.alertForm.setValue({
-        name: this._currentAlert.name,
+        share: this._currentAlert.share,
         message: this._currentAlert.message,
-        type: this._currentAlert.type,
-        assembly: this._currentAlert.assembly,
         formula: this._currentAlert.formula,
-        note: this._currentAlert.note,
-        isSystem: this._currentAlert.isSystem,
+        isActive: this._currentAlert.isActive,
       });
     }
   }

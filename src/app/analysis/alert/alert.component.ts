@@ -56,11 +56,11 @@ export class AlertComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(async (result) => {
-      // if (result && result === 'Yes') {
-      //   await this._analysisService.deleteAlert(alertId);
-      //   this.alerts = _.without(this.alerts, _.findWhere(this.alerts, {id: alertId}));
-      //   this._toasterService.pop('success', 'Alert deleted.', '');
-      // }
+      if (result && result === 'Yes') {
+        await this._analysisService.deleteAlert(alertId);
+        this.alerts = _.without(this.alerts, _.findWhere(this.alerts, {id: alertId}));
+        this._toasterService.pop('success', 'Alert deleted.', '');
+      }
     });
   }
 
