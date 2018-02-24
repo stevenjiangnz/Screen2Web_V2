@@ -20,6 +20,7 @@ export class AlertEditComponent implements OnInit {
   private shares;
   private tradeSetting;
   private myShare;
+  private verificationResult;
 
   private _currentAlert: any;
 
@@ -79,13 +80,7 @@ export class AlertEditComponent implements OnInit {
     } else {
       value.id = this._currentAlert.id;
 
-      const serviceObj = Object.assign({}, this._currentAlert);
-      serviceObj.share = null;
-      serviceObj.shareId = alertObj.shareId;
-      serviceObj.message = alertObj.message;
-      serviceObj.formula = alertObj.formula;
-      serviceObj.isActive = alertObj.isActive;
-      serviceObj.zoneId = alertObj.zoneId;
+      const serviceObj = this.populateServiceObjectWithInput(alertObj);
 
       const result = await this._analysisService.updateAlert(serviceObj);
 
@@ -96,6 +91,25 @@ export class AlertEditComponent implements OnInit {
         this.alertUpdated.emit(result);
       }
     }
+
+    this.verificationResult = null;
+  }
+
+  private async verifyAlert() {
+    const result = await this._analysisService.verifyAlert(this._currentAlert);
+    this.verificationResult = result;
+  }
+
+  private populateServiceObjectWithInput(alertObj) {
+    const serviceObj = Object.assign({}, this._currentAlert);
+    serviceObj.share = null;
+    serviceObj.shareId = alertObj.shareId;
+    serviceObj.message = alertObj.message;
+    serviceObj.formula = alertObj.formula;
+    serviceObj.isActive = alertObj.isActive;
+    serviceObj.zoneId = alertObj.zoneId;
+
+    return serviceObj;
   }
 
   private getAlertObject(value) {
@@ -111,6 +125,7 @@ export class AlertEditComponent implements OnInit {
   }
 
   initForm() {
+    this.verificationResult = null;
     if (this.mode === 'create') {
       this.alertForm.setValue({
         share: '',
@@ -136,7 +151,6 @@ export class AlertEditComponent implements OnInit {
   async onShareKey(event) {
     if (typeof this.alertForm.value.share === 'string') {
       this.alertForm.patchValue({ tradingDate: null });
-      this.resetForm();
     }
   }
 
@@ -144,8 +158,7 @@ export class AlertEditComponent implements OnInit {
     const html = `<span>${data.symbol} - ${data.name}</span>`;
     return this._sanitizer.bypassSecurityTrustHtml(html);
   }
-  private resetForm() {
-  }
+
 
   async onShareChanged(share) {
   }

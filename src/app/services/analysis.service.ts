@@ -189,4 +189,16 @@ export class AnalysisService extends BaseService {
       });
       return newAlert;
     }
+
+    public async verifyAlert(alert) {
+      let newResult = null;
+      const opt = await super.getOptions();
+
+      await this.http.post(this.baseUrl + '/alert/verify', JSON.stringify(alert), opt).toPromise().then((data) => {
+        const resObject = data.json();
+        newResult = resObject;
+      });
+      return newResult;
+    }
+
 }
