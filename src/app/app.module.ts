@@ -67,6 +67,13 @@ import { ScanComponent } from './analysis/scan/scan.component';
 import { ScanEditComponent } from './analysis/scan/scan-edit/scan-edit.component';
 import { AlertComponent } from './analysis/alert/alert.component';
 import { AlertEditComponent } from './analysis/alert/alert-edit/alert-edit.component';
+import { SearchComponent } from './stock/search/search.component';
+import { SearchPanelComponent } from './stock/search/search-panel/search-panel.component';
+import { SearchFilterComponent } from './stock/search/search-filter/search-filter.component';
+import { SearchPanelStockComponent } from './stock/search/search-panel/search-panel-stock/search-panel-stock.component';
+import { SearchPanelWatchComponent } from './stock/search/search-panel/search-panel-watch/search-panel-watch.component';
+import { SearchPanelScanComponent } from './stock/search/search-panel/search-panel-scan/search-panel-scan.component';
+import { SearchPanelAlertComponent } from './stock/search/search-panel/search-panel-alert/search-panel-alert.component';
 
 export declare var require: any;
 declare var Highcharts: any;
@@ -134,6 +141,13 @@ function setChartOptions() {
     ScanEditComponent,
     AlertComponent,
     AlertEditComponent,
+    SearchComponent,
+    SearchPanelComponent,
+    SearchFilterComponent,
+    SearchPanelStockComponent,
+    SearchPanelWatchComponent,
+    SearchPanelScanComponent,
+    SearchPanelAlertComponent,
   ],
   imports: [
     RouterModule,

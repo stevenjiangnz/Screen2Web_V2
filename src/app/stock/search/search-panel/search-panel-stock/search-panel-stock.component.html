@@ -1,0 +1,16 @@
+<div>
+    <form class="form-vertical" name="searchForm" (ngSubmit)="onSubmit(searchForm)" [formGroup]="searchForm" novalidate>
+        <fieldset>
+            <div class="form-group">
+                    <label for="zoneStartDate" class="control-label">Start Date</label>
+                    <div>
+                        <input class="form-control" style="float:left; width:62%" placeholder="Select a date" ngx-mydatepicker name="startDate"
+                        formControlName="startDateObj" [options]="myOptions" #dpStart="ngx-mydatepicker"/>
+                        <i class="fa fa-calendar calendar-icon" aria-hidden="true" (click)="dpStart.toggleCalendar()"></i>
+                    </div>
+                    <label class="control-error" *ngIf="searchForm.controls['startDateObj'].invalid && (searchForm.controls['startDateObj'].dirty || searchForm.controls['startDateObj'].touched)">Start Date is required.</label>
+            </div>
+        </fieldset>
+    </form>
+
+  </div>

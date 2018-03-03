@@ -14,6 +14,6 @@ export const analysisRoutes: Routes = [
             {path: 'watch', component: WatchComponent},
             {path: 'alert', component: AlertComponent},
             {path: 'scan', component: ScanComponent},
-            {path: 'watchdetail/:id', component: WatchDetailComponent}
+            {path: 'watchdetail/:id', component: WatchDetailComponent},
         ]},
 ];
