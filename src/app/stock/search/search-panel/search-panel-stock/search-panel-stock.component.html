@@ -1,16 +1,25 @@
 <div>
-    <form class="form-vertical" name="searchForm" (ngSubmit)="onSubmit(searchForm)" [formGroup]="searchForm" novalidate>
+    <form class="form-inline" name="searchForm" (ngSubmit)="onSubmit(searchForm)" [formGroup]="searchForm" novalidate
+        style="margin-top: 10px">
         <fieldset>
             <div class="form-group">
-                    <label for="zoneStartDate" class="control-label">Start Date</label>
-                    <div>
-                        <input class="form-control" style="float:left; width:62%" placeholder="Select a date" ngx-mydatepicker name="startDate"
-                        formControlName="startDateObj" [options]="myOptions" #dpStart="ngx-mydatepicker"/>
-                        <i class="fa fa-calendar calendar-icon" aria-hidden="true" (click)="dpStart.toggleCalendar()"></i>
-                    </div>
-                    <label class="control-error" *ngIf="searchForm.controls['startDateObj'].invalid && (searchForm.controls['startDateObj'].dirty || searchForm.controls['startDateObj'].touched)">Start Date is required.</label>
+                <label for="searchTradeDate" class="control-label">Trading Date: </label>
+                <div>
+                    <input class="form-control" style="float:left; width:62%" placeholder="Select a date" ngx-mydatepicker name="tradeDate" formControlName="tradeDateObj"
+                        [options]="myOptions" #dpStart="ngx-mydatepicker" />
+                    <i class="fa fa-calendar calendar-icon" aria-hidden="true" (click)="dpStart.toggleCalendar()"></i>
+                </div>
+                <label class="control-error" *ngIf="searchForm.controls['tradeDateObj'].invalid && (searchForm.controls['tradeDateObj'].dirty || searchForm.controls['tradeDateObj'].touched)">Trade Date is required.</label>
+            </div>
+            <div class="form-group" style="margin-top: 10px">
+                <div>
+                    <button type="submit" class="btn btn-primary" [disabled]="searchForm.invalid">Submit
+                    </button>
+                    <button type="button" class="btn btn-default" (click)="cancelForm()">Cancel
+                    </button>
+                </div>
             </div>
         </fieldset>
     </form>
 
-  </div>
+</div>

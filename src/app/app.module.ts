@@ -74,6 +74,7 @@ import { SearchPanelStockComponent } from './stock/search/search-panel/search-pa
 import { SearchPanelWatchComponent } from './stock/search/search-panel/search-panel-watch/search-panel-watch.component';
 import { SearchPanelScanComponent } from './stock/search/search-panel/search-panel-scan/search-panel-scan.component';
 import { SearchPanelAlertComponent } from './stock/search/search-panel/search-panel-alert/search-panel-alert.component';
+import { SearchResultComponent } from './stock/search/search-result/search-result.component';
 
 export declare var require: any;
 declare var Highcharts: any;
@@ -148,6 +149,7 @@ function setChartOptions() {
     SearchPanelWatchComponent,
     SearchPanelScanComponent,
     SearchPanelAlertComponent,
+    SearchResultComponent,
   ],
   imports: [
     RouterModule,

@@ -10,7 +10,7 @@
         <ngb-tabset type="pills" #tasbset="ngbTabset" [justify]="'fill'">
           <ngb-tab id="stock" title="Stock">
             <ng-template ngbTabContent>
-              <app-search-panel-stock></app-search-panel-stock>
+              <app-search-panel-stock (searchSubmitted)="stockSearchSubmitted($event)"></app-search-panel-stock>
             </ng-template>
           </ngb-tab>
   

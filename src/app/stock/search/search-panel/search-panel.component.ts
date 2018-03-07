@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ToasterService } from 'angular2-toaster';
+import { ShareService } from '../../../services/share.service';
+import { UtilityService } from '../../../services/utility.service';
 
 @Component({
   selector: 'app-search-panel',
@@ -7,9 +10,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SearchPanelComponent implements OnInit {
 
-  constructor() { }
+  @Output() searchDone = new EventEmitter<any>();
+
+  constructor(private _shareService: ShareService, private _toasterService: ToasterService, 
+    private _utilityService: UtilityService ) { }
 
   ngOnInit() {
   }
 
+
+  async stockSearchSubmitted(value) {
+    this._utilityService.startProgressBar();
+    const shareList = await this._shareService.searchShareList(value.tradingDate);
+    this.searchDone.emit(shareList);
+    this._utilityService.completeProgressBar();
+  }
 }

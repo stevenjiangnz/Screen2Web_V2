@@ -11,21 +11,19 @@ import { TradeService } from '../../../../services/trade.service';
   styleUrls: ['./search-panel-stock.component.scss']
 })
 
-
 export class SearchPanelStockComponent implements OnInit {
   searchForm: FormGroup;
 
   private _currentSearch: any;
+  private tradeSettings;
 
   myOptions: INgxMyDpOptions = {
     dateFormat: 'dd-mm-yyyy',
   };
 
-  // Initialized to specific date (09.10.2018)
   model: any = { date: { year: 2018, month: 10, day: 9 } };
 
-  @Output() searchCreated = new EventEmitter<any>();
-  @Output() searchUpdated = new EventEmitter<any>();
+  @Output() searchSubmitted = new EventEmitter<any>();
 
   constructor(private fb: FormBuilder, private _toasterService: ToasterService, private _tradeService: TradeService) {
     this.createForm();
@@ -36,12 +34,14 @@ export class SearchPanelStockComponent implements OnInit {
     // date selected
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+    this.tradeSettings = await this._tradeService.getTradeSetting();
+    this.initForm();
   }
 
   createForm() {
     this.searchForm = this.fb.group({
-      startDateObj: [null, Validators.required],
+      tradeDateObj: [null, Validators.required],
     });
   }
 
@@ -50,35 +50,25 @@ export class SearchPanelStockComponent implements OnInit {
   }
 
   async onSubmit({ value, valid }: { value: any, valid: boolean }) {
+    console.log('about to submit submitted');
+    this.searchSubmitted.emit({
+      tradingDate: ObjHelper.dateToInt(ObjHelper.CalendarToDate(value.tradeDateObj.date))
+    });
   }
 
   initForm() {
+      const startDate = ObjHelper.intToDate(this.tradeSettings.currentZone.tradingDate);
+      const startDateObj = {
+        date: {
+          year: startDate.getFullYear(),
+          month: startDate.getMonth() + 1,
+          day: startDate.getDate(),
+        }
+      };
       this.searchForm.setValue({
-        startDateObj: null,
+        tradeDateObj: startDateObj,
       });
       }
-
-      // this.searchForm.setValue({
-      //   name: this._currentSearch.name,
-      //   description: this._currentSearch.description,
-      //   startDateObj: startDateObj,
-      //   endDateObj: endDateObj,
-      //   status: this._currentSearch.status,
-      //   note: this._currentSearch.note,
-      // });
-
-  customValid(value) {
-    let isValid = true;
-
-    if (value.endDate) {
-      if (value.endDate.epoc < value.startDate.epoc) {
-        isValid = false;
-        this._toasterService.pop('error', 'Validation error', 'Start Date can not be later than End Date.');
-      }
-    }
-
-    return isValid;
-  }
 
   cancelForm() {
     this.searchForm.reset();
