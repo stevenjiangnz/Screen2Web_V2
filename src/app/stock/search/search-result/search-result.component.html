@@ -71,7 +71,42 @@
                         <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'close' && !sortReverse)"></span>
                     </span>
                 </th>
-    
+                <th>
+                    <span class="sortable-header" (click)="onClickOrder('volumn')">
+                                          Vol
+                        <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'volumn' && sortReverse)"></span>
+                        <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'volumn' && !sortReverse)"></span>
+                    </span>
+                </th>
+                <th>
+                    <span class="sortable-header" (click)="onClickOrder('delt_Price')">
+                                          ~Price
+                        <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'delt_Price' && sortReverse)"></span>
+                        <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'delt_Price' && !sortReverse)"></span>
+                    </span>
+                </th>
+                <th>
+                  <span class="sortable-header" (click)="onClickOrder('delt_PriceSD')">
+                                          ~PriceSD
+                        <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'delt_PriceSD' && sortReverse)"></span>
+                        <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'delt_PriceSD' && !sortReverse)"></span>
+                    </span>
+                </th>
+                <th>
+                    <span class="sortable-header" (click)="onClickOrder('delt_Vol')">
+                                            ~Vol
+                          <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'delt_Vol' && sortReverse)"></span>
+                          <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'delt_Vol' && !sortReverse)"></span>
+                      </span>
+                </th>
+                <th>
+                    <span class="sortable-header" (click)="onClickOrder('delt_Adx')">
+                                            ~Adx
+                          <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'delt_Adx' && sortReverse)"></span>
+                          <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'delt_Adx' && !sortReverse)"></span>
+                      </span>
+                </th>
+
                 <th></th>
               </tr>
             </thead>
@@ -87,6 +122,11 @@
                 <td>{{share.low | number:'1.2-2'}}</td>
                 <td>{{share.high | number:'1.2-2'}}</td>
                 <td>{{share.close | number:'1.2-2'}}</td>
+                <td>{{share.volumn}}</td>
+                <td [ngClass]="{'positive': share.delt_Price > 0, 'negative': share.delt_Price < 0}">{{share.delt_Price | number : '1.2-2'}}%</td>
+                <td [ngClass]="{'positive': share.delt_PriceSD > 0, 'negative': share.delt_PriceSD < 0}">{{share.delt_PriceSD | number : '1.2-2'}}%</td>
+                <td [ngClass]="{'positive': share.delt_Vol > 120, 'negative': share.delt_Vol < 80}">{{share.delt_Vol | number : '1.2-2'}}%</td>
+                <td [ngClass]="{'positive': share.delt_Adx > 5, 'negative': share.delt_Adx < -5}">{{share.delt_Adx | number : '1.2-2'}}</td>
                 <td style="width:80px">
                   <i class="fa fa-pencil-square-o icon-edit" (click)= "editShare(share.id)"></i>
                 </td>
