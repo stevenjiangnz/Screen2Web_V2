@@ -1,4 +1,4 @@
-<div class="stock-detail-panel">
+<div class="stock-detail-panel tab-wrapper">
   <ngb-tabset type="pills" #tasbset="ngbTabset">
     <ngb-tab id="edit" title="Edit">
       <ng-template ngbTabContent>
@@ -6,14 +6,15 @@
           <div class="panel-body">
               <div>
                   <h4>Rule Details</h4>
-                  <p>Form value: {{ ruleForm.value | json }}</p>
-                  <p>Form status: {{ ruleForm.status | json }}</p>
+                  <!-- <span mdTooltip="Tooltip! \n 232323">I have a tooltip</span> -->
+                  <!-- <p>Form value: {{ ruleForm.value | json }}</p>
+                  <p>Form status: {{ ruleForm.status | json }}</p> -->
               </div>
               <div class="detail-sub-section">
-                  <form class="form-vertical" name="ruleForm" [formGroup]="ruleForm" novalidate>
+                  <form class="form-vertical" name="ruleForm" (ngSubmit)="onSubmit(ruleForm)" [formGroup]="ruleForm" novalidate>
                       <fieldset>
-                          <div class="form-group" ng-show="detailMode == 'update'">
-                              <label>ID: </label>
+                          <div class="form-group" *ngIf="mode==='edit'">
+                              <label>ID: {{_currentRule.id}}</label>
                           </div>
                           <div class="form-group">
                               <label for="ruleName" class="control-label">Name</label>
@@ -24,52 +25,46 @@
                               </div>
                               <label class="control-error" *ngIf="ruleForm.controls['name'].invalid && (ruleForm.controls['name'].dirty || ruleForm.controls['name'].touched)">Name is required.</label>
                           </div>
-                          <!-- <div class="form-group" ng-init="localRule.direction='long'">
+                          <div class="form-group">
                               <label class="control-label">Direction</label>
                               <div>
-                                  <label class="radio-inline"><input type="radio" ng-value="'long'"
-                                                                     name="ruleDirection"
-                                                                     ng-model="localRule.direction">Long</label>
-
-                                  <label class="radio-inline"><input type="radio" ng-value="'short'"
-                                                                     name="ruleDirection"
-                                                                     ng-model="localRule.direction">Short</label>
+                                  <label class="radio-inline"><input type="radio" value="long" [checked]="ruleForm.value['direction'] === 'long'"
+                                                                     formControlName="direction"
+                                                                     >Long</label>
+                                  <label class="radio-inline"><input type="radio" value="short" [checked]="ruleForm.value['direction'] === 'short'"
+                                                                     formControlName="direction"
+                                                                     >Short</label>
                               </div>
                           </div>
-
                           <div class="form-group">
                               <label for="ruleDescription" class="control-label">Description</label>
                               <div>
                                   <textarea rows="2" class="form-control" id="ruleDescription" placeholder="Description"
-                                      ng-model="localRule.description"></textarea>
+                                      formControlName="description"></textarea>
                               </div>
                           </div>
-                          <div class="form-group" ng-init="localRule.type='formula'">
+                          <div class="form-group">
                               <label class="control-label">Type</label>
                               <div>
-                                  <label class="radio-inline"><input type="radio" ng-value="'formula'"
-                                                                     name="ruleType"
-                                                                     ng-model="localRule.type">Formula</label>
+                                  <label class="radio-inline"><input type="radio" value="formula" [checked]="ruleForm.value['type'] === 'formula'"
+                                                                     formControlName="type">Formula</label>
 
-                                  <label class="radio-inline"><input type="radio" ng-value="'assembly'"
-                                                                     name="ruleType"
-                                                                     ng-model="localRule.type">Assembly</label>
+                                  <label class="radio-inline"><input type="radio" value="assembly" [checked]="ruleForm.value['type'] === 'assembly'"
+                                                                     formControlName="type">Assembly</label>
                               </div>
                           </div>
-
-                          <div class="form-group" ng-show="localRule.type=='formula'">
+                          <div class="form-group" [hidden]="ruleForm.value.type !== 'formula'">
                               <label for="ruleFormula" class="control-label">Formula</label>
                               <i class="fa fa-asterisk indicator-required"></i>
                               <div>
-                                  <textarea rows="2" class="form-control" id="ruleFormula" placeholder="Calculate Formula"
-                                            ng-model="localRule.formula" ></textarea>
+                                  <textarea rows="2" class="form-control" id="formula" placeholder="Calculate Formula"
+                                  formControlName="formula" ></textarea>
                               </div>
                           </div>
-
-                          <div class="form-group" ng-show="localRule.type=='assembly'">
+                          <div class="form-group" [hidden]="ruleForm.value.type !== 'assembly'">
                               <label for="ruleCategory">Assembly</label>
                               <i class="fa fa-asterisk indicator-required"></i>
-                              <select class="form-control" id="ruleCategory" ng-model="localRule.assembly"
+                              <select class="form-control" id="ruleCategory" formControlName="assembly"
                                       >
                                   <option value="ScanManager_RSI2">RSI2</option>
                                   <option value="ScanManager_MACD_Long">+MACD</option>
@@ -85,21 +80,20 @@
                           <div class="form-group">
                               <label for="ruleNote" class="control-label">Note</label>
                               <div>
-                                  <textarea rows="2" class="form-control" id="ruleNote" placeholder="Description"
-                                            ng-model="localRule.note"></textarea>
+                                  <textarea rows="2" class="form-control" id="note" placeholder="Note"
+                                  formControlName="note"></textarea>
                               </div>
                           </div>
                           <div class="form-group">
                               <div class="checkbox-inline">
                                   <label>
-                                      <input type="checkbox" ng-model="localRule.isSystem">Is System Watch
+                                      <input type="checkbox" formControlName="isSystem">Is System Watch
                                   </label>
                               </div>
-                          </div> -->
+                          </div>
                           <div class="form-group">
                               <div>
                                   <button type="submit" class="btn btn-primary"
-                                          ng-click="submitRule(ruleForm)"
                                           [disabled]="ruleForm.invalid">Submit
                                   </button>
                                   <button type="button" class="btn btn-default"

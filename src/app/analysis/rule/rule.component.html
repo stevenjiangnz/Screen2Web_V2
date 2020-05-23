@@ -6,7 +6,7 @@
       </div>
 
       <div class="col-lg-7 pull-right">
-        <div class="btn btn-primary pull-right">
+        <div class="btn btn-primary pull-right" (click)="createRule()">
           Create
         </div>
       </div>
@@ -66,7 +66,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let rule of rules | orderBy : sortType : sortReverse | paginate: { itemsPerPage: 10, currentPage: p }">
+            <tr *ngFor="let rule of rules | orderBy : sortType : sortReverse | paginate: { itemsPerPage: 10, currentPage: currentPage }">
 
               <td>{{rule.id}}</td>
               <td>{{rule.name}}</td>
@@ -75,8 +75,8 @@
               <td>{{rule.description}}</td>
               <td>{{rule.isSystem}}</td>
               <td style="width:80px">
-                <i class="fa fa-pencil-square-o icon-edit"></i>
-                <i class="fa fa-trash-o icon-delete"></i>
+                <i class="fa fa-pencil-square-o icon-edit" (click)= "editRule(rule.id)"></i>
+                <i class="fa fa-trash-o icon-delete" (click)= "deleteRule(rule.id)"></i>
               </td>
             </tr>
           </tbody>
@@ -86,14 +86,14 @@
 
     <div class="row">
         <div class="col-lg-12">
-        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
         </div>
     </div>
     
   </div>
 
   <div class="col-sm-4 right-panel">
-    <app-rule-edit></app-rule-edit>
+    <app-rule-edit [currentRule]="selectedRule" (ruleCreated)="onRuleCreated($event)" (ruleUpdated)="onRuleUpdated($event)"></app-rule-edit>
   </div>
 </div>
 

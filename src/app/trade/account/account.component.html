@@ -1,0 +1,131 @@
+<div class="row">
+  <div class="col-sm-8 mid-panel">
+    <div class="row">
+      <div class="col-lg-5">
+        <h1>Manage Account List</h1>
+      </div>
+
+      <div class="col-lg-7 pull-right">
+        <div class="btn btn-primary pull-right" (click)="createAccount()">
+          Create
+        </div>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <div class="row pull-right" style="padding-right: 20px" *ngIf="accounts">
+        <h4>Total: {{accounts.length}}</h4>
+      </div>
+      <div class="row" style="clear:both">
+        <table class="table table-bordered table-striped ">
+          <thead>
+            <tr>
+              <th>
+                <span class="sortable-header" (click)="onClickOrder('id')">
+                                      ID
+                    <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'id' && sortReverse)" ></span>
+                    <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'id' && !sortReverse)"></span>
+                </span>
+              </th>
+              <th>
+                <span class="sortable-header" (click)="onClickOrder('name')">
+                                      Name
+                    <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'name' && sortReverse)"></span>
+                    <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'name' && !sortReverse)"></span>
+                </span>
+              </th>
+              <th>
+                <span class="sortable-header" (click)="onClickOrder('broker')">
+                                      Broker
+                    <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'broker' && sortReverse)"></span>
+                    <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'broker' && !sortReverse)"></span>
+                </span>
+              </th>
+              <th>
+                <span class="sortable-header" (click)="onClickOrder('zone')">
+                                      Zone
+                    <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'zone' && sortReverse)"></span>
+                    <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'zone' && !sortReverse)"></span>
+                </span>
+              </th>
+              <th>
+                <span class="sortable-header" (click)="onClickOrder('fundAmount')">
+                                      Fund Amount
+                    <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'fundAmount' && sortReverse)"></span>
+                    <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'fundAmount' && !sortReverse)"></span>
+                </span>
+              </th>
+              <th>
+                <span class="sortable-header" (click)="onClickOrder('availableFund')">
+                                      Avail Fund
+                    <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'availableFund' && sortReverse)"></span>
+                    <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'availableFund' && !sortReverse)"></span>
+                </span>
+              </th>
+              <th>
+                <span class="sortable-header" (click)="onClickOrder('margin')">
+                                      Margin
+                    <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'margin' && sortReverse)"></span>
+                    <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'margin' && !sortReverse)"></span>
+                </span>
+              </th>
+              <th>
+                <span class="sortable-header" (click)="onClickOrder('reserve')">
+                                      Reserve
+                    <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'reserve' && sortReverse)"></span>
+                    <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'reserve' && !sortReverse)"></span>
+                </span>
+              </th>
+              <th>
+                <span class="sortable-header" (click)="onClickOrder('feeSum')">
+                                      Fee
+                    <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'feeSum' && sortReverse)"></span>
+                    <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'feeSum' && !sortReverse)"></span>
+                </span>
+              </th>
+              <th>
+                <span class="sortable-header" (click)="onClickOrder('status')">
+                                      Status
+                    <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'status' && sortReverse)"></span>
+                    <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'status' && !sortReverse)"></span>
+                </span>
+              </th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let account of accounts | orderBy : sortType : sortReverse | paginate: { itemsPerPage: 10, currentPage: currentPage }">
+
+              <td>{{account.id}}</td>
+              <td>{{account.name}}</td>
+              <td>{{account.broker}}</td>
+              <td>{{account.zone}}</td>
+              <td>{{account.fundAmount | currency:'USD':true:'1.2-2'}}</td>
+              <td>{{account.availableFund | currency:'USD':true:'1.2-2'}}</td>
+              <td>{{account.margin | currency:'USD':true:'1.2-2'}}</td>
+              <td>{{account.reserve | currency:'USD':true:'1.2-2'}}</td>
+              <td>{{account.feeSum | currency:'USD':true:'1.2-2'}}</td>
+              <td>{{account.status}}</td>
+              <td style="width:80px">
+                <i class="fa fa-pencil-square-o icon-edit" (click)= "editAccount(account.id)"></i>
+                <i class="fa fa-trash-o icon-delete" (click)= "deleteAccount(account.id)"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+        <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+        </div>
+    </div>
+    
+  </div>
+
+  <div class="col-sm-4 right-panel">
+      <app-account-edit [currentAccount]="selectedAccount" (accountCreated)="onAccountCreated($event)" (accountUpdated)="onAccountUpdated($event)" (fundTransfered)="onFundTransfered()"></app-account-edit>
+  </div>
+</div>
+

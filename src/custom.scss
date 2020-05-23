@@ -2,11 +2,10 @@ $primaryColor: #ebebeb;
 $main-background-color: #2b3e50;
 $highlight-background-color: #4e5d6c;
 $tree-hover-color: #4caf50;
-$hover-background-color:  #111;
+$hover-background-color : #111;
 $active-background-color: #4caf50;
 $icon-color: #47d1ff;
 $icon-color-right: #ffe427;
-
 body {
   background: $main-background-color;
   color: $primaryColor;
@@ -60,13 +59,12 @@ body {
 }
 
 #main-panel {
-    min-height: 750px;
-    padding:0px;
+  min-height: 750px;
+  padding: 0px;
 }
 
 .mid-panel {
   margin-top: 20px;
-
   .chart-switch {
     line-height: 0.85em;
     .price-type {
@@ -96,6 +94,10 @@ body {
   }
 }
 
+.mid-tab-panel{
+  padding: 2px 8px 8px 2px;
+}
+
 #chart-container {
   width: 100%;
   height: 100%;
@@ -104,42 +106,35 @@ body {
 .btn {
   cursor: pointer;
 }
+
 .chart-panel {
   margin-top: 10px;
 }
 
 .tab-content-wrapper {
   padding: 20px 10px;
-
   .table-detail-key {
     width: 30%;
   }
-  .table-detail-value {
-
-  }
-
+  .table-detail-value {}
 }
-.stock-detail-panel{
+
+.stock-detail-panel {
   margin-top: 50px;
-  margin-right: 10px;
-  a.nav-link {
-    // background-color: $highlight-background-color;
-    color: $primaryColor;
-  }
-
-  .nav-pills .nav-item.show .nav-link, .nav-pills .nav-link.active {
-    background-color: $active-background-color;
-  }
-
-  a:hover:not(.active) {
-    background-color: $highlight-background-color;
-  }
-
-  .tab-pane.active{
-    background-color: $highlight-background-color;
-    padding: 10px 10px 20px 10px;
-  }
-
+  margin-right: 10px; // a.nav-link {
+  //   // background-color: $highlight-background-color;
+  //   color: $primaryColor;
+  // }
+  // .nav-pills .nav-item.show .nav-link, .nav-pills .nav-link.active {
+  //   background-color: $active-background-color;
+  // }
+  // a:hover:not(.active) {
+  //   background-color: $highlight-background-color;
+  // }
+  // .tab-pane.active{
+  //   background-color: $highlight-background-color;
+  //   padding: 10px 10px 20px 10px;
+  // }
   .detail-sub-title {
     // border-bottom: 1px solid whitesmoke;
     padding: 0 0 0 0;
@@ -152,14 +147,13 @@ body {
     }
   }
 }
+
 .stock-tree-wrapper {
   margin-top: 15px;
-
   .stock-filter {
     padding: 0.2rem 0.4rem;
     font-size: 0.95rem;
   }
-
   .tree {
     padding: 3px 5px;
     background-color: #4e5d6c;
@@ -168,23 +162,24 @@ body {
     .node-content-wrapper:hover {
       background: $tree-hover-color !important;
     }
-    .node-content-wrapper-active, .node-content-wrapper-focused {
+    .node-content-wrapper-active,
+    .node-content-wrapper-focused {
       background: darken($tree-hover-color, 10%) !important;
     }
-    .node-content-wrapper-active:hover, .node-content-wrapper-focused:hover {
+    .node-content-wrapper-active:hover,
+    .node-content-wrapper-focused:hover {
       background: $tree-hover-color !important;
     }
-    .tree-node-level-3 .node-content-wrapper{
+    .tree-node-level-3 .node-content-wrapper {
       margin-left: 6px;
     }
-  
-    .tree-node-level-3 tree-node-expander ::after{
+    .tree-node-level-3 tree-node-expander ::after {
       content: "\f15c";
       font-family: FontAwesome;
       font-style: normal;
       font-weight: bold;
       text-decoration: inherit;
-  /*--adjust as necessary--*/
+      /*--adjust as necessary--*/
       color: #fff;
       font-size: 12px;
       padding-right: 0.5em;
@@ -210,7 +205,6 @@ body {
 
 .table-container {
   margin-top: 30px;
-
   .sortable-header {
     cursor: pointer;
   }
@@ -218,7 +212,7 @@ body {
 
 .ngx-pagination {
   float: right;
-  .current{
+  .current {
     background-color: $active-background-color !important;
   }
   a:hover {
@@ -245,4 +239,123 @@ body {
 
 .control-error {
   color: #F68D98;
+}
+
+.radio-inline,
+.checkbox-inline {
+  margin: 0 8px 0 8px;
+  input {
+    margin: 0 8px 0 8px;
+  }
+}
+
+.md-tooltip .md-content {
+  height: 35px !important;
+  background-color: red !important;
+  color: white !important;
+  border-radius: 5px;
+}
+
+.mat-tooltip {
+  /* your own custom styles here */
+  /* e.g. */
+  color: #F1EFEF !important;
+  height: auto !important;
+  background-color: #202135 !important;
+  border-radius: 5px;
+  font-size: 16px !important;
+}
+
+.mat-dialog-container {
+  background-color: #D1D9B7 !important;
+  font-weight: bold;
+}
+
+.calendar-icon {
+  margin: 8px;
+  cursor: pointer;
+  color: $icon-color-right;
+}
+
+.checkbox {
+  input {
+    width: 35px;
+    float: left;
+    margin-top: 7px;
+    margin-left: 5px;
+  }
+}
+
+.zone-selector {
+  padding-top: 13px;
+  span {
+    font-size: 18px;
+    font-weight: bold;
+    i {
+      margin: 0 10px 0 10px;
+      color: $icon-color;
+      cursor: pointer;
+    }
+  }
+}
+
+.main-panel-form,
+.card {
+  margin-top: 30px;
+  padding: 0px;
+  border: 0px;
+  .card-header {
+    background-color: $highlight-background-color;
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  .card-block {
+    background-color: darken($highlight-background-color, 5%);
+  }
+}
+
+a.nav-link {
+  // background-color: $highlight-background-color;
+  color: $primaryColor;
+}
+
+a.id-link {
+  // background-color: $highlight-background-color;
+  color: $primaryColor;
+  text-decoration: underline;
+}
+
+.tab-wrapper {
+  .nav-pills .nav-item.show .nav-link,
+  .nav-pills .nav-link.active {
+    background-color: $active-background-color;
+  }
+  a:hover:not(.active) {
+    background-color: $highlight-background-color;
+  }
+  .tab-pane.active {
+    background-color: $highlight-background-color;
+    padding: 10px 10px 20px 10px;
+  }
+}
+
+.account-profile-wrap {
+  padding: 10px;
+  h5 {
+    font-size: 1.15em;
+  }
+}
+.ngui-auto-complete ul {
+  color: $hover-background-color;
+}
+
+.content-link, .content-link:hover, .content-link:visited {
+  color: darken($primaryColor, 20%);
+}
+
+.positive {
+  color: #00CCCC;
+}
+.negative {
+  color: #ffa8a8;
 }

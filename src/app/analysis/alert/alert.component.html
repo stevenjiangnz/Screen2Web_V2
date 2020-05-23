@@ -1,0 +1,91 @@
+<div class="row">
+  <div class="col-sm-8 mid-panel">
+    <div class="row">
+      <div class="col-lg-5">
+        <h1>Manage Alert List</h1>
+      </div>
+
+      <div class="col-lg-7 pull-right">
+        <div class="btn btn-primary pull-right" (click)="createAlert()">
+          Create
+        </div>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <div class="row pull-right" style="padding-right: 20px" *ngIf="alerts">
+        <h4>Total: {{alerts.length}}</h4>
+      </div>
+      <div class="row" style="clear:both">
+        <table class="table table-bordered table-striped ">
+          <thead>
+            <tr>
+              <th>
+                <span class="sortable-header" (click)="onClickOrder('id')">
+                                      ID
+                    <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'id' && sortReverse)" ></span>
+                    <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'id' && !sortReverse)"></span>
+                </span>
+              </th>
+              <th>
+                <span class="sortable-header" (click)="onClickOrder('name')">
+                                      Share
+                    <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'name' && sortReverse)"></span>
+                    <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'name' && !sortReverse)"></span>
+                </span>
+              </th>
+              <th>
+                <span class="sortable-header" (click)="onClickOrder('message')">
+                                      Message
+                    <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'message' && sortReverse)"></span>
+                    <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'message' && !sortReverse)"></span>
+                </span>
+              </th>
+              <th>
+                <span class="sortable-header" (click)="onClickOrder('formula')">
+                                      Formula
+                    <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'formula' && sortReverse)"></span>
+                    <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'formula' && !sortReverse)"></span>
+                </span>
+              </th>
+              <th>
+                <span class="sortable-header" (click)="onClickOrder('isActive')">
+                                      Is System
+                    <span class="fa fa-caret-down pull-right" [hidden]="!(sortType === 'isActive' && sortReverse)"></span>
+                    <span class="fa fa-caret-up pull-right" [hidden]="!(sortType === 'isActive' && !sortReverse)"></span>
+                </span>
+              </th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let alert of alerts | orderBy : sortType : sortReverse | paginate: { itemsPerPage: 10, currentPage: currentPage }">
+
+              <td>{{alert.id}}</td>
+              <td>{{alert.share.symbol + " (" + alert.share.id + ")"}}</td>
+              <td>{{alert.message}}</td>
+              <td>{{alert.formula}}</td>
+              <td>{{alert.isActive}}</td>
+              <td style="width:80px">
+                <i class="fa fa-pencil-square-o icon-edit" (click)= "editAlert(alert.id)"></i>
+                <i class="fa fa-trash-o icon-delete" (click)= "deleteAlert(alert.id)"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+        <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
+        </div>
+    </div>
+    
+  </div>
+
+  <div class="col-sm-4 right-panel">
+    <app-alert-edit [currentAlert]="selectedAlert" (alertCreated)="onAlertCreated($event)" (alertUpdated)="onAlertUpdated($event)"></app-alert-edit>
+  </div>
+</div>
+

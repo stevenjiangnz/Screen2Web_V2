@@ -1,0 +1,6 @@
+<div class="zone-selector">
+  <span>
+    <i class="fa fa-cog" aria-hidden="true" (click)="onSettingClick($event)"></i>
+    {{currentAccount.name}} | {{currentZone.name}} | {{currentZone.tradingDate}} <i class="fa fa-arrow-right" aria-hidden="true" (click)="onMoveToNextDay($event)"></i>  
+  </span>
+</div>

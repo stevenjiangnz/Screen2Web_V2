@@ -4,11 +4,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MdButtonModule, MdCheckboxModule } from '@angular/material';
+import { NguiAutoCompleteModule } from '@ngui/auto-complete';
+import { MdButtonModule, MdCheckboxModule, MdTooltipModule, MdDialogModule } from '@angular/material';
 import { TreeModule } from 'angular-tree-component';
+import { NgxMyDatePickerModule } from 'ngx-mydatepicker';
 import { routing } from './app.routes';
 import { Logger, Options, Level } from 'angular2-logger/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxDialogModule } from 'ngx-dialog';
 import { ToasterModule, ToasterService } from 'angular2-toaster';
 import { SlimLoadingBarModule } from 'ng2-slim-loading-bar';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -35,9 +38,43 @@ import { StockDetailComponent } from './stock/stock-detail/stock-detail.componen
 import { StockProfileComponent } from './stock/stock-profile/stock-profile.component';
 import { StockIndicatorComponent } from './stock/stock-indicator/stock-indicator.component';
 import { AnalysisComponent } from './analysis/analysis.component';
-import { ZoneComponent } from './analysis/zone/zone.component';
 import { RuleComponent } from './analysis/rule/rule.component';
 import { RuleEditComponent } from './analysis/rule/rule-edit/rule-edit.component';
+import { DialogConfirmComponent } from './component/dialog-confirm/dialog-confirm.component';
+import { TradePortalComponent } from './trade/trade-portal.component';
+import { ZoneComponent } from './trade/zone/zone.component';
+import { ZoneEditComponent } from './trade/zone/zone-edit/zone-edit.component';
+import { BrokerComponent } from './trade/broker/broker.component';
+import { BrokerEditComponent } from './trade/broker/broker-edit/broker-edit.component';
+import { AccountComponent } from './trade/account/account.component';
+import { AccountEditComponent } from './trade/account/account-edit/account-edit.component';
+import { FundTransferComponent } from './trade/account/fund-transfer/fund-transfer.component';
+import { ZoneSelectorComponent } from './component/zone-selector/zone-selector.component';
+import { TradeSettingComponent } from './trade/trade-setting/trade-setting.component';
+import { TradeSummaryComponent } from './trade/trade-summary/trade-summary.component';
+import { OrderEditComponent } from './trade/order-edit/order-edit.component';
+import { TradeOrderComponent } from './trade/trade-order/trade-order.component';
+import { TradeHistoryComponent } from './trade/trade-history/trade-history.component';
+import { TradeTransactionComponent } from './trade/trade-transaction/trade-transaction.component';
+import { TradePositionComponent } from './trade/trade-position/trade-position.component';
+import { PositionEditComponent } from './trade/trade-position/position-edit/position-edit.component';
+import { TradeProfileComponent } from './trade/trade-profile/trade-profile.component';
+import { WatchComponent } from './analysis/watch/watch.component';
+import { WatchEditComponent } from './analysis/watch/watch-edit/watch-edit.component';
+import { WatchDetailComponent } from './analysis/watch/watch-detail/watch-detail.component';
+import { WatchDetailEditComponent } from './analysis/watch/watch-detail/watch-detail-edit/watch-detail-edit.component';
+import { ScanComponent } from './analysis/scan/scan.component';
+import { ScanEditComponent } from './analysis/scan/scan-edit/scan-edit.component';
+import { AlertComponent } from './analysis/alert/alert.component';
+import { AlertEditComponent } from './analysis/alert/alert-edit/alert-edit.component';
+import { SearchComponent } from './stock/search/search.component';
+import { SearchPanelComponent } from './stock/search/search-panel/search-panel.component';
+import { SearchFilterComponent } from './stock/search/search-filter/search-filter.component';
+import { SearchPanelStockComponent } from './stock/search/search-panel/search-panel-stock/search-panel-stock.component';
+import { SearchPanelWatchComponent } from './stock/search/search-panel/search-panel-watch/search-panel-watch.component';
+import { SearchPanelScanComponent } from './stock/search/search-panel/search-panel-scan/search-panel-scan.component';
+import { SearchPanelAlertComponent } from './stock/search/search-panel/search-panel-alert/search-panel-alert.component';
+import { SearchResultComponent } from './stock/search/search-result/search-result.component';
 
 export declare var require: any;
 declare var Highcharts: any;
@@ -76,9 +113,43 @@ function setChartOptions() {
     StockProfileComponent,
     StockIndicatorComponent,
     AnalysisComponent,
-    ZoneComponent,
     RuleComponent,
     RuleEditComponent,
+    DialogConfirmComponent,
+    TradePortalComponent,
+    ZoneComponent,
+    ZoneEditComponent,
+    BrokerComponent,
+    BrokerEditComponent,
+    AccountComponent,
+    AccountEditComponent,
+    FundTransferComponent,
+    ZoneSelectorComponent,
+    TradeSettingComponent,
+    TradeSummaryComponent,
+    OrderEditComponent,
+    TradeOrderComponent,
+    TradeHistoryComponent,
+    TradeTransactionComponent,
+    TradePositionComponent,
+    PositionEditComponent,
+    TradeProfileComponent,
+    WatchComponent,
+    WatchEditComponent,
+    WatchDetailComponent,
+    WatchDetailEditComponent,
+    ScanComponent,
+    ScanEditComponent,
+    AlertComponent,
+    AlertEditComponent,
+    SearchComponent,
+    SearchPanelComponent,
+    SearchFilterComponent,
+    SearchPanelStockComponent,
+    SearchPanelWatchComponent,
+    SearchPanelScanComponent,
+    SearchPanelAlertComponent,
+    SearchResultComponent,
   ],
   imports: [
     RouterModule,
@@ -89,13 +160,18 @@ function setChartOptions() {
     BrowserAnimationsModule,
     MdButtonModule,
     MdCheckboxModule,
+    MdTooltipModule,
+    MdDialogModule,
     routing,
     TreeModule,
     ToasterModule,
     NgbModule.forRoot(),
     SlimLoadingBarModule.forRoot(),
     OrderModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgxDialogModule.forRoot(),
+    NgxMyDatePickerModule.forRoot(),
+    NguiAutoCompleteModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [StockService,
@@ -117,6 +193,7 @@ function setChartOptions() {
     //   useFactory: highchartsFactory
     // }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [DialogConfirmComponent]
 })
 export class AppModule { }

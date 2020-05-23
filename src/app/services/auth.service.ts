@@ -19,7 +19,6 @@ export class AuthService extends BaseService {
 
   public async testPromise(): Promise<string> {
     const myFirstPromise = new Promise<string> ((resolve, reject) => {
-      // console.log('in promise');
       setTimeout(function(){
         resolve('Success!'); // Yay! Everything went well!
       }, 200);

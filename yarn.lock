@@ -174,9 +174,9 @@
   dependencies:
     tsickle "^0.21.0"
 
-"@ng-bootstrap/ng-bootstrap@^1.0.0-alpha.26":
-  version "1.0.0-alpha.26"
-  resolved "https://registry.yarnpkg.com/@ng-bootstrap/ng-bootstrap/-/ng-bootstrap-1.0.0-alpha.26.tgz#f3d9e16b5682ec20edb3f1397d3d45a576f3f6a4"
+"@ng-bootstrap/ng-bootstrap@^1.0.0-beta.5":
+  version "1.0.0-beta.5"
+  resolved "https://registry.yarnpkg.com/@ng-bootstrap/ng-bootstrap/-/ng-bootstrap-1.0.0-beta.5.tgz#da2b9066b3701a284cac5a16168a77def947b4ab"
 
 "@ngtools/json-schema@1.1.0", "@ngtools/json-schema@^1.1.0":
   version "1.1.0"
@@ -3959,6 +3959,14 @@ ng2-slim-loading-bar@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/ng2-slim-loading-bar/-/ng2-slim-loading-bar-4.0.0.tgz#7256fdde7c058f14955a3ef2e65afafb5b664603"
 
+ngx-dialog@^0.1.7:
+  version "0.1.7"
+  resolved "https://registry.yarnpkg.com/ngx-dialog/-/ngx-dialog-0.1.7.tgz#f4ad62455bc28b14f8f50b91021e73586b5ee5c9"
+
+ngx-mydatepicker@^2.1.4:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/ngx-mydatepicker/-/ngx-mydatepicker-2.1.4.tgz#7b65186d645e8c9819f6ce6de0fe0810655d3f31"
+
 ngx-order-pipe@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/ngx-order-pipe/-/ngx-order-pipe-1.0.2.tgz#a50bbaa1259c96c6dd5c8dfebfe715b4de7893b9"
@@ -5217,9 +5225,9 @@ ripemd160@^2.0.0, ripemd160@^2.0.1:
     hash-base "^2.0.0"
     inherits "^2.0.1"
 
-rxjs@^5.1.0:
-  version "5.4.1"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.4.1.tgz#b62f757f279445d265a18a58fb0a70dc90e91626"
+rxjs@5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.1.0.tgz#0aa9018b7f440b505fa42bd742b6738be550e720"
   dependencies:
     symbol-observable "^1.0.1"
 

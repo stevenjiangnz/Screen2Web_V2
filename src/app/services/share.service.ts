@@ -83,7 +83,17 @@ export class ShareService extends BaseService {
       const resObject = data.json();
       indicator = resObject;
     });
-    console.log(indicator);
     return indicator;
+  }
+
+  public async searchShareList(tradingDate) {
+    let shareList = null;
+    const opt = await super.getOptions();
+
+    await this.http.get(this.baseUrl + '/share/search/' + tradingDate, opt).toPromise().then((data) => {
+      const resObject = data.json();
+      shareList = resObject;
+    });
+    return shareList;
   }
 }

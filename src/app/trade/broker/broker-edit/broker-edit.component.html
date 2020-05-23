@@ -1,0 +1,73 @@
+<div class="stock-detail-panel tab-wrapper">
+  <ngb-tabset type="pills" #tasbset="ngbTabset">
+    <ngb-tab id="edit" title="Edit">
+      <ng-template ngbTabContent>
+
+        <div class="panel-body">
+          <div>
+            <h4>Broker Details</h4>
+            <!-- <p>Form value: {{ brokerForm.value | json }}</p>
+                  <p>Form status: {{ brokerForm.status | json }}</p> -->
+          </div>
+          <div class="detail-sub-section">
+            <form class="form-vertical" name="brokerForm" (ngSubmit)="onSubmit(brokerForm)" [formGroup]="brokerForm" novalidate>
+              <fieldset>
+                <div class="form-group" *ngIf="mode==='edit'">
+                  <label>ID: {{_currentBroker.id}}</label>
+                </div>
+                <div class="form-group">
+                  <label for="brokerName" class="control-label">Name</label>
+                  <i class="fa fa-asterisk indicator-required"></i>
+                  <div>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Name" formControlName="name">
+                  </div>
+                  <label class="control-error" *ngIf="brokerForm.controls['name'].invalid && (brokerForm.controls['name'].dirty || brokerForm.controls['name'].touched)">Name is required.</label>
+                </div>
+                <div class="form-group">
+                  <label for="brokerDescription" class="control-label">Description</label>
+                  <div>
+                    <textarea rows="2" class="form-control" id="brokerDescription" placeholder="Description" formControlName="description"></textarea>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="minFee" class="control-label">Min Fee</label>
+                  <i class="fa fa-asterisk indicator-required"></i>
+                  <div>
+                    <input type="number" class="form-control" id="minFee" name="minFee" placeholder="minFee" formControlName="minFee">
+                  </div>
+                  <label class="control-error" *ngIf="brokerForm.controls['minFee'].invalid && (brokerForm.controls['minFee'].dirty || brokerForm.controls['minFee'].touched)">Min Fee is required.</label>
+                </div>
+                <div class="form-group">
+                  <label for="feeRate" class="control-label">Fee Rate</label>
+                  <i class="fa fa-asterisk indicator-required"></i>
+                  <div>
+                    <input type="number" class="form-control" id="feeRate" name="feeRate" placeholder="feeRate" formControlName="feeRate">
+                  </div>
+                  <label class="control-error" *ngIf="brokerForm.controls['feeRate'].invalid && (brokerForm.controls['feeRate'].dirty || brokerForm.controls['feeRate'].touched)">Fee Rate is required.</label>
+                </div>
+                <div class="form-group">
+                  <div class="checkbox">
+                        <input type="checkbox" class="form-control" id="shartable" formControlName="shortable">Is Shortable
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="checkbox">
+                        <input type="checkbox" class="form-control" id="isActive" formControlName="isActive">Is Active
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div>
+                    <button type="submit" class="btn btn-primary" [disabled]="brokerForm.invalid">Submit
+                                  </button>
+                    <button type="button" class="btn btn-default" (click)="cancelForm()">Cancel
+                                  </button>
+                  </div>
+                </div>
+              </fieldset>
+            </form>
+          </div>
+        </div>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+</div>

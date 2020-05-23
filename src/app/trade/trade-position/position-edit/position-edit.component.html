@@ -1,0 +1,91 @@
+<div class="panel-body" *ngIf="_currentPosition">
+    <div>
+      <h4>Position Details {{_currentPosition.id}}</h4>
+      <!-- <p>Form value: {{ positionForm.value | json }}</p>
+            <p>Form status: {{ positionForm.status | json }}</p> -->
+            {{currentPosition | json}}
+    </div>
+    <div class="detail-sub-section col-lg-8">
+      <form class="form-vertical" name="positionForm" (ngSubmit)="onSubmit(positionForm)" [formGroup]="positionForm" novalidate>
+        <fieldset>
+          <div class="form-group">
+            <label>Current Price: {{_currentPosition.currentPrice}}</label>
+          </div>
+          <div class="form-group" *ngIf="nextTicker">
+            <label class="control-label" style="margin-left:30px">
+                  <span *ngIf="!openPeeked"><button type="button" class="btn btn-primary" (click)="onPeekOpen()">Peek Next Open
+                    </button></span>
+                  <span *ngIf="openPeeked">Next open: {{nextTicker.open}} </span>
+                </label>
+            <label style="margin-left:30px">
+                    <span *ngIf="!closePeeked"><button type="button" class="btn btn-primary" (click)="onPeekClose()">Peek Next Close
+                      </button></span>
+                  <span *ngIf="closePeeked">Next Close: {{nextTicker.close}}</span> 
+                </label>
+          </div>
+          <div class="form-group">
+            <label for="stop" class="control-label">Stop</label>
+            <div>
+              <input type="number" class="form-control" id="stop" name="stop" formControlName="stop" step="0.0001" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="limit" class="control-label">Limit</label>
+            <div>
+              <input type="number" class="form-control" id="limit" name="limit" formControlName="limit" step="0.0001"
+              />
+            </div>
+          </div>
+
+          <!-- <div class="form-group">
+            <label for="positionName" class="control-label">Name</label>
+            <i class="fa fa-asterisk indicator-required"></i>
+            <div>
+              <input type="text" class="form-control" id="name" name="name" placeholder="Name" formControlName="name">
+            </div>
+            <label class="control-error" *ngIf="positionForm.controls['name'].invalid && (positionForm.controls['name'].dirty || positionForm.controls['name'].touched)">Name is required.</label>
+          </div>
+          <div class="form-group">
+            <label for="positionDescription" class="control-label">Description</label>
+            <div>
+              <textarea rows="2" class="form-control" id="positionDescription" placeholder="Description" formControlName="description"></textarea>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="minFee" class="control-label">Min Fee</label>
+            <i class="fa fa-asterisk indicator-required"></i>
+            <div>
+              <input type="number" class="form-control" id="minFee" name="minFee" placeholder="minFee" formControlName="minFee">
+            </div>
+            <label class="control-error" *ngIf="positionForm.controls['minFee'].invalid && (positionForm.controls['minFee'].dirty || positionForm.controls['minFee'].touched)">Min Fee is required.</label>
+          </div>
+          <div class="form-group">
+            <label for="feeRate" class="control-label">Fee Rate</label>
+            <i class="fa fa-asterisk indicator-required"></i>
+            <div>
+              <input type="number" class="form-control" id="feeRate" name="feeRate" placeholder="feeRate" formControlName="feeRate">
+            </div>
+            <label class="control-error" *ngIf="positionForm.controls['feeRate'].invalid && (positionForm.controls['feeRate'].dirty || positionForm.controls['feeRate'].touched)">Fee Rate is required.</label>
+          </div>
+          <div class="form-group">
+            <div class="checkbox">
+                  <input type="checkbox" class="form-control" id="shartable" formControlName="shortable">Is Shortable
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="checkbox">
+                  <input type="checkbox" class="form-control" id="isActive" formControlName="isActive">Is Active
+            </div>
+          </div> -->
+          <div class="form-group">
+            <div>
+              <button type="submit" class="btn btn-primary" [disabled]="positionForm.invalid">Submit
+                            </button>
+              <button type="button" class="btn btn-default" (click)="cancelForm()">Cancel
+                            </button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>

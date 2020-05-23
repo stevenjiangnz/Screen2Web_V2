@@ -1,4 +1,15 @@
 export class ObjHelper {
+    public static copyObject(sourceObj, targetObj)
+    {
+        if (sourceObj) {
+            // tslint:disable-next-line:no-var-keyword
+            // tslint:disable-next-line:forin
+            for (var k in sourceObj) {
+                targetObj[k] = sourceObj[k];
+            }
+        }
+    }
+
     public static dateToInt(d)
     {
         var intDate=0;
@@ -27,5 +38,9 @@ export class ObjHelper {
         }
 
         return returnDate;
+    }
+
+    public static CalendarToDate(calendarDate) {
+        return new Date(calendarDate.year, calendarDate.month -1, calendarDate.day);
     }
 }

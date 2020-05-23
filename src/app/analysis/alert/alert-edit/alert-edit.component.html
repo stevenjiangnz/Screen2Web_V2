@@ -1,0 +1,85 @@
+<div class="stock-detail-panel tab-wrapper">
+  <ngb-tabset type="pills" #tasbset="ngbTabset">
+    <ngb-tab id="edit" title="Edit">
+      <ng-template ngbTabContent>
+
+          <div class="panel-body">
+              <div>
+                  <h4>Alert Details</h4>
+                  <!-- <p>Form value: {{ alertForm.value | json }}</p>
+                  <p>Form status: {{ alertForm.status | json }}</p> -->
+              </div>
+              <div class="detail-sub-section">
+                  <form class="form-vertical" name="alertForm" (ngSubmit)="onSubmit(alertForm)" [formGroup]="alertForm" novalidate>
+                      <fieldset>
+                          <div class="form-group" *ngIf="mode==='edit'">
+                              <label>ID: {{_currentAlert.id}}</label>
+                          </div>
+                          <div class="form-group">
+                            <label for="accountName" class="control-label">Share</label>
+                            <i class="fa fa-asterisk indicator-required"></i>
+                            <input ngui-auto-complete formControlName="share" [source]="shares" [list-formatter]="autocompleListFormatter" value-property-name="id" [(ngModel)] = "myShare"
+                              display-property-name="symbol" accept-user-input="false" (valueChanged)="onShareChanged($event)"
+                              (keyup)="onShareKey($event)" class="form-control">
+                          </div>
+                          <div class="form-group">
+                              <label for="alertDescription" class="control-label">Message</label>
+                              <div>
+                                  <textarea rows="2" class="form-control" id="alertMessage" placeholder="Message"
+                                      formControlName="message"></textarea>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <label for="alertFormula" class="control-label">Formula</label>
+                              <i class="fa fa-asterisk indicator-required"></i>
+                              <div>
+                                  <textarea rows="2" class="form-control" id="formula" placeholder="Calculate Formula"
+                                  formControlName="formula" ></textarea>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <div class="checkbox-inline">
+                                  <label>
+                                      <input type="checkbox" formControlName="isActive">Is Active
+                                  </label>
+                              </div>
+                          </div>
+                          <div class="form-group">
+                              <div>
+                                  <button type="submit" class="btn btn-primary"
+                                          [disabled]="alertForm.invalid">Submit
+                                  </button>
+                                  <button type="button" class="btn btn-default"
+                                          (click)="cancelForm()">Cancel
+                                  </button>
+
+                                  <span class="pull-right" *ngIf="mode==='edit'">
+                                        <button type="button" class="btn btn-primary"
+                                        [disabled]="alertForm.dirty"
+                                        (click)="verifyAlert()">Verify
+                                        </button>
+                                  </span>
+                              </div>
+                          </div>
+                      </fieldset>
+                      <fieldset *ngIf="verificationResult">
+                            <div class="form-group">
+                                    <label>Is Success: {{verificationResult.isSuccess}}</label>
+                            </div>
+                            <div class="form-group">
+                                    <label>Is Match: {{verificationResult.isMatch}}</label>
+                            </div>
+                            <div class="form-group">
+                                    <label>Trading Date: {{verificationResult.tradingDate}}</label>
+                            </div>
+                            <div class="form-group" *ngIf="verificationResult.errorMessage">
+                                    <label>Error Message: {{verificationResult.errorMessage}}</label>
+                            </div>
+                      </fieldset>
+                  </form>
+              </div>
+          </div>
+      </ng-template>
+    </ngb-tab>
+  </ngb-tabset>
+</div>

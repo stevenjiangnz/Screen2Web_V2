@@ -12,7 +12,6 @@ export class LoginCompComponent implements OnInit {
   ngOnInit() {
   }
   onClickMe() {
-    console.log('button clicked.');
     this.clickMessage = 'You are my hero!';
   }
 }

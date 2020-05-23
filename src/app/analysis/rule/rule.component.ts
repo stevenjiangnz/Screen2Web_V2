@@ -1,5 +1,10 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import { ObjHelper } from '../../utils/obj-helper';
+import * as _ from 'underscore';
 import { AnalysisService } from '../../services/analysis.service';
+import { DialogConfirmComponent } from '../../component/dialog-confirm/dialog-confirm.component';
+import { ToasterService } from 'angular2-toaster';
 
 declare var $: any;
 
@@ -11,25 +16,53 @@ declare var $: any;
 export class RuleComponent implements OnInit, AfterViewInit {
   private rules;
   private sortType = 'id';
-  p: number = 1;
+  private selectedRule;
+  private currentPage = 1;
   private sortReverse = false;
 
-  constructor(private _analysisService: AnalysisService) { }
+  constructor(private _analysisService: AnalysisService, private _toasterService: ToasterService, public dialog: MdDialog) { }
 
   async ngOnInit() {
     this.rules = await this._analysisService.getRuleList();
   }
 
   ngAfterViewInit() {
-    // const exampleId: any = $('#example');
-
-    // // exampleId.hide();
-    // console.log(exampleId);
-    // exampleId.DataTable();
   }
 
   onClickOrder(header) {
     this.sortType = header;
     this.sortReverse = !this.sortReverse;
+  }
+
+  async deleteRule(ruleId) {
+
+    const dialogRef = this.dialog.open(DialogConfirmComponent, {
+      width: '450px',
+      data: { hint: `Are sure you want to remove rule ${ruleId}?`}
+    });
+
+    dialogRef.afterClosed().subscribe(async (result) => {
+      if (result && result === 'Yes') {
+        await this._analysisService.deleteRule(ruleId);
+        this.rules = _.without(this.rules, _.findWhere(this.rules, {id: ruleId}));
+        this._toasterService.pop('success', 'Rule deleted.', '');
+      }
+    });
+  }
+
+  editRule(ruleId) {
+    this.selectedRule = _.findWhere(this.rules, {id: ruleId});
+  }
+
+  createRule() {
+    this.selectedRule = null;
+  }
+
+  onRuleCreated(newRule) {
+    this.rules.push(newRule);
+  }
+
+  onRuleUpdated(updatedRule) {
+    ObjHelper.copyObject(updatedRule, this.selectedRule);
   }
 }

@@ -1,0 +1,72 @@
+<div>
+  <div class="account-profile-wrap" *ngIf="accountSummary">
+      <div class="row">
+          <div class="col-lg-5"><h4>Account Profile</h4></div>
+          <div class="col-lg-7"><h5 class="pull-right">Trading Date: {{accountSummary.balance.tradingDate}}</h5></div>
+      </div>
+      <hr>
+      <div class="row">
+          <div class="col-lg-4">
+              <h5>Fund Amount: <span class="label label-default">{{accountSummary.balance.fundAmount | currency:'USD':true:'1.2-2'}}</span></h5>
+          </div>
+          <div class="col-lg-4">
+              <h5>Balance: <span class="label label-default">{{accountSummary.balance.totalBalance | currency:'USD':true:'1.2-2'}}</span></h5>
+          </div>
+          <div class="col-lg-4">
+              <h5>Available Fund: <span class="label label-default">{{accountSummary.balance.availableFund | currency:'USD':true:'1.2-2'}}</span></h5>
+          </div>
+          <div class="col-lg-4">
+              <h5>Position Value: <span class="label label-default">{{accountSummary.balance.positionValue | currency:'USD':true:'1.2-2'}}</span></h5>
+          </div>
+          <div class="col-lg-4">
+              <h5>Reserve: <span class="label label-default">{{accountSummary.balance.reserve | currency:'USD':true:'1.2-2'}}</span></h5>
+          </div>
+          <div class="col-lg-4">
+              <h5>Margin: <span class="label label-default">{{accountSummary.balance.margin | currency:'USD':true:'1.2-2'}}</span></h5>
+          </div>
+          <div class="col-lg-4">
+              <h5>Fee: <span class="label label-default">{{accountSummary.balance.feeSum | currency:'USD':true:'1.2-2'}}</span></h5>
+          </div>
+          <div class="col-lg-4">
+              <h5>P / L: <span class="label label-default" [ngClass]="{'positive': accountSummary.balance.pl > 0, 'negative': accountSummary.balance.pl < 0}">{{accountSummary.balance.pl | currency:'USD':true:'1.2-2'}}</span></h5>
+          </div>
+          <div class="col-lg-4">
+              <h5>P / L Per: <span class="label label-default" [ngClass]="{'positive': accountSummary.balance.pl > 0, 'negative': accountSummary.balance.pl < 0}">{{accountSummary.balance.plPercent | number : '1.2-2'}}%</span></h5>
+          </div>
+      </div>
+      <hr>
+      <div class="row" ng-show="accountSummary.openOrders.length > 0">
+          <div class="col-lg-4">
+              <h5>Open Orders: <span class="label label-default">{{accountSummary.openOrders.length}}</span></h5>
+          </div>
+          <div class="col-lg-4">
+              <h5>Order Value: <span class="label label-default">{{accountSummary.orderValueSum | currency:'USD':true:'1.2-2'}}</span></h5>
+          </div>
+          <div class="col-lg-4">
+              <h5>Reserve: <span class="label label-default">{{accountSummary.orderReserveSum | currency:'USD':true:'1.2-2'}}</span></h5>
+          </div>
+          <div class="col-lg-4">
+              <h5>Fee: <span class="label label-default">{{accountSummary.orderFeeSum | currency:'USD':true:'1.2-2'}}</span></h5>
+          </div>
+      </div>
+      <hr>
+      <div class="row" ng-show="accountSummary.currentPositions.length > 0">
+          <div class="col-lg-4">
+              <h5>Positions: <span class="label label-default">{{accountSummary.currentPositions.length}}</span></h5>
+          </div>
+          <div class="col-lg-4">
+              <h5>Entry Cost: <span class="label label-default">{{accountSummary.positionEntrySum | currency:'USD':true:'1.2-2'}}</span></h5>
+          </div>
+          <div class="col-lg-4">
+              <h5>Current Value: <span class="label label-default">{{accountSummary.positionValueSum | currency:'USD':true:'1.2-2'}}</span></h5>
+          </div>
+
+          <div class="col-lg-4">
+              <h5>Diff Value: <span class="label label-default" [ngClass]="{'positive': accountSummary.positionDiffSum > 0, 'negative': accountSummary.positionDiffSum < 0}">{{accountSummary.positionDiffSum | currency :'USD':true:'1.2-2'}}</span></h5>
+          </div>
+          <div class="col-lg-4">
+              <h5>Diff Per: <span class="label label-default" [ngClass]="{'positive': accountSummary.positionDiffSum > 0, 'negative': accountSummary.positionDiffSum < 0}">{{accountSummary.positionDiffSumPercent | number : '1.2-2'}}%</span></h5>
+          </div>
+      </div>
+  </div>
+</div>
