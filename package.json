@@ -71,7 +71,7 @@
     "karma-jasmine-html-reporter": "^0.2.2",
     "karma-teamcity-reporter": "^1.0.0",
     "ngx-dialog": "^0.1.7",
-    "node-sass": "^4.5.3",
+    "node-sass": "^7.0.0",
     "protractor": "~5.1.0",
     "ts-node": "~2.0.0",
     "tslint": "~4.5.0",
